@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const querystring = require('querystring');
 require('dotenv').config();
 
 const User = require('../models/User');
@@ -32,19 +33,26 @@ router.get('/redirect', async (req, res) => {
    }
 
    const authCode = req.query.code;
-   //console.log(authCode);
+
    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization:
          'Basic ' +
          new Buffer.from(clientID + ':' + clientSecret).toString('base64')
    };
+
+   const options = {
+      method: 'post',
+      headers: headers,
+      data: {
+         grant_type: grantType,
+         code: authCode,
+         redirect_uri: redirectUri
+      },
+      url: tokenEndpoint
+   };
+
    try {
-      const res = await axios.post(
-         tokenEndpoint,
-         { grant_type: grantType, code: authCode, redirect_uri: redirectUri },
-         { headers: headers }
-      );
+      const res = await axios(options);
       console.log(res);
    } catch (err) {
       return res.json({ err });
