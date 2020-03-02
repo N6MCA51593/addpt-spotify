@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const querystring = require('querystring');
-const qs = require('qs');
 require('dotenv').config();
 
 const User = require('../models/User');
@@ -45,7 +44,7 @@ router.get('/redirect', async (req, res) => {
    const options = {
       method: 'post',
       headers: headers,
-      data: qs.stringify({
+      data: querystring.stringify({
          grant_type: grantType,
          code: authCode,
          redirect_uri: redirectUri
@@ -55,7 +54,7 @@ router.get('/redirect', async (req, res) => {
 
    try {
       const res = await axios(options);
-      console.log(res);
+      console.log(res.data);
    } catch (err) {
       return res.json({ err });
    }
