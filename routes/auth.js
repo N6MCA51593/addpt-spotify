@@ -34,32 +34,50 @@ router.get('/redirect', async (req, res) => {
 
    const authCode = req.query.code;
 
-   const headers = {
-      'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-      Authorization:
-         'Basic ' +
-         new Buffer.from(clientID + ':' + clientSecret).toString('base64')
-   };
-
-   const options = {
-      method: 'post',
-      headers: headers,
-      data: querystring.stringify({
-         grant_type: grantType,
-         code: authCode,
-         redirect_uri: redirectUri
-      }),
-      url: tokenEndpoint
-   };
-
    try {
-      const res = await axios(options);
-      console.log(res.data);
+      const headers = {
+         'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+         Authorization:
+            'Basic ' +
+            new Buffer.from(clientID + ':' + clientSecret).toString('base64')
+      };
+      const options = {
+         method: 'post',
+         headers: headers,
+         data: querystring.stringify({
+            grant_type: grantType,
+            code: authCode,
+            redirect_uri: redirectUri
+         }),
+         url: tokenEndpoint
+      };
+      const spRes = await axios(options);
+      const accessToken = spRes.data.access_token;
+      const tokenType = spRes.data.token_type;
+      const refreshToken = spRes.data.refresh_token;
+      try {
+         const options = {
+            method: 'get',
+            url: 'https://api.spotify.com/v1/me',
+            headers: { Authorization: tokenType + ' ' + accessToken }
+         };
+         const spRes = await axios(options);
+         console.log(spRes);
+         const spID = spRes.data.id;
+         const filter = { spID: spID };
+         const update = { refreshToken: refreshToken };
+         let doc = await User.findOneAndUpdate(filter, update, {
+            new: true,
+            upsert: true
+         });
+         console.log(doc);
+         res.json({ doc });
+      } catch (err) {
+         console.log(err);
+      }
    } catch (err) {
-      return res.json({ err });
+      console.log(err);
    }
-
-   res.json({ msg: 'Hi' });
 });
 
 module.exports = router;
