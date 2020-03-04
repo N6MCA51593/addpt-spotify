@@ -12,6 +12,7 @@ const scopes = process.env.SCOPES;
 const redirectUri = process.env.REDIRECT_URI;
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
+const jwtSecret = process.env.JWT_SECRET;
 
 const tokenEndpoint = 'https://accounts.spotify.com/api/token';
 const grantType = 'authorization_code';
@@ -22,7 +23,7 @@ const stateKey = 'spotify_auth_state';
 // @route     GET api/auth
 // @desc      Step 1 oAuth 2.0
 // @access    Public
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
    res.cookie(stateKey, state);
    res.redirect(
       'https://accounts.spotify.com/authorize' +
@@ -71,24 +72,36 @@ router.get('/redirect', async (req, res) => {
          url: tokenEndpoint
       };
       const spRes = await axios(options);
-      const accessToken = spRes.data.access_token;
-      const tokenType = spRes.data.token_type;
-      const refreshToken = spRes.data.refresh_token;
+
+      const { access_token, token_type, refresh_token } = spRes.data;
       try {
          const options = {
             method: 'get',
             url: 'https://api.spotify.com/v1/me',
-            headers: { Authorization: tokenType + ' ' + accessToken }
+            headers: { Authorization: token_type + ' ' + access_token }
          };
          const spRes = await axios(options);
+
          const spID = spRes.data.id;
          const filter = { spID: spID };
-         const update = { refreshToken: refreshToken };
+         const update = { refreshToken: refresh_token };
          let doc = await User.findOneAndUpdate(filter, update, {
             new: true,
             upsert: true
          });
-         res.json({ doc });
+
+         console.log(access_token);
+
+         const payload = {
+            user: {
+               id: doc._id,
+               accessToken: access_token
+            }
+         };
+         jwt.sign(payload, jwtSecret, { expiresIn: 3600 }, (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+         });
       } catch (err) {
          console.error(err.message);
          res.status(500).send('Server Error');
