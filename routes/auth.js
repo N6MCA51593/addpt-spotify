@@ -1,18 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const querystring = require('querystring');
 const crypto = require('crypto');
-require('dotenv').config();
 
 const User = require('../models/User');
+
+const createToken = require('../functions/createToken');
 
 const scopes = process.env.SCOPES;
 const redirectUri = process.env.REDIRECT_URI;
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
-const jwtSecret = process.env.JWT_SECRET;
 
 const tokenEndpoint = 'https://accounts.spotify.com/api/token';
 const grantType = 'authorization_code';
@@ -85,23 +84,12 @@ router.get('/redirect', async (req, res) => {
          const spID = spRes.data.id;
          const filter = { spID: spID };
          const update = { refreshToken: refresh_token };
-         let doc = await User.findOneAndUpdate(filter, update, {
+         await User.findOneAndUpdate(filter, update, {
             new: true,
             upsert: true
          });
-
-         console.log(access_token);
-
-         const payload = {
-            user: {
-               id: doc._id,
-               accessToken: access_token
-            }
-         };
-         jwt.sign(payload, jwtSecret, { expiresIn: 3600 }, (err, token) => {
-            if (err) throw err;
-            res.json({ token });
-         });
+         const token = createToken(spID, access_token);
+         res.json({ token });
       } catch (err) {
          console.error(err.message);
          res.status(500).send('Server Error');
