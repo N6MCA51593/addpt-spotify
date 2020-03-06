@@ -9,6 +9,6 @@ module.exports = (spID, accessToken) => {
       }
    };
    return jwt.sign(payload, jwtSecret, {
-      expiresIn: 20160
+      expiresIn: '14d'
    });
 };
