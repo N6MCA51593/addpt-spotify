@@ -12,7 +12,7 @@ app.use(express.json({ extended: false })).use(cookieParser());
 app.use(express.static('public'));
 
 // Define Routes
-//app.use('/api/users', require('./routes/users'));
+app.use('/api/library', require('./routes/library'));
 app.use('/api/auth', require('./routes/auth'));
 //app.use('/api/contacts', require('./routes/contacts'));
 
