@@ -83,7 +83,7 @@ router.get('/redirect', async (req, res) => {
 
          const spID = spRes.data.id;
          const filter = { spID: spID };
-         const update = { refreshToken: refresh_token };
+         const update = { refreshToken: refresh_token, lastLogin: Date.now() };
          await User.findOneAndUpdate(filter, update, {
             new: true,
             upsert: true
