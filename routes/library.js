@@ -8,10 +8,10 @@ router.get('/', [auth, authSpotify], (req, res) => {
   res.json(req.user);
 });
 
-// TODO: Placeholder images
-// @route     POST api/library/search
+// @route     POST api/library/add/search
 // @desc      Search for an artist
 // @access    Private
+// TODO: Placeholder images
 router.post('/add/search', [auth, authSpotify], async (req, res) => {
   const { accessToken } = req.user;
   const query = req.body.query;
@@ -25,7 +25,7 @@ router.post('/add/search', [auth, authSpotify], async (req, res) => {
     const spRes = await axios(options);
     if (spRes.data.artists.items.length > 0) {
       const artists = spRes.data.artists.items.map(e => {
-        return { spID: e5.id, name: e.name, img: e.images };
+        return { spID: e.id, name: e.name, img: e.images };
       });
       return res.json(artists);
     } else {
@@ -39,4 +39,21 @@ router.post('/add/search', [auth, authSpotify], async (req, res) => {
   }
 });
 
+// @route     GET api/library/add/new
+// @desc      Return an artist to add
+// @access    Private
+// TODO: Placeholder images
+router.get('/add/new', [auth, authSpotify], async (req, res) => {
+  const { accessToken } = req.user;
+  const id = req.query.id;
+  const options = {
+    method: 'get',
+    url: 'https://api.spotify.com/v1/search',
+    headers: { Authorization: 'Bearer ' + accessToken },
+    params: { q: query, type: 'artist', limit: 50 }
+  };
+  try {
+    const spRes = await axios(options);
+  } catch (err) {}
+});
 module.exports = router;
