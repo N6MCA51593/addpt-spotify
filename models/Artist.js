@@ -7,7 +7,8 @@ const ArtistSchema = mongoose.Schema({
   user: { type: Schema.ObjectId, ref: 'User' },
   isTracked: { type: Boolean, default: true },
   lastListen: { type: Date, default: null },
-  img: Array
+  img: Array,
+  isFullyCached: { type: Boolean, default: true }
 });
 
 module.exports = mongoose.model('artist', ArtistSchema);
