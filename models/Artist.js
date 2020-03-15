@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const Album = require('./Album');
+const Album = require('./Album').schema;
 const ArtistSchema = mongoose.Schema({
   spID: String,
   name: String,
   albums: [Album],
-  user: { type: Schema.ObjectId, ref: 'User' },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
   isTracked: { type: Boolean, default: true },
   lastListen: { type: Date, default: null },
   img: Array,

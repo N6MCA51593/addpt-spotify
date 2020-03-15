@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
-const SongSchema = mongoose.Schema({
+const TrackSchema = mongoose.Schema({
   spID: String,
   name: String,
-  album: { type: Schema.ObjectId, ref: 'Album' },
+  number: Number,
+  album: { type: mongoose.Schema.ObjectId, ref: 'album' },
   isTracked: { type: Boolean, default: false },
   lastListen: { type: Date, default: null },
   listens: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.model('song', SongSchema);
+module.exports = mongoose.model('song', TrackSchema);
