@@ -91,16 +91,20 @@ router.get('/redirect', async (req, res) => {
       const token = createToken(spID, access_token);
       res.json({ token });
     } catch (err) {
-      err.response
-        ? console.error(err.response.status + ' ' + err.response.text)
-        : console.error(err.message);
-      return res.status(500).json({ msg: 'Server error' });
+      const status = err.response ? err.response.status : 500;
+      const msg = err.response
+        ? err.response.status + ' ' + err.response.text
+        : err.message;
+      console.error(msg);
+      return res.status(status).json({ msg: msg });
     }
   } catch (err) {
-    err.response
-      ? console.error(err.response.status + ' ' + err.response.text)
-      : console.error(err.message);
-    return res.status(500).json({ msg: 'Server error' });
+    const status = err.response ? err.response.status : 500;
+    const msg = err.response
+      ? err.response.status + ' ' + err.response.text
+      : err.message;
+    console.error(msg);
+    return res.status(status).json({ msg: msg });
   }
 });
 

@@ -6,9 +6,23 @@ const axios = require('axios');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 const Track = require('../models/Track');
-const Album = require('../models/Album');
 
-router.get('/', [auth, authSpotify], (req, res) => {
+// @route     GET api/library
+// @desc      Get user's artists
+// @access    Private (jwt)
+router.get('/', [auth], async (req, res) => {
+  const uSpID = req.user.id;
+  const user = await User.findOne({ spID: uSpID });
+  //const artists = await Artists
+  try {
+  } catch (err) {
+    const status = err.response ? err.response.status : 500;
+    const msg = err.response
+      ? err.response.status + ' ' + err.response.text
+      : err.message;
+    console.error(msg);
+    return res.status(status).json({ msg: msg });
+  }
   res.json(req.user);
 });
 
@@ -38,10 +52,12 @@ router.post('/add/search', [auth, authSpotify], async (req, res) => {
       return res.json({ msg: 'Nothing found' });
     }
   } catch (err) {
-    err.response
-      ? console.error(err.response.status + ' ' + err.response.text)
-      : console.error(err.message);
-    return res.status(500).json({ msg: 'Server error' });
+    const status = err.response ? err.response.status : 500;
+    const msg = err.response
+      ? err.response.status + ' ' + err.response.text
+      : err.message;
+    console.error(msg);
+    return res.status(status).json({ msg: msg });
   }
 });
 
@@ -50,6 +66,7 @@ router.post('/add/search', [auth, authSpotify], async (req, res) => {
 // @access    Private
 // TODO: npm array.prototype.flat
 router.get('/add/new', [auth, authSpotify], async (req, res) => {
+  const uSpID = req.user.id;
   const { accessToken } = req.user;
   const id = req.query.id;
   const artistOptions = {
@@ -137,12 +154,26 @@ router.get('/add/new', [auth, authSpotify], async (req, res) => {
       return tracks(spRes);
     };
 
-    return res.json(await trackResponse(albums));
+    const user = await User.findOne({ spID: uSpID });
+    const newArtist = new Artist({ ...artist, user: user._id });
+    await newArtist.save();
+    const songs = await trackResponse(albums);
+    const newTracks = songs.map(e => {
+      return {
+        ...e,
+        album: newArtist.albums.find(album => album.spID == e.albumSpID)._id
+      };
+    });
+    await Track.insertMany(newTracks);
+
+    return res.json(artist);
   } catch (err) {
-    err.response
-      ? console.error(err.response.status + ' ' + err.response.text)
-      : console.error(err.message);
-    return res.status(500).json({ msg: 'Server error' });
+    const status = err.response ? err.response.status : 500;
+    const msg = err.response
+      ? err.response.status + ' ' + err.response.text
+      : err.message;
+    console.error(msg);
+    return res.status(status).json({ msg: msg });
   }
 });
 module.exports = router;

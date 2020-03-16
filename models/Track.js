@@ -9,4 +9,4 @@ const TrackSchema = mongoose.Schema({
   listens: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.model('song', TrackSchema);
+module.exports = mongoose.model('track', TrackSchema);
