@@ -6,15 +6,17 @@ const axios = require('axios');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 const Track = require('../models/Track');
+const Album = require('../models/Album');
 
 // @route     GET api/library
 // @desc      Get user's artists
 // @access    Private (jwt)
 router.get('/', [auth], async (req, res) => {
   const uSpID = req.user.id;
-  const user = await User.findOne({ spID: uSpID });
-  //const artists = await Artists
   try {
+    const user = await User.findOne({ spID: uSpID });
+    const artists = await Artist.find({ user: user._id });
+    res.json(artists);
   } catch (err) {
     const status = err.response ? err.response.status : 500;
     const msg = err.response
@@ -23,7 +25,6 @@ router.get('/', [auth], async (req, res) => {
     console.error(msg);
     return res.status(status).json({ msg: msg });
   }
-  res.json(req.user);
 });
 
 // @route     POST api/library/add/search
@@ -176,4 +177,25 @@ router.get('/add/new', [auth, authSpotify], async (req, res) => {
     return res.status(status).json({ msg: msg });
   }
 });
+
+// @route     DELETE api/library
+// @desc      Delete album/artist
+// @access    Private (jwt)
+router.delete('/', [auth], async (req, res) => {
+  const model = req.query.artistid ? Artist : Album;
+  const id = req.query.artistid ? req.query.artistid : req.query.albumid;
+
+  try {
+    await model.deleteOne({ _id: id });
+    res.json({ msg: 'Deleted' });
+  } catch (err) {
+    const status = err.response ? err.response.status : 500;
+    const msg = err.response
+      ? err.response.status + ' ' + err.response.text
+      : err.message;
+    console.error(msg);
+    return res.status(status).json({ msg: msg });
+  }
+});
+
 module.exports = router;
