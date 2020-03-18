@@ -156,18 +156,55 @@ router.get('/add/new', [auth, authSpotify], async (req, res) => {
     };
 
     const user = await User.findOne({ spID: uSpID });
-    const newArtist = new Artist({ ...artist, user: user._id });
-    await newArtist.save();
     const songs = await trackResponse(albums);
-    const newTracks = songs.map(e => {
-      return {
-        ...e,
-        album: newArtist.albums.find(album => album.spID == e.albumSpID)._id
-      };
+    const newArtist = new Artist({
+      ...artist,
+      user: user._id,
+      albums: artist.albums.map(e => {
+        return {
+          ...e,
+          tracks: songs.filter(song => song.albumSpID === e.spID)
+        };
+      })
     });
-    await Track.insertMany(newTracks);
+    await newArtist.save();
+    return res.json(newArtist);
+  } catch (err) {
+    const status = err.response ? err.response.status : 500;
+    const msg = err.response
+      ? err.response.status + ' ' + err.response.text
+      : err.message;
+    console.error(msg);
+    return res.status(status).json({ msg: msg });
+  }
+});
 
-    return res.json(artist);
+// @route     PUT api/library
+// @desc      Toggle tracking or archive artist
+// @access    Private (jwt)
+router.put('/', [auth], async (req, res) => {
+  const uSpID = req.user.id;
+  const artistID = req.query.artistid;
+  const albumID = req.query.albumid ? req.query.albumid : null;
+  const trackID = req.query.trackid ? req.query.trackid : null;
+  try {
+    console.log('req.query.archive', req.query.archive);
+    if (req.query.archive) {
+      const {
+        trackThresholds,
+        albumThresholds,
+        artistThresholds
+      } = await User.findOne({ spID: uSpID });
+      const artist = await Artist.findOneAndUpdate(
+        { _id: artistID },
+        {
+          isArchived: true,
+          settingsSnapshot: [trackThresholds, albumThresholds, artistThresholds]
+        },
+        { new: true }
+      );
+      res.json(artist);
+    }
   } catch (err) {
     const status = err.response ? err.response.status : 500;
     const msg = err.response
@@ -182,11 +219,16 @@ router.get('/add/new', [auth, authSpotify], async (req, res) => {
 // @desc      Delete album/artist
 // @access    Private (jwt)
 router.delete('/', [auth], async (req, res) => {
-  const model = req.query.artistid ? Artist : Album;
-  const id = req.query.artistid ? req.query.artistid : req.query.albumid;
-
+  const artistID = req.query.artistid;
+  const albumID = req.query.albumid ? req.query.albumid : null;
   try {
-    await model.deleteOne({ _id: id });
+    if (!albumID) {
+      await Artist.deleteOne({ _id: artistID });
+    } else {
+      const artist = await Artist.findOne({ _id: artistID });
+      await artist.albums.id(albumID).remove();
+      await artist.save();
+    }
     res.json({ msg: 'Deleted' });
   } catch (err) {
     const status = err.response ? err.response.status : 500;

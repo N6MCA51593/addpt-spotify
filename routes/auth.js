@@ -86,7 +86,8 @@ router.get('/redirect', async (req, res) => {
       const update = { refreshToken: refresh_token, lastLogin: Date.now() };
       await User.findOneAndUpdate(filter, update, {
         new: true,
-        upsert: true
+        upsert: true,
+        setDefaultsOnInsert: true
       });
       const token = createToken(spID, access_token);
       res.json({ token });

@@ -9,7 +9,9 @@ const ArtistSchema = mongoose.Schema({
   isTracked: { type: Boolean, default: true },
   lastListen: { type: Date, default: null },
   img: Array,
-  isFullyCached: { type: Boolean, default: true }
+  isFullyCached: { type: Boolean, default: true },
+  isArchived: { type: Boolean, default: false },
+  settingsSnapshot: { type: Array, default: null }
 });
 //ArtistSchema.index({ spID: 1, user: 1 }, { unique: true });
 module.exports = mongoose.model('artist', ArtistSchema);

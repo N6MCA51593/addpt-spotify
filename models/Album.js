@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
+const Track = require('./Track').schema;
 const AlbumSchema = mongoose.Schema({
   spID: String,
   name: String,
   releaseType: String,
   isTracked: { type: Boolean, default: false },
-  lastListen: { type: Date, default: null },
-  progress: { type: Number, default: 0 },
+  tracks: [Track],
   img: Array
 });
 
