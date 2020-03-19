@@ -27,158 +27,6 @@ router.get('/', [auth], async (req, res) => {
   }
 });
 
-// @route     POST api/library/add/search
-// @desc      Search for an artist
-// @access    Private
-// TODO: Placeholder images
-// TODO: Exclude saved artists
-router.post('/add/search', [auth, authSpotify], async (req, res) => {
-  const { accessToken } = req.user;
-  const query = req.body.query;
-  const options = {
-    method: 'get',
-    url: 'https://api.spotify.com/v1/search',
-    market: 'from_token',
-    headers: { Authorization: 'Bearer ' + accessToken },
-    params: { q: query, type: 'artist', limit: 50 }
-  };
-  try {
-    const spRes = await axios(options);
-    if (spRes.data.artists.items.length > 0) {
-      const artists = spRes.data.artists.items.map(e => {
-        return { spID: e.id, name: e.name, img: e.images };
-      });
-      return res.json(artists);
-    } else {
-      return res.json({ msg: 'Nothing found' });
-    }
-  } catch (err) {
-    const status = err.response ? err.response.status : 500;
-    const msg = err.response
-      ? err.response.status + ' ' + err.response.text
-      : err.message;
-    console.error(msg);
-    return res.status(status).json({ msg: msg });
-  }
-});
-
-// @route     GET api/library/add/new
-// @desc      Add an artist
-// @access    Private
-// TODO: npm array.prototype.flat
-router.get('/add/new', [auth, authSpotify], async (req, res) => {
-  const uSpID = req.user.id;
-  const { accessToken } = req.user;
-  const id = req.query.id;
-  const artistOptions = {
-    method: 'get',
-    url: `https://api.spotify.com/v1/artists/${id}`,
-    headers: { Authorization: 'Bearer ' + accessToken }
-  };
-  const albumOptions = group => ({
-    method: 'get',
-    url: `https://api.spotify.com/v1/artists/${id}/albums`,
-    params: { include_groups: group, country: 'from_token' },
-    headers: { Authorization: 'Bearer ' + accessToken }
-  });
-
-  try {
-    const albumsResponse = await axios.all([
-      axios(albumOptions('album')),
-      axios(albumOptions('single')),
-      axios(albumOptions('compilation'))
-    ]);
-    const isFullyCached = albumsResponse.some(e => e.data.next);
-    const albums = albumsResponse
-      .map(e => {
-        return e.data.items.map(e => {
-          return {
-            spID: e.id,
-            name: e.name,
-            releaseType: e.album_type,
-            isTracked: e.album_type === 'album' ? true : false,
-            img: e.images
-          };
-        });
-      })
-      .flat();
-
-    const artistResponse = await axios(artistOptions);
-    const artist = {
-      spID: artistResponse.data.id,
-      name: artistResponse.data.name,
-      isFullyCached: !isFullyCached,
-      img: artistResponse.data.images,
-      albums: albums
-    };
-
-    // Breaking up the request as per Spotify API limitation of 20 albums per call
-    const trackResponse = async albums => {
-      const ids = albums.map(e => e.spID);
-      let counter = 0;
-      let optionsArray = [];
-      const trackOptions = ids => ({
-        method: 'get',
-        url: `https://api.spotify.com/v1/albums`,
-        params: { ids: ids.join(), country: 'from_token' },
-        headers: { Authorization: 'Bearer ' + accessToken }
-      });
-      while (counter < ids.length) {
-        optionsArray.push(trackOptions(ids.slice(counter, counter + 20)));
-        counter += 20;
-      }
-      const spRes = await axios.all(optionsArray.map(e => axios(e)));
-      const tracks = spRes => {
-        const albums = spRes.map(e => e.data.albums).flat();
-        const tracks = albums
-          .map(e =>
-            e.tracks.items
-              .map(e => {
-                return {
-                  spID: e.id,
-                  name: e.name,
-                  number: e.track_number,
-                  discNumber: e.disc_number
-                };
-              })
-              .map(item => {
-                return {
-                  ...item,
-                  albumSpID: e.id,
-                  isTracked: e.album_type === 'album' ? true : false
-                };
-              })
-          )
-          .flat();
-        return tracks;
-      };
-      return tracks(spRes);
-    };
-
-    const user = await User.findOne({ spID: uSpID });
-    const songs = await trackResponse(albums);
-    const newArtist = new Artist({
-      ...artist,
-      user: user._id,
-      albums: artist.albums.map(e => {
-        return {
-          ...e,
-          tracks: songs.filter(song => song.albumSpID === e.spID)
-        };
-      })
-    });
-    await newArtist.save();
-    return res.json(newArtist);
-  } catch (err) {
-    const status = err.response ? err.response.status : 500;
-    const msg = err.response
-      ? err.response.status + ' ' + err.response.text
-      : err.message;
-    console.error(msg);
-    return res.status(status).json({ msg: msg });
-  }
-});
-
 // @route     PUT api/library
 // @desc      Toggle tracking or archive artist
 // @access    Private (jwt)
@@ -188,23 +36,53 @@ router.put('/', [auth], async (req, res) => {
   const albumID = req.query.albumid ? req.query.albumid : null;
   const trackID = req.query.trackid ? req.query.trackid : null;
   try {
-    console.log('req.query.archive', req.query.archive);
-    if (req.query.archive) {
+    const artist = await Artist.findOne({ _id: artistID });
+    if (req.query.archive === true) {
       const {
         trackThresholds,
         albumThresholds,
         artistThresholds
       } = await User.findOne({ spID: uSpID });
-      const artist = await Artist.findOneAndUpdate(
-        { _id: artistID },
-        {
-          isArchived: true,
-          settingsSnapshot: [trackThresholds, albumThresholds, artistThresholds]
-        },
-        { new: true }
-      );
-      res.json(artist);
+      if (!artist.isArchived) {
+        artist.isArchived = true;
+        artist.settingsSnapshot = [
+          trackThresholds,
+          albumThresholds,
+          artistThresholds
+        ];
+      } else {
+        artist.isArchived = false;
+        artist.settingsSnapshot = null;
+      }
+    } else {
+      if (trackID && !albumID) {
+        const track = artist.albums.id(albumID).tracks.id(trackID);
+        track.isTracked = !track.isTracked;
+      } else if (albumID && !trackID) {
+        const album = artist.albums.id(albumID);
+        album.isTracked = !album.isTracked;
+        album.tracks.map(track =>
+          album.isTracked ? (track.isTracked = true) : (track.isTracked = false)
+        );
+      } else {
+        artist.isTracked = !artist.isTracked;
+        artist.albums.map(album => {
+          if (!artist.isTracked) {
+            album.isTracked = false;
+            album.tracks.map(track => (track.isTracked = false));
+          } else {
+            if (album.releaseType === 'album') {
+              album.isTracked = true;
+              album.tracks.map(track => (track.isTracked = true));
+            }
+          }
+          return album;
+        });
+      }
     }
+    await artist.save();
+
+    return res.json(artist);
   } catch (err) {
     const status = err.response ? err.response.status : 500;
     const msg = err.response
@@ -222,12 +100,16 @@ router.delete('/', [auth], async (req, res) => {
   const artistID = req.query.artistid;
   const albumID = req.query.albumid ? req.query.albumid : null;
   try {
+    const artist = await Artist.findOne({ _id: artistID });
     if (!albumID) {
       await Artist.deleteOne({ _id: artistID });
     } else {
-      const artist = await Artist.findOne({ _id: artistID });
-      await artist.albums.id(albumID).remove();
-      await artist.save();
+      if (artist.albums.length > 1) {
+        await artist.albums.id(albumID).remove();
+        await artist.save();
+      } else {
+        await Artist.deleteOne({ _id: artistID });
+      }
     }
     res.json({ msg: 'Deleted' });
   } catch (err) {
@@ -239,5 +121,7 @@ router.delete('/', [auth], async (req, res) => {
     return res.status(status).json({ msg: msg });
   }
 });
+
+router.use('/add', require('./add'));
 
 module.exports = router;
