@@ -35,6 +35,7 @@ router.put('/', [auth], async (req, res) => {
   const artistID = req.query.artistid;
   const albumID = req.query.albumid ? req.query.albumid : null;
   const trackID = req.query.trackid ? req.query.trackid : null;
+  const listens = req.query.listens ? req.query.listens : null;
   try {
     const artist = await Artist.findOne({ _id: artistID });
     if (req.query.archive === true) {
@@ -55,9 +56,13 @@ router.put('/', [auth], async (req, res) => {
         artist.settingsSnapshot = null;
       }
     } else {
-      if (trackID && !albumID) {
+      if (trackID) {
         const track = artist.albums.id(albumID).tracks.id(trackID);
-        track.isTracked = !track.isTracked;
+        if (listens) {
+          track.listens = listens;
+        } else {
+          track.isTracked = !track.isTracked;
+        }
       } else if (albumID && !trackID) {
         const album = artist.albums.id(albumID);
         album.isTracked = !album.isTracked;
@@ -123,5 +128,7 @@ router.delete('/', [auth], async (req, res) => {
 });
 
 router.use('/add', require('./add'));
+
+router.use('/append', require('./append'));
 
 module.exports = router;

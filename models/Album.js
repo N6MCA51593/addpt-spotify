@@ -4,6 +4,7 @@ const AlbumSchema = mongoose.Schema({
   spID: String,
   name: String,
   releaseType: String,
+  releaseDate: String,
   isTracked: { type: Boolean, default: false },
   tracks: [Track],
   img: Array

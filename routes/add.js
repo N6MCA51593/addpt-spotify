@@ -82,6 +82,7 @@ router.get('/new', [auth, authSpotify], async (req, res) => {
             spID: e.id,
             name: e.name,
             releaseType: e.album_type,
+            releaseDate: e.release_date,
             isTracked: e.album_type === 'album' ? true : false,
             img: e.images
           };
