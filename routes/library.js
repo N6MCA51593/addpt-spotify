@@ -1,12 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const authSpotify = require('../middleware/authSpotify');
-const axios = require('axios');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
-const Track = require('../models/Track');
-const Album = require('../models/Album');
 
 // @route     GET api/library
 // @desc      Get user's artists
@@ -38,7 +34,7 @@ router.put('/', [auth], async (req, res) => {
   const listens = req.query.listens ? req.query.listens : null;
   try {
     const artist = await Artist.findOne({ _id: artistID });
-    if (req.query.archive === true) {
+    if (req.query.action === 'archive') {
       const {
         trackThresholds,
         albumThresholds,
@@ -53,7 +49,7 @@ router.put('/', [auth], async (req, res) => {
         ];
       } else {
         artist.isArchived = false;
-        artist.settingsSnapshot = null;
+        artist.settingsSnapshot = [];
       }
     } else {
       if (trackID) {

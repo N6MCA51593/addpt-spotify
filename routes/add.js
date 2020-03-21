@@ -5,8 +5,6 @@ const authSpotify = require('../middleware/authSpotify');
 const axios = require('axios');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
-const Track = require('../models/Track');
-const Album = require('../models/Album');
 
 // @route     POST api/library/add/search
 // @desc      Search for an artist
@@ -82,7 +80,10 @@ router.get('/new', [auth, authSpotify], async (req, res) => {
             spID: e.id,
             name: e.name,
             releaseType: e.album_type,
-            releaseDate: e.release_date,
+            releaseDate:
+              e.release_date.length == 4
+                ? e.release_date
+                : e.release_date.slice(0, 4),
             isTracked: e.album_type === 'album' ? true : false,
             img: e.images
           };
