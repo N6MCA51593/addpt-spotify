@@ -62,7 +62,7 @@ router.post('/search', [auth, authSpotify], async (req, res) => {
     const msg = err.response
       ? err.response.status + ' ' + err.response.text
       : err.message;
-    console.error(msg);
+    console.error(err);
     return res.status(status).json({ msg: msg });
   }
 });
@@ -112,7 +112,7 @@ router.get('/new', [auth, authSpotify], async (req, res) => {
     const msg = err.response
       ? err.response.status + ' ' + err.response.text
       : err.message;
-    console.error(msg);
+    console.error(err);
     return res.status(status).json({ msg: msg });
   }
 });

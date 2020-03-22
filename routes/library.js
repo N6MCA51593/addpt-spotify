@@ -18,7 +18,7 @@ router.get('/', [auth], async (req, res) => {
     const msg = err.response
       ? err.response.status + ' ' + err.response.text
       : err.message;
-    console.error(msg);
+    console.error(err);
     return res.status(status).json({ msg: msg });
   }
 });
@@ -53,6 +53,8 @@ router.put('/', [auth], async (req, res) => {
       }
     } else {
       if (trackID) {
+        console.log(albumID);
+        console.log(artist.albums.id(albumID));
         const track = artist.albums.id(albumID).tracks.id(trackID);
         if (listens) {
           track.listens = listens;
@@ -89,7 +91,7 @@ router.put('/', [auth], async (req, res) => {
     const msg = err.response
       ? err.response.status + ' ' + err.response.text
       : err.message;
-    console.error(msg);
+    console.error(err);
     return res.status(status).json({ msg: msg });
   }
 });
@@ -118,7 +120,7 @@ router.delete('/', [auth], async (req, res) => {
     const msg = err.response
       ? err.response.status + ' ' + err.response.text
       : err.message;
-    console.error(msg);
+    console.error(err);
     return res.status(status).json({ msg: msg });
   }
 });
