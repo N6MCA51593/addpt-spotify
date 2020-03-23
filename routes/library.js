@@ -53,8 +53,6 @@ router.put('/', [auth], async (req, res) => {
       }
     } else {
       if (trackID) {
-        console.log(albumID);
-        console.log(artist.albums.id(albumID));
         const track = artist.albums.id(albumID).tracks.id(trackID);
         if (listens) {
           track.listens = listens;

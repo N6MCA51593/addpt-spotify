@@ -5,21 +5,41 @@ const authSpotify = require('../middleware/authSpotify');
 const axios = require('axios');
 const Artist = require('../models/Artist');
 const User = require('../models/User');
+const History = require('../models/History');
 
 // @route     POST api/sync
 // @desc      Update listens and history
 // @access    Private
 router.post('/', [auth, authSpotify], async (req, res) => {
   const { accessToken, id } = req.user;
-  const options = {
-    method: 'get',
-    url: 'https://api.spotify.com/v1/me/player/recently-played',
-    headers: { Authorization: 'Bearer ' + accessToken },
-    params: { limit: 50 }
-  };
   try {
-    const spRes = await axios(options);
     const userID = await User.findOne({ spID: id }).then(res => res._id);
+    const history = await History.exists({ user: userID }).then(async hist => {
+      if (hist) {
+        return await History.findOne({ user: userID });
+      } else {
+        const newHistory = new History({
+          user: userID,
+          date: '',
+          tracks: []
+        });
+        await newHistory.save();
+        return newHistory;
+      }
+    });
+
+    const options = {
+      method: 'get',
+      url: 'https://api.spotify.com/v1/me/player/recently-played',
+      headers: { Authorization: 'Bearer ' + accessToken },
+      params: { limit: 50, after: history.date ? history.date : 0 }
+    };
+    const spRes = await axios(options);
+    const timestamp = spRes.data.cursors.after;
+    const historyTracks = spRes.data.items.map(e => {
+      return { spID: e.track.id, name: e.track.name, playedAt: e.played_at };
+    });
+
     const trackedTracks = await Artist.aggregate([
       {
         $match: {
@@ -37,7 +57,7 @@ router.post('/', [auth, authSpotify], async (req, res) => {
               input: '$albums',
               as: 'album',
               cond: {
-                $eq: ['$$album.isTracked', true]
+                $and: ['$$album.isTracked']
               }
             }
           }
@@ -55,7 +75,7 @@ router.post('/', [auth, authSpotify], async (req, res) => {
               input: '$albums.tracks',
               as: 'track',
               cond: {
-                $eq: ['$$track.isTracked', true]
+                $and: ['$$track.isTracked', { $lte: ['$$track.listens', 100] }]
               }
             }
           }
@@ -63,7 +83,34 @@ router.post('/', [auth, authSpotify], async (req, res) => {
       },
       { $unwind: '$tracks' }
     ]);
-    res.json(trackedTracks);
+    const updatedTracks = trackedTracks
+      .filter(trackedTrack =>
+        historyTracks.some(
+          historyTrack => trackedTrack.tracks.spID === historyTrack.spID
+        )
+      )
+      .map(trackedTrack => {
+        return {
+          ...trackedTrack,
+          tracks: {
+            ...trackedTrack.tracks,
+            lastListen: historyTracks.find(
+              historyTrack => historyTrack.spID === trackedTrack.tracks.spID
+            ).playedAt,
+            listens:
+              trackedTrack.tracks.listens +
+              historyTracks.filter(
+                historyTrack => historyTrack.spID === trackedTrack.tracks.spID
+              ).length
+          }
+        };
+      });
+    await Artist.update({
+      user: userID,
+      isTracked: true,
+      isArchived: false
+    });
+    res.json(updatedTracks);
   } catch (err) {
     const status = err.response ? err.response.status : 500;
     const msg = err.response
