@@ -1,5 +1,0 @@
-ctrl + L - select multiple lines
-ctrl + alt + L - turbo console log
-shift + alt + A - block comment toggle
-alt + arrows - move line up/down
-ctrl + D - select next occurence
