@@ -105,12 +105,23 @@ router.post('/', [auth, authSpotify], async (req, res) => {
           }
         };
       });
-    await Artist.update({
-      user: userID,
-      isTracked: true,
-      isArchived: false
-    });
-    res.json(updatedTracks);
+    const generateUpdate = trackToUpdate => {
+      return {
+        updateOne: {
+          filter: {
+            _id: trackToUpdate._id
+          },
+          update: { $set: { 'album.$[album].tracks.$[track].listens': 100 } },
+          arrayFilters: [
+            { 'album._id': trackToUpdate.albums._id },
+            { 'track._id': trackToUpdate.tracks._id }
+          ]
+        }
+      };
+    };
+    const update = updatedTracks.map(generateUpdate);
+    await Artist.bulkWrite(update);
+    res.json(update);
   } catch (err) {
     const status = err.response ? err.response.status : 500;
     const msg = err.response
