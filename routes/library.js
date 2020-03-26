@@ -52,32 +52,57 @@ router.put('/', [auth], async (req, res) => {
         artist.settingsSnapshot = [];
       }
     } else {
+      const track = trackID
+        ? artist.albums.id(albumID).tracks.id(trackID)
+        : null;
+      const album = albumID ? artist.albums.id(albumID) : null;
       if (trackID) {
-        const track = artist.albums.id(albumID).tracks.id(trackID);
         if (listens) {
           track.listens = listens;
         } else {
           track.isTracked = !track.isTracked;
-        }
-      } else if (albumID && !trackID) {
-        const album = artist.albums.id(albumID);
-        album.isTracked = !album.isTracked;
-        album.tracks.map(track =>
-          album.isTracked ? (track.isTracked = true) : (track.isTracked = false)
-        );
-      } else {
-        artist.isTracked = !artist.isTracked;
-        artist.albums.map(album => {
-          if (!artist.isTracked) {
-            album.isTracked = false;
-            album.tracks.map(track => (track.isTracked = false));
-          } else {
-            if (album.releaseType === 'album') {
-              album.isTracked = true;
-              album.tracks.map(track => (track.isTracked = true));
+          if (
+            album.tracks.filter(trackE => trackE.isTracked === true).length ===
+              1 ||
+            album.tracks.every(trackE => trackE.isTracked === false)
+          ) {
+            album.isTracked = track.isTracked;
+            if (
+              artist.albums.filter(albumE => albumE.isTracked === true)
+                .length === 1 ||
+              artist.albums.every(albumE => albumE.isTracked === false)
+            ) {
+              artist.isTracked = album.isTracked;
             }
           }
-          return album;
+        }
+      } else if (albumID && !trackID) {
+        album.isTracked = !album.isTracked;
+        album.tracks.map(trackE =>
+          album.isTracked
+            ? (trackE.isTracked = true)
+            : (trackE.isTracked = false)
+        );
+        if (
+          artist.albums.filter(albumE => albumE.isTracked === true).length ===
+            1 ||
+          artist.albums.every(albumE => albumE.isTracked === false)
+        ) {
+          artist.isTracked = album.isTracked;
+        }
+      } else {
+        artist.isTracked = !artist.isTracked;
+        artist.albums.map(albumE => {
+          if (!artist.isTracked) {
+            albumE.isTracked = false;
+            albumE.tracks.map(track => (track.isTracked = false));
+          } else {
+            if (albumE.releaseType === 'album') {
+              albumE.isTracked = true;
+              albumE.tracks.map(track => (track.isTracked = true));
+            }
+          }
+          return albumE;
         });
       }
     }

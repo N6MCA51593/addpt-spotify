@@ -78,7 +78,8 @@ router.post('/', [auth, authSpotify], async (req, res) => {
                 cond: {
                   $and: [
                     '$$track.isTracked',
-                    { $lte: ['$$track.listens', 100] }
+                    { $lte: ['$$track.listens', 100] },
+                    { $in: ['$$track.spID', historyTracks.map(e => e.spID)] }
                   ]
                 }
               }
@@ -87,12 +88,14 @@ router.post('/', [auth, authSpotify], async (req, res) => {
         },
         { $unwind: '$tracks' }
       ]);
+      if (trackedTracks.length === 0) {
+        history.date = timestamp;
+        await history.save();
+        return res.json({
+          msg: 'Recently listened tracks contain no tracked tracks'
+        });
+      }
       const updatedTracks = trackedTracks
-        .filter(trackedTrack =>
-          historyTracks.some(
-            historyTrack => trackedTrack.tracks.spID === historyTrack.spID
-          )
-        )
         .map(trackedTrack => {
           return {
             ...trackedTrack,
