@@ -17,6 +17,7 @@ app.use('/api/library', require('./routes/library'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/settings', require('./routes/settings'));
 app.use('/api/sync', require('./routes/sync'));
+app.use('/api/history', require('./routes/history'));
 
 app.get('/', (req, res) => res.json({ msg: 'Welcome to API' }));
 
