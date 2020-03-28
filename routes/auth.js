@@ -83,7 +83,11 @@ router.get('/redirect', async (req, res) => {
 
       const spID = spRes.data.id;
       const filter = { spID: spID };
-      const update = { refreshToken: refresh_token, lastLogin: Date.now() };
+      // sets the date of inactivity in 12 weeks
+      const update = {
+        refreshToken: refresh_token,
+        inactiveAt: Date.now() + 6.04e8 * 12
+      };
       await User.findOneAndUpdate(filter, update, {
         new: true,
         upsert: true,

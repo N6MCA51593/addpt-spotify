@@ -1,4 +1,3 @@
-//TODO Enable unique index
 const mongoose = require('mongoose');
 const Album = require('./Album').schema;
 const ArtistSchema = mongoose.Schema({
@@ -13,5 +12,5 @@ const ArtistSchema = mongoose.Schema({
   isArchived: { type: Boolean, default: false },
   settingsSnapshot: { type: Array, default: null }
 });
-//ArtistSchema.index({ spID: 1, user: 1 }, { unique: true });
+ArtistSchema.index({ spID: 1, user: 1 }, { unique: true });
 module.exports = mongoose.model('artist', ArtistSchema);

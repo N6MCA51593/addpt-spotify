@@ -6,11 +6,11 @@ const axios = require('axios');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 
-// @route     POST api/library/add/search
+// @route     GET api/library/add/search
 // @desc      Search for an artist
 // @access    Private
 // TODO: Placeholder images
-router.post('/search', [auth, authSpotify], async (req, res) => {
+router.get('/search', [auth, authSpotify], async (req, res) => {
   const uSpID = req.user.id;
   const { accessToken } = req.user;
   const query = req.body.query;
@@ -47,10 +47,10 @@ router.post('/search', [auth, authSpotify], async (req, res) => {
   }
 });
 
-// @route     GET api/library/add/new
+// @route     POST api/library/add/new
 // @desc      Add an artist
 // @access    Private
-router.get('/new', [auth, authSpotify], async (req, res) => {
+router.post('/new', [auth, authSpotify], async (req, res) => {
   const uSpID = req.user.id;
   const { accessToken } = req.user;
   const id = req.query.id;

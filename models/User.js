@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema({
     type: String,
     unique: true
   },
-  lastLogin: Date,
+  inactiveAt: Date,
   doNotTrack: { type: Boolean, default: false },
   trackThresholds: { type: Array, default: [3, 6, 8, 10] },
   albumThresholds: { type: Array, default: [30, 60, 80, 100] },

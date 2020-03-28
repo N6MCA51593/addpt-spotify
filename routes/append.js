@@ -5,11 +5,11 @@ const authSpotify = require('../middleware/authSpotify');
 const axios = require('axios');
 const Artist = require('../models/Artist');
 
-// @route     POST api/library/append/search
+// @route     GET api/library/append/search
 // @desc      Search for an album
 // @access    Private
 // TODO: Placeholder images
-router.post('/search', [auth, authSpotify], async (req, res) => {
+router.get('/search', [auth, authSpotify], async (req, res) => {
   const { accessToken } = req.user;
   const query = req.body.query;
   const id = req.query.id;
@@ -67,10 +67,10 @@ router.post('/search', [auth, authSpotify], async (req, res) => {
   }
 });
 
-// @route     GET api/library/append/new
+// @route     POST api/library/append/new
 // @desc      Add an album
 // @access    Private
-router.get('/new', [auth, authSpotify], async (req, res) => {
+router.post('/new', [auth, authSpotify], async (req, res) => {
   const { accessToken } = req.user;
   const artistID = req.query.artistid;
   const albumSpID = req.query.albumid;
@@ -105,6 +105,9 @@ router.get('/new', [auth, authSpotify], async (req, res) => {
     };
     const artist = await Artist.findOne({ _id: artistID });
     artist.albums.push(album);
+    if (!artist.isTracked) {
+      artist.isTracked = true;
+    }
     await artist.save();
     res.json(artist);
   } catch (err) {

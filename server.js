@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./db');
 var cookieParser = require('cookie-parser');
 const app = express();
+const poll = require('./poll');
 
 // Connect Database
 connectDB();
@@ -18,6 +19,10 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/settings', require('./routes/settings'));
 app.use('/api/sync', require('./routes/sync'));
 app.use('/api/history', require('./routes/history'));
+
+//Poll Spotify API for users' played tracks history changes
+const interval = 3600000;
+setInterval(() => poll(), interval);
 
 app.get('/', (req, res) => res.json({ msg: 'Welcome to API' }));
 

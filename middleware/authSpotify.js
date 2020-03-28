@@ -1,4 +1,3 @@
-// @fileoverview Spotify access check, token refresh if necessary
 const axios = require('axios');
 const createToken = require('../functions/createToken');
 const User = require('../models/User');
@@ -6,7 +5,6 @@ const querystring = require('querystring');
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
-// TODO: Refactor with try catch for consistency
 module.exports = async (req, res, next) => {
   const { id, accessToken } = req.user;
   const options = {

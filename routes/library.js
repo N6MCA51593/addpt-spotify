@@ -24,7 +24,7 @@ router.get('/', [auth], async (req, res) => {
 });
 
 // @route     PUT api/library
-// @desc      Toggle tracking or archive artist
+// @desc      Toggle tracking, change track listens, or archive artist
 // @access    Private (jwt)
 router.put('/', [auth], async (req, res) => {
   const uSpID = req.user.id;
