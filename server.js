@@ -10,8 +10,6 @@ connectDB();
 // Init Middleware
 app.use(express.json({ extended: false })).use(cookieParser());
 
-app.use(express.static('public'));
-
 // Define Routes
 app.use(express.json());
 app.use('/api/library', require('./routes/library'));
