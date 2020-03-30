@@ -22,6 +22,30 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  // Login User
+  const login = async () => {
+    const options = {
+      method: 'post',
+      url: '/api/auth',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      //props.history.push('/api/auth');
+      const res = await axios(options);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err
+      });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -29,7 +53,8 @@ const AuthState = props => {
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         user: state.user,
-        error: state.error
+        error: state.error,
+        login
       }}
     >
       {props.children}

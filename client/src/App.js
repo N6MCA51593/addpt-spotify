@@ -1,11 +1,13 @@
 import React from 'react';
-import AuthState from './context/auth/AuthState';
 import './App.css';
+import Login from './components/auth/Login';
+import AuthState from './context/auth/AuthState';
 
 const App = () => {
   return (
     <AuthState>
-      <div className='App'>My app</div>
+      <div className='container'>Please Log In</div>
+      <Login />
     </AuthState>
   );
 };
