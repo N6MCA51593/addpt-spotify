@@ -41,8 +41,10 @@ module.exports = async (req, res, next) => {
         axios(options)
           .then(response => {
             req.user.accessToken = response.data.access_token;
+            const newToken = createToken(id, response.data.access_token);
+            res.cookie('token', newToken);
             res.set({
-              'auth-token': createToken(id, response.data.access_token),
+              'auth-token': newToken,
               'new-token': true
             });
             next();

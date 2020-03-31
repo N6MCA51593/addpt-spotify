@@ -22,6 +22,22 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  // Load User
+  const loadUser = async () => {
+    console.log(document.cookie);
+    //setAuthToken();
+    try {
+      const res = await axios.get('/api/auth');
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // Login User
   const login = async () => {
     const options = {

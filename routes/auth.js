@@ -94,7 +94,8 @@ router.get('/redirect', async (req, res) => {
         setDefaultsOnInsert: true
       });
       const token = createToken(spID, access_token);
-      res.json({ token });
+      res.cookie('token', token);
+      res.redirect('http://localhost:3000');
     } catch (err) {
       const status = err.response ? err.response.status : 500;
       const msg = err.response
