@@ -1,19 +1,22 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-//import setAuthToken from '../../utils/setAuthToken';
+import setAuthToken from '../../utils/setAuthToken';
 import {
   USER_LOADED,
-  LOGIN_SUCCESS,
+  AUTH_FAIL,
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS
 } from '../types';
 
+const cookies = new Cookies();
+const token = cookies.get('token');
 const AuthState = props => {
   const initialState = {
-    token: localStorage.getItem('token'),
+    token: token || null,
     isAuthenticated: null,
     loading: true,
     user: null,
@@ -24,41 +27,15 @@ const AuthState = props => {
 
   // Load User
   const loadUser = async () => {
-    console.log(document.cookie);
-    //setAuthToken();
+    setAuthToken(token);
     try {
-      const res = await axios.get('/api/auth');
-
+      const res = await axios.get('/api/auth/load');
       dispatch({
         type: USER_LOADED,
         payload: res.data
       });
     } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // Login User
-  const login = async () => {
-    const options = {
-      method: 'post',
-      url: '/api/auth',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    try {
-      //props.history.push('/api/auth');
-      const res = await axios(options);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
-      });
-    } catch (err) {
-      dispatch({
-        type: LOGIN_FAIL,
-        payload: err
-      });
+      dispatch({ type: AUTH_FAIL });
     }
   };
 
@@ -70,7 +47,7 @@ const AuthState = props => {
         loading: state.loading,
         user: state.user,
         error: state.error,
-        login
+        loadUser
       }}
     >
       {props.children}

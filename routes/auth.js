@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const User = require('../models/User');
 
 const createToken = require('../functions/createToken');
+const auth = require('../middleware/auth');
 
 const scopes = process.env.SCOPES;
 const redirectUri = process.env.REDIRECT_URI;
@@ -111,6 +112,19 @@ router.get('/redirect', async (req, res) => {
       : err.message;
     console.error(err);
     return res.status(status).json({ msg: msg });
+  }
+});
+
+// @route     GET api/auth/load
+// @desc      Get logged in user
+// @access    Private
+router.get('/load', auth, async (req, res) => {
+  try {
+    const user = await User.find({ spID: req.user.id }).select('spID');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 
