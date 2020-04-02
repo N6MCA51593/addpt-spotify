@@ -4,13 +4,7 @@ import Cookies from 'universal-cookie';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAuthToken from '../../utils/setAuthToken';
-import {
-  USER_LOADED,
-  AUTH_FAIL,
-  LOGIN_FAIL,
-  LOGOUT,
-  CLEAR_ERRORS
-} from '../types';
+import { USER_LOADED, AUTH_FAIL, LOGOUT, CLEAR_ERRORS } from '../types';
 
 const cookies = new Cookies();
 const token = cookies.get('token');
@@ -39,6 +33,7 @@ const AuthState = props => {
     }
   };
 
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
   return (
     <AuthContext.Provider
       value={{
@@ -47,7 +42,8 @@ const AuthState = props => {
         loading: state.loading,
         user: state.user,
         error: state.error,
-        loadUser
+        loadUser,
+        clearErrors
       }}
     >
       {props.children}

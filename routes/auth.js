@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
       state
   );
 });
-
+// TODO Change redirect URL
 // @route     GET api/auth/redirect
 // @desc      Step 2 oAuth 2.0
 // @access    Private

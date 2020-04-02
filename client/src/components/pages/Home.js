@@ -1,9 +1,10 @@
 import React from 'react';
+import Library from '../library/Library';
 
 export const Home = () => {
   return (
     <div>
-      <h1>You are logged in</h1>
+      <Library />
     </div>
   );
 };

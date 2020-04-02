@@ -21,15 +21,13 @@ export default (state, action) => {
         token: null,
         user: null,
         isAuthenticated: false,
-        loading: false
+        loading: false,
+        error: ''
       };
-    case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
+    case CLEAR_ERRORS:
       return {
         ...state,
-        ...action.payload,
-        isAuthenticated: true,
-        loading: false
+        error: null
       };
     default:
       return state;
