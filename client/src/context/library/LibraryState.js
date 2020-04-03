@@ -22,7 +22,7 @@ const LibraryState = props => {
         payload: res.data
       });
     } catch (err) {
-      dispatch({ type: LOAD_FAIL, payload: err.response.msg });
+      dispatch({ type: LOAD_FAIL, payload: err });
     }
   };
 

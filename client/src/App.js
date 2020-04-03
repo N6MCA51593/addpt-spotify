@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import './App.css';
 import Login from './components/pages/Login';
 import Home from './components/pages/Home';
@@ -29,6 +29,9 @@ const App = () => {
               <PrivateRoute exact path='/' component={Home} />
               <PrivateRoute exact path='/settings' component={Settings} />
             </Switch>
+            <Link to='/settings'>Settings</Link>
+            <Link to='/'>Library</Link>
+            <Link to='/login'>Login</Link>
           </Fragment>
         </Router>
       </LibraryState>

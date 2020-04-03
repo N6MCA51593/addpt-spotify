@@ -3,14 +3,11 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import setAuthToken from '../../utils/setAuthToken';
+import setAxiosOptions from '../../utils/setAxiosOptions';
 import { USER_LOADED, AUTH_FAIL, LOGOUT, CLEAR_ERRORS } from '../types';
 
-const cookies = new Cookies();
-const token = cookies.get('token');
 const AuthState = props => {
   const initialState = {
-    token: token || null,
     isAuthenticated: null,
     loading: true,
     user: null,
@@ -19,9 +16,17 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  const logout = () => {
+    const cookies = new Cookies();
+    cookies.remove('token');
+    dispatch({
+      type: LOGOUT
+    });
+  };
+
   // Load User
   const loadUser = async () => {
-    setAuthToken(token);
+    setAxiosOptions(logout);
     try {
       const res = await axios.get('/api/auth/load');
       dispatch({
@@ -37,13 +42,13 @@ const AuthState = props => {
   return (
     <AuthContext.Provider
       value={{
-        token: state.token,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         user: state.user,
         error: state.error,
         loadUser,
-        clearErrors
+        clearErrors,
+        logout
       }}
     >
       {props.children}
