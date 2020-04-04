@@ -2,15 +2,20 @@ const express = require('express');
 const connectDB = require('./db');
 var cookieParser = require('cookie-parser');
 const app = express();
+var cors = require('cors');
 const poll = require('./poll');
+const frontEndURI = process.env.FRONT_END_URI;
 
-// Connect Database
 connectDB();
 
-// Init Middleware
 app.use(express.json({ extended: false })).use(cookieParser());
+app.use(
+  cors({
+    origin: [frontEndURI],
+    credentials: true
+  })
+);
 
-// Define Routes
 app.use(express.json());
 app.use('/api/library', require('./routes/library'));
 app.use('/api/auth', require('./routes/auth'));

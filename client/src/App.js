@@ -12,7 +12,7 @@ import LibraryState from './context/library/LibraryState';
 
 const App = () => {
   const authContext = useContext(AuthContext);
-  const { loadUser } = authContext;
+  const { loadUser, logout } = authContext;
 
   useEffect(() => {
     loadUser();
@@ -32,6 +32,7 @@ const App = () => {
             <Link to='/settings'>Settings</Link>
             <Link to='/'>Library</Link>
             <Link to='/login'>Login</Link>
+            <button onClick={logout}>Log out</button>
           </Fragment>
         </Router>
       </LibraryState>

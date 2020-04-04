@@ -20,6 +20,8 @@ const grantType = 'authorization_code';
 const state = crypto.randomBytes(10).toString('hex');
 const stateKey = 'spotify_auth_state';
 
+const frontEndURI = process.env.FRONT_END_URI;
+
 // @route     GET api/auth
 // @desc      Step 1 oAuth 2.0
 // @access    Public
@@ -45,14 +47,9 @@ router.get('/redirect', async (req, res) => {
   const state = req.query.state;
   const storedState = req.cookies ? req.cookies[stateKey] : null;
   const authCode = req.query.code;
-  if (req.query.error) {
-    return res.status(401).json({ msg: 'User turned down auth request' });
+  if (req.query.error || state === null || state !== storedState) {
+    return res.redirect(frontEndURI);
   }
-
-  if (state === null || state !== storedState) {
-    return res.status(401).json({ msg: 'State mismatch' });
-  }
-
   res.clearCookie(stateKey);
   try {
     const headers = {
@@ -95,8 +92,8 @@ router.get('/redirect', async (req, res) => {
         setDefaultsOnInsert: true
       });
       const token = createToken(spID, access_token);
-      res.cookie('token', token);
-      res.redirect('http://localhost:3000');
+      res.cookie('token', token, { httpOnly: true });
+      res.redirect(frontEndURI);
     } catch (err) {
       const status = err.response ? err.response.status : 500;
       const msg = err.response
@@ -126,6 +123,14 @@ router.get('/load', auth, async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+});
+
+// @route     GET api/auth/logout
+// @desc      Log the user out
+// @access    Public
+router.get('/logout', async (req, res) => {
+  res.clearCookie('token');
+  res.redirect(frontEndURI);
 });
 
 module.exports = router;

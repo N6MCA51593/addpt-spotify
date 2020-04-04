@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAxiosOptions from '../../utils/setAxiosOptions';
@@ -16,9 +15,8 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  const logout = () => {
-    const cookies = new Cookies();
-    cookies.remove('token');
+  const logout = async () => {
+    const res = await axios.get('/api/auth/logout');
     dispatch({
       type: LOGOUT
     });
