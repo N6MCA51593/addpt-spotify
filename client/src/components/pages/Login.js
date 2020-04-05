@@ -6,7 +6,7 @@ export const Login = props => {
   const authContext = useContext(AuthContext);
   const alertContext = useContext(AlertContext);
 
-  const { isAuthenticated, error } = authContext;
+  const { isAuthenticated, error, clearErrors } = authContext;
   const { setAlert } = alertContext;
 
   useEffect(() => {
@@ -16,6 +16,7 @@ export const Login = props => {
 
     if (error === 'Login failed') {
       setAlert(error, 'danger');
+      clearErrors();
     }
 
     // eslint-disable-next-line

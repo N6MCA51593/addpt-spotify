@@ -1,9 +1,10 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAxiosOptions from '../../utils/setAxiosOptions';
-import { USER_LOADED, AUTH_FAIL, LOGOUT, CLEAR_ERRORS } from '../types';
+import { USER_LOADED, AUTH_FAIL, LOGOUT, CLEAR_ERRORS, LOADED } from '../types';
 
 const AuthState = props => {
   const initialState = {
@@ -24,15 +25,27 @@ const AuthState = props => {
 
   // Load User
   const loadUser = async () => {
-    setAxiosOptions(logout);
-    try {
-      const res = await axios.get('/api/auth/load');
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data
-      });
-    } catch (err) {
+    const cookies = new Cookies();
+    const login = cookies.get('login') || null;
+    if (login && login === 'error') {
       dispatch({ type: AUTH_FAIL });
+      cookies.remove('login');
+    } else if (login && login === 'success') {
+      setAxiosOptions(logout);
+      try {
+        const res = await axios.get('/api/auth/load');
+        dispatch({
+          type: USER_LOADED,
+          payload: res.data
+        });
+      } catch (err) {
+        dispatch({ type: AUTH_FAIL });
+        cookies.remove('login');
+      }
+    } else {
+      dispatch({
+        type: LOADED
+      });
     }
   };
 

@@ -48,6 +48,8 @@ router.get('/redirect', async (req, res) => {
   const storedState = req.cookies ? req.cookies[stateKey] : null;
   const authCode = req.query.code;
   if (req.query.error || state === null || state !== storedState) {
+    res.clearCookie(stateKey);
+    res.cookie('login', 'error');
     return res.redirect(frontEndURI);
   }
   res.clearCookie(stateKey);
@@ -92,23 +94,17 @@ router.get('/redirect', async (req, res) => {
         setDefaultsOnInsert: true
       });
       const token = createToken(spID, access_token);
-      res.cookie('token', token, { httpOnly: true });
+      res.cookie('token', token, { httpOnly: true }).cookie('login', 'success');
       res.redirect(frontEndURI);
     } catch (err) {
-      const status = err.response ? err.response.status : 500;
-      const msg = err.response
-        ? err.response.status + ' ' + err.response.text
-        : err.message;
       console.error(err);
-      return res.status(status).json({ msg: msg });
+      res.cookie('login', 'error');
+      return res.redirect(frontEndURI);
     }
   } catch (err) {
-    const status = err.response ? err.response.status : 500;
-    const msg = err.response
-      ? err.response.status + ' ' + err.response.text
-      : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    res.cookie('login', 'error');
+    return res.redirect(frontEndURI);
   }
 });
 
@@ -129,7 +125,7 @@ router.get('/load', auth, async (req, res) => {
 // @desc      Log the user out
 // @access    Public
 router.get('/logout', async (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token').clearCookie('login');
   res.redirect(frontEndURI);
 });
 

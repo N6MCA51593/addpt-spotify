@@ -1,13 +1,15 @@
 const express = require('express');
 const connectDB = require('./db');
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
-var cors = require('cors');
+const cors = require('cors');
+const rateLimiter = require('./middleware/rateLimiter');
 const poll = require('./poll');
 const frontEndURI = process.env.FRONT_END_URI;
 
 connectDB();
 
+app.use(rateLimiter);
 app.use(express.json({ extended: false })).use(cookieParser());
 app.use(
   cors({

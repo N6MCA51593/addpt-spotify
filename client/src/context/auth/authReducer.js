@@ -3,7 +3,8 @@ import {
   LOGIN_SUCCESS,
   AUTH_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  LOADED
 } from '../types';
 
 export default (state, action) => {
@@ -22,7 +23,7 @@ export default (state, action) => {
         user: null,
         isAuthenticated: false,
         loading: false,
-        error: ''
+        error: 'Login failed'
       };
     case CLEAR_ERRORS:
       return {
@@ -34,6 +35,11 @@ export default (state, action) => {
         ...state,
         user: null,
         isAuthenticated: false,
+        loading: false
+      };
+    case LOADED:
+      return {
+        ...state,
         loading: false
       };
     default:

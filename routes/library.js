@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
+//const authSpotify = require('../middleware/authSpotify');
 const User = require('../models/User');
 const Artist = require('../models/Artist');
 
