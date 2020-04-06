@@ -1,11 +1,4 @@
-import {
-  USER_LOADED,
-  LOGIN_SUCCESS,
-  AUTH_FAIL,
-  LOGOUT,
-  CLEAR_ERRORS,
-  LOADED
-} from '../types';
+import { USER_LOADED, AUTH_FAIL, LOGOUT, CLEAR_ERRORS, LOADED } from '../types';
 
 export default (state, action) => {
   switch (action.type) {

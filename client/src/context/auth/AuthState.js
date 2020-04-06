@@ -17,13 +17,12 @@ const AuthState = props => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const logout = async () => {
-    const res = await axios.get('/api/auth/logout');
+    await axios.get('/api/auth/logout');
     dispatch({
       type: LOGOUT
     });
   };
 
-  // Load User
   const loadUser = async () => {
     const cookies = new Cookies();
     const login = cookies.get('login') || null;
@@ -50,6 +49,7 @@ const AuthState = props => {
   };
 
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
   return (
     <AuthContext.Provider
       value={{
