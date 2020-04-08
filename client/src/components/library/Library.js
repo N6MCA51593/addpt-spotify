@@ -1,18 +1,21 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
+import useAPIRequest from '../../utils/useAPIRequest';
 
 export const Library = () => {
   const libraryContext = useContext(LibraryContext);
-  const { artists, loading, loadLibrary } = libraryContext;
-
+  const { artists, isLoading, loadLibrary } = libraryContext;
+  const [state, setConfig] = useAPIRequest({
+    url: '/api/library',
+    method: 'get'
+  });
   useEffect(() => {
-    loadLibrary();
-    // eslint-disable-next-line
-  }, []);
+    loadLibrary(state);
+  }, [state]);
 
   return (
     <Fragment>
-      <h1>Library</h1>
+      <h1>{state.isLoading ? 'Loading...' : 'Library'}</h1>
     </Fragment>
   );
 };

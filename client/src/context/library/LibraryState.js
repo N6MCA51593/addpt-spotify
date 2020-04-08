@@ -14,15 +14,15 @@ const LibraryState = props => {
   const [state, dispatch] = useReducer(libraryReducer, initialState);
 
   // Load Library
-  const loadLibrary = async () => {
-    try {
-      const res = await axios.get('/api/library');
+  const loadLibrary = ({ isError, isLoading, data }) => {
+    console.log(data);
+    if (!isError) {
       dispatch({
         type: GET_LIBRARY,
-        payload: res.data
+        payload: data
       });
-    } catch (err) {
-      dispatch({ type: LOAD_FAIL, payload: err });
+    } else {
+      dispatch({ type: LOAD_FAIL, payload: state });
     }
   };
 
