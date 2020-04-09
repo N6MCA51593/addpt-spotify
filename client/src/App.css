@@ -63,3 +63,14 @@ body {
   color: #333;
   border: #ccc solid 1px;
 }
+
+.card {
+  padding: 1rem;
+  border: #ccc 1px dotted;
+  margin: 0.7rem 0;
+}
+
+.artist-container {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -73,6 +73,7 @@ const useAPIRequest = (initialConfig, initialData) => {
     return () => {
       didCancel = true;
     };
+    // eslint-disable-next-line
   }, [config]);
 
   return [state, setConfig];

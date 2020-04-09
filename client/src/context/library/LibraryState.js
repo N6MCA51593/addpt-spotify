@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
 import { GET_LIBRARY, CLEAR_ERRORS, LOAD_FAIL } from '../types';
 import LibraryContext from './libraryContext';
 import libraryReducer from './libraryReducer';
@@ -14,7 +13,7 @@ const LibraryState = props => {
   const [state, dispatch] = useReducer(libraryReducer, initialState);
 
   // Load Library
-  const loadLibrary = ({ isError, isLoading, data }) => {
+  const loadLibrary = ({ isError, data }) => {
     console.log(data);
     if (!isError) {
       dispatch({
