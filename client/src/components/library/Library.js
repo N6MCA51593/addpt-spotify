@@ -19,9 +19,7 @@ export const Library = () => {
 
   return (
     <Fragment>
-      <h1>
-        <ArtistList />
-      </h1>
+      <ArtistList />
     </Fragment>
   );
 };

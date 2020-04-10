@@ -1,0 +1,153 @@
+:root {
+  --primary-color: #003699;
+  --dark-color: #333333;
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #fff;
+  color: #333;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+
+.alert {
+  padding: 0.7rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--light-color);
+  color: #333;
+}
+
+.alert-primary {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.alert-light {
+  background: var(--light-color);
+  color: #333;
+}
+.alert-dark {
+  background: var(--dark-color);
+  color: #fff;
+}
+.alert-danger {
+  background: var(--danger-color);
+  color: #fff;
+}
+
+.alert-success {
+  background: var(--success-color);
+  color: #fff;
+}
+
+.alert-white {
+  background: #fff;
+  color: #333;
+  border: #ccc solid 1px;
+}
+
+.card {
+  padding: 1rem;
+  border: #ccc 1px dotted;
+  margin: 0.7rem 0;
+  margin: 5px 5px 5px 5px;
+}
+
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 9999px;
+}
+
+.accordion-item.collapsed {
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+}
+
+.accordion-title {
+  font-weight: 600;
+  cursor: pointer;
+  color: #666;
+  padding: 0.5em 1.5em;
+  border: solid 1px #ccc;
+  border-radius: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid currentColor;
+  }
+
+  &:hover,
+  &.open {
+    color: black;
+  }
+
+  &.open {
+    &::after {
+      content: '';
+      border-top: 0;
+      border-bottom: 5px solid;
+    }
+  }
+}
+
+.navbar {
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  display: flex;
+  align-content: space-around;
+  z-index: 1;
+  height: 100vh;
+  position: fixed;
+  width: 10%;
+  border-bottom: solid 1px var(--primary-color);
+  opacity: 0.9;
+  margin-bottom: 1rem;
+  display: block;
+  text-align: center;
+  top: 0; /* Stay at the top */
+  left: 0;
+}
+
+a:visited {
+  color: var(--light-color);
+}
+
+img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+}

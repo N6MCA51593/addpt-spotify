@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import ArtistItem from './ArtistItem';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import Accordion from '../layout/Accordion';
 
 const ArtistList = () => {
   const libraryContext = useContext(LibraryContext);
@@ -10,14 +11,37 @@ const ArtistList = () => {
   if (artists && artists.length === 0 && !loading) {
     return <h4>No artists found</h4>;
   }
-  console.log(artists);
-  console.log(loading);
+
   return (
-    <div className='artist-container'>
+    <div className='wrapper'>
       {artists && !loading ? (
-        artists.map(artistsE => {
-          return <ArtistItem key={artistsE._id} artist={artistsE} />;
-        })
+        <Fragment>
+          <Accordion openByDef={true} title={'Tracked'}>
+            {artists
+              .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
+              .map(artistsE => {
+                return <ArtistItem key={artistsE._id} artist={artistsE} />;
+              })}
+          </Accordion>
+          {artists.some(artistE => !artistE.isTracked) && (
+            <Accordion openByDef={false} title={'Not Tracked'}>
+              {artists
+                .filter(artistsE => !artistsE.isTracked)
+                .map(artistsE => {
+                  return <ArtistItem key={artistsE._id} artist={artistsE} />;
+                })}
+            </Accordion>
+          )}
+          {artists.some(artistE => artistE.isArchived) && (
+            <Accordion openByDef={false} title={'Archived'}>
+              {artists
+                .filter(artistsE => artistsE.isArchived)
+                .map(artistsE => {
+                  return <ArtistItem key={artistsE._id} artist={artistsE} />;
+                })}
+            </Accordion>
+          )}
+        </Fragment>
       ) : (
         <LoadingSpinner />
       )}
