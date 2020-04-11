@@ -1,17 +1,25 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const Accordion = ({ title, children, openByDef }) => {
+const Accordion = ({ title, children, openByDef, toggle }) => {
   const [isOpen, setOpen] = useState(openByDef ? true : false);
+  const [count] = useState(children.length);
   return (
     <Fragment>
       <div
         className={`accordion-title ${isOpen ? 'open' : ''}`}
         onClick={() => setOpen(!isOpen)}
       >
-        {title}
+        {title} {count}
       </div>
       <div className={`accordion-item ${!isOpen ? 'collapsed' : ''}`}>
+        <Fragment>
+          {title === 'Tracked' && (
+            <div className='card' onClick={toggle}>
+              Show Modal
+            </div>
+          )}
+        </Fragment>
         {children}
       </div>
     </Fragment>
@@ -21,7 +29,8 @@ const Accordion = ({ title, children, openByDef }) => {
 Accordion.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool
+  isOpen: PropTypes.bool,
+  toggle: PropTypes.func
 };
 
 export default Accordion;
