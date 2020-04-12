@@ -55,6 +55,7 @@ const useAPIRequest = (initialConfig, initialData) => {
 
       try {
         const result = await axios(config);
+        console.log(config);
         if (!didCancel) {
           dispatch({
             type: REQUEST_SUCCESS,

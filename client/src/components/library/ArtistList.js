@@ -4,22 +4,26 @@ import ArtistItem from './ArtistItem';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
-import Search from './Search';
+import SearchModal from '../layout/SearchModal';
 
 const ArtistList = () => {
   const libraryContext = useContext(LibraryContext);
   const { artists, loading } = libraryContext;
   const { isShowing, toggle } = useModal();
 
-  // if (artists && artists.length === 0 && !loading) {
-  //   return <h4>No artists found</h4>;
-  // }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className='wrapper'>
-      {artists && !loading ? (
+      {artists && (
         <Fragment>
-          <Search isShowing={isShowing} hide={toggle} />
+          <SearchModal
+            isShowing={isShowing}
+            hide={toggle}
+            searchType={'artist'}
+          />
           <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
             {artists
               .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
@@ -46,8 +50,6 @@ const ArtistList = () => {
             </Accordion>
           )}
         </Fragment>
-      ) : (
-        <LoadingSpinner />
       )}
     </div>
   );

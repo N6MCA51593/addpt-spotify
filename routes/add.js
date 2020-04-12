@@ -13,7 +13,7 @@ const Artist = require('../models/Artist');
 router.get('/search', [auth, authSpotify], async (req, res) => {
   const uSpID = req.user.id;
   const { accessToken } = req.user;
-  const query = req.body.query;
+  const query = req.query.query;
   const options = {
     method: 'get',
     url: 'https://api.spotify.com/v1/search',
