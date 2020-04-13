@@ -28,11 +28,14 @@ body {
 }
 
 .alert {
-  padding: 0.7rem;
-  margin: 1rem 0;
+  padding-top: 0.7rem;
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
 }
 
 .alert-primary {
@@ -65,10 +68,19 @@ body {
 }
 
 .card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 1rem;
   border: #ccc 1px dotted;
   margin: 5px;
   max-width: 160px;
+  text-align: center;
+}
+
+.card p {
+  flex-grow: 0;
 }
 
 .wrapper {
@@ -181,7 +193,7 @@ img {
   border-radius: 3px;
   max-width: 65%;
   padding: 2rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .modal-header {

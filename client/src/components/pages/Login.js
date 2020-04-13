@@ -3,11 +3,8 @@ import AuthContext from '../../context/auth/authContext';
 import AlertContext from '../../context/alert/alertContext';
 
 export const Login = props => {
-  const authContext = useContext(AuthContext);
-  const alertContext = useContext(AlertContext);
-
-  const { isAuthenticated, error, clearErrors } = authContext;
-  const { setAlert } = alertContext;
+  const { isAuthenticated, error, clearErrors } = useContext(AuthContext);
+  const { setAlert } = useContext(AlertContext);
 
   useEffect(() => {
     if (isAuthenticated) {

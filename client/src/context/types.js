@@ -7,3 +7,4 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const GET_LIBRARY = 'GET_LIBRARY';
 export const LOAD_FAIL = 'LOAD_FAIL';
+export const ADD_ARTIST = 'ADD_ARTIST';

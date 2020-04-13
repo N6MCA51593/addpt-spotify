@@ -1,11 +1,15 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
+import AlertContext from '../../context/alert/alertContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import ArtistList from './ArtistList';
 
 export const Library = () => {
-  const libraryContext = useContext(LibraryContext);
-  const { artists, loading, loadLibrary } = libraryContext;
+  const { artists, loading, loadLibrary, error, clearErrors } = useContext(
+    LibraryContext
+  );
+  const { setAlert } = useContext(AlertContext);
+
   const [state, setConfig] = useAPIRequest({
     url: '/api/library',
     method: 'get'
@@ -16,6 +20,14 @@ export const Library = () => {
     }
     // eslint-disable-next-line
   }, [state]);
+
+  useEffect(() => {
+    if (error) {
+      setAlert(error, 'success');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error]);
 
   return (
     <Fragment>

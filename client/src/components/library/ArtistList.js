@@ -1,15 +1,20 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import ArtistItem from './ArtistItem';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
+import Modal from '../layout/Modal';
 
 const ArtistList = () => {
   const libraryContext = useContext(LibraryContext);
   const { artists, loading } = libraryContext;
   const { isShowing, toggle } = useModal();
+
+  useEffect(() => {
+    toggle();
+  }, [artists]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -19,11 +24,9 @@ const ArtistList = () => {
     <div className='wrapper'>
       {artists && (
         <Fragment>
-          <SearchModal
-            isShowing={isShowing}
-            hide={toggle}
-            searchType={'artist'}
-          />
+          <Modal isShowing={isShowing} hide={toggle}>
+            <SearchModal searchType={'artist'} />
+          </Modal>
           <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
             {artists
               .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)

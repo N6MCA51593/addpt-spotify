@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
 
 const types = {
   REQUEST_INIT: 'REQUEST_INIT',
@@ -55,7 +56,6 @@ const useAPIRequest = (initialConfig, initialData) => {
 
       try {
         const result = await axios(config);
-        console.log(config);
         if (!didCancel) {
           dispatch({
             type: REQUEST_SUCCESS,
@@ -78,6 +78,11 @@ const useAPIRequest = (initialConfig, initialData) => {
   }, [config]);
 
   return [state, setConfig];
+};
+
+useAPIRequest.propTypes = {
+  initialConfig: PropTypes.object,
+  initialData: PropTypes.any
 };
 
 export default useAPIRequest;
