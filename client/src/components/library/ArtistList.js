@@ -10,10 +10,10 @@ import Modal from '../layout/Modal';
 const ArtistList = () => {
   const libraryContext = useContext(LibraryContext);
   const { artists, loading } = libraryContext;
-  const { isShowing, toggle } = useModal();
+  const { isShowing, toggle, setIsShowing } = useModal();
 
   useEffect(() => {
-    toggle();
+    setIsShowing(false);
   }, [artists]);
 
   if (loading) {

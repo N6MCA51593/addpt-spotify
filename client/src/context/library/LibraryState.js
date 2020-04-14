@@ -1,5 +1,11 @@
 import React, { useReducer } from 'react';
-import { GET_LIBRARY, CLEAR_ERRORS, LOAD_FAIL, ADD_ARTIST } from '../types';
+import {
+  GET_LIBRARY,
+  CLEAR_ERRORS,
+  LOAD_FAIL,
+  ADD_ARTIST,
+  SET_CURRENT
+} from '../types';
 import LibraryContext from './libraryContext';
 import libraryReducer from './libraryReducer';
 
@@ -7,7 +13,8 @@ const LibraryState = props => {
   const initialState = {
     artists: null,
     loading: true,
-    error: null
+    error: null,
+    currentArtist: null
   };
 
   const [state, dispatch] = useReducer(libraryReducer, initialState);
@@ -28,6 +35,10 @@ const LibraryState = props => {
     dispatch({ type: ADD_ARTIST, payload: artist });
   };
 
+  const setCurrentArtist = artist => {
+    dispatch({ type: SET_CURRENT, payload: artist });
+  };
+
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
   return (
     <LibraryContext.Provider
@@ -35,9 +46,11 @@ const LibraryState = props => {
         artists: state.artists,
         loading: state.loading,
         error: state.error,
+        currentArtist: state.currentArtist,
         loadLibrary,
         clearErrors,
-        addArtist
+        addArtist,
+        setCurrentArtist
       }}
     >
       {props.children}

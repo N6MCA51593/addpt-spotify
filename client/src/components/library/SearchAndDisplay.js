@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useContext } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import useAPIRequest from '../../utils/useAPIRequest';
 import PropTypes from 'prop-types';
 import LoadingSpinner from '../layout/LoadingSpinner';
@@ -10,7 +10,7 @@ const SearchAndDisplay = ({
   toggleSubmitted,
   searchType
 }) => {
-  const [{ isLoading, data }, setConfig] = useAPIRequest();
+  const [{ isLoading, data }, setConfig] = useAPIRequest({}, []);
 
   useEffect(() => {
     if (searchType === 'artist' && isSubmitted === true) {
@@ -29,7 +29,7 @@ const SearchAndDisplay = ({
     return <LoadingSpinner />;
   }
 
-  if (data && data.msg) {
+  if (data.msg) {
     return (
       <Fragment>
         <p>{data.msg}</p>
@@ -39,10 +39,9 @@ const SearchAndDisplay = ({
 
   return (
     <div className='search-results'>
-      {data &&
-        data.map(dataE => {
-          return <ArtistItem key={dataE.spID} artist={dataE} />;
-        })}
+      {data.map(dataE => {
+        return <ArtistItem key={dataE.spID} artist={dataE} />;
+      })}
     </div>
   );
 };

@@ -1,4 +1,10 @@
-import { GET_LIBRARY, CLEAR_ERRORS, LOAD_FAIL, ADD_ARTIST } from '../types';
+import {
+  GET_LIBRARY,
+  CLEAR_ERRORS,
+  LOAD_FAIL,
+  ADD_ARTIST,
+  SET_CURRENT
+} from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -23,6 +29,11 @@ export default (state, action) => {
         ...state,
         artists: [...state.artists, action.payload],
         error: `${action.payload.name} added to your library`
+      };
+    case SET_CURRENT:
+      return {
+        ...state,
+        currentArtist: action.payload
       };
 
     default:
