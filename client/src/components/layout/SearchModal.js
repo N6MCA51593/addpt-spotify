@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchAndDisplay from '../library/SearchAndDisplay';
 
-const SearchModal = ({ searchType }) => {
+const SearchModal = ({ artistName, artistID }) => {
   const [query, setQuery] = useState('');
   const [isSubmitted, toggleSubmitted] = useState(false);
 
@@ -31,15 +31,12 @@ const SearchModal = ({ searchType }) => {
           query={query}
           isSubmitted={isSubmitted}
           toggleSubmitted={toggleSubmitted}
-          searchType={searchType}
+          artistName={artistName}
+          artistID={artistID}
         />
       </form>
     </React.Fragment>
   );
-};
-
-SearchModal.propTypes = {
-  searchType: PropTypes.string.isRequired
 };
 
 export default SearchModal;

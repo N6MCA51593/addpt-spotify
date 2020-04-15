@@ -25,10 +25,6 @@ const ArtistItem = ({ artist }) => {
       params: { id: e.target.value }
     });
   };
-  const setCurrent = e => {
-    e.preventDefault();
-    setCurrentArtist(artist);
-  };
 
   return (
     <div className='card'>
@@ -46,9 +42,11 @@ const ArtistItem = ({ artist }) => {
           Add
         </button>
       ) : (
-        <button onClick={setCurrent} value={artist}>
-          Set Current
-        </button>
+        <input
+          type='button'
+          value='Set current'
+          onClick={() => setCurrentArtist(artist)}
+        />
       )}
     </div>
   );

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Library from '../library/Library';
 
 export const Home = () => {
   return (
-    <div>
+    <Fragment>
       <Library />
-    </div>
+    </Fragment>
   );
 };
 

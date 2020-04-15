@@ -11,8 +11,8 @@ const Artist = require('../models/Artist');
 // TODO: Placeholder images
 router.get('/search', [auth, authSpotify], async (req, res) => {
   const { accessToken } = req.user;
-  const query = req.body.query;
   const id = req.query.id;
+  const query = req.query.query;
   const artistName = req.query.artistname;
   const options = {
     method: 'get',

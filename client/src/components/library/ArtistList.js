@@ -25,7 +25,7 @@ const ArtistList = () => {
       {artists && (
         <Fragment>
           <Modal isShowing={isShowing} hide={toggle}>
-            <SearchModal searchType={'artist'} />
+            <SearchModal />
           </Modal>
           <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
             {artists

@@ -6,7 +6,7 @@ import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
 const AlbumItem = ({ album }) => {
-  const { addAlbum } = useContext(LibraryContext);
+  const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
 
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
 
@@ -37,10 +37,16 @@ const AlbumItem = ({ album }) => {
         />
       )}
       <p>{album.name}</p>
-      {!album._id && (
+      {!album._id ? (
         <button onClick={add} value={album.spID}>
           Add
         </button>
+      ) : (
+        <input
+          type='button'
+          value='Set current'
+          onClick={() => setCurrentAlbum(album)}
+        />
       )}
     </div>
   );

@@ -4,7 +4,9 @@ import {
   CLEAR_ERRORS,
   LOAD_FAIL,
   ADD_ARTIST,
-  SET_CURRENT
+  SET_CURRENT_ARTIST,
+  SET_CURRENT_ALBUM,
+  CLEAR_CURRENT
 } from '../types';
 import LibraryContext from './libraryContext';
 import libraryReducer from './libraryReducer';
@@ -14,7 +16,8 @@ const LibraryState = props => {
     artists: null,
     loading: true,
     error: null,
-    currentArtist: null
+    currentArtist: null,
+    currentAlbum: null
   };
 
   const [state, dispatch] = useReducer(libraryReducer, initialState);
@@ -36,7 +39,15 @@ const LibraryState = props => {
   };
 
   const setCurrentArtist = artist => {
-    dispatch({ type: SET_CURRENT, payload: artist });
+    dispatch({ type: SET_CURRENT_ARTIST, payload: artist });
+  };
+
+  const setCurrentAlbum = album => {
+    dispatch({ type: SET_CURRENT_ALBUM, payload: album });
+  };
+
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
   };
 
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
@@ -47,10 +58,13 @@ const LibraryState = props => {
         loading: state.loading,
         error: state.error,
         currentArtist: state.currentArtist,
+        currentAlbum: state.currentAlbum,
         loadLibrary,
         clearErrors,
         addArtist,
-        setCurrentArtist
+        setCurrentArtist,
+        setCurrentAlbum,
+        clearCurrent
       }}
     >
       {props.children}

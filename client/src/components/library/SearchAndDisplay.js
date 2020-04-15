@@ -3,21 +3,30 @@ import useAPIRequest from '../../utils/useAPIRequest';
 import PropTypes from 'prop-types';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import ArtistItem from './ArtistItem';
+import AlbumItem from './AlbumItem';
 
 const SearchAndDisplay = ({
   query,
   isSubmitted,
   toggleSubmitted,
-  searchType
+  artistName,
+  artistID
 }) => {
   const [{ isLoading, data }, setConfig] = useAPIRequest({}, []);
 
   useEffect(() => {
-    if (searchType === 'artist' && isSubmitted === true) {
+    if (!artistID && isSubmitted === true) {
       setConfig({
         url: '/api/library/add/search',
         method: 'get',
         params: { query: query }
+      });
+    }
+    if (artistID && isSubmitted === true) {
+      setConfig({
+        url: '/api/library/append/search',
+        method: 'get',
+        params: { query: query, artistname: artistName, id: artistID }
       });
     }
 
@@ -40,14 +49,17 @@ const SearchAndDisplay = ({
   return (
     <div className='search-results'>
       {data.map(dataE => {
-        return <ArtistItem key={dataE.spID} artist={dataE} />;
+        return artistID ? (
+          <AlbumItem key={dataE.spID} album={dataE} />
+        ) : (
+          <ArtistItem key={dataE.spID} artist={dataE} />
+        );
       })}
     </div>
   );
 };
 
 SearchAndDisplay.propTypes = {
-  searchType: PropTypes.string.isRequired,
   query: PropTypes.string.isRequired,
   isSubmitted: PropTypes.bool.isRequired,
   toggleSubmitted: PropTypes.func.isRequired

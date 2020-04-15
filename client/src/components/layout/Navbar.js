@@ -18,9 +18,7 @@ const Navbar = () => {
           <Link to='/login'>Login</Link>
         </li>
         <li>
-          <a href='/' onClick={logout}>
-            Logout
-          </a>
+          <p onClick={logout}>Logout</p>
         </li>
       </ul>
     </div>

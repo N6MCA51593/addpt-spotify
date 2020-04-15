@@ -4,6 +4,7 @@ import AlertContext from '../../context/alert/alertContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
+import History from './History';
 
 export const Library = () => {
   const {
@@ -12,7 +13,8 @@ export const Library = () => {
     loadLibrary,
     error,
     clearErrors,
-    currentArtist
+    currentArtist,
+    currentAlbum
   } = useContext(LibraryContext);
   const { setAlert } = useContext(AlertContext);
 
@@ -34,7 +36,20 @@ export const Library = () => {
     }
     // eslint-disable-next-line
   }, [error]);
-  return <Fragment>{currentArtist ? <AlbumList /> : <ArtistList />}</Fragment>;
+  return (
+    <Fragment>
+      {currentArtist ? <AlbumList /> : <ArtistList />}
+      {currentAlbum ? (
+        <div className='history'>
+          {currentAlbum.tracks.map(currentAlbumE => (
+            <p key={currentAlbumE._id}>{currentAlbumE.name}</p>
+          ))}
+        </div>
+      ) : (
+        <History />
+      )}
+    </Fragment>
+  );
 };
 
 export default Library;

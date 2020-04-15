@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 :root {
   --primary-color: #003699;
   --dark-color: #333333;
@@ -84,21 +86,23 @@ body {
 }
 
 .wrapper {
-  width: 80%;
-  margin: 0 auto;
+  width: 70%;
+  padding-left: 10%;
 }
 
 .accordion-item {
-  overflow: hidden;
+  overflow: auto;
   transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
   height: auto;
   display: flex;
   flex-wrap: wrap;
-  max-height: 9999px;
+  max-height: 60vh;
 }
 
 .accordion-item.collapsed {
   max-height: 0;
+
+  overflow: hidden;
   transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
 }
 
@@ -144,10 +148,7 @@ body {
   position: fixed;
   width: 10%;
   opacity: 0.9;
-  display: block;
   text-align: center;
-  top: 0; /* Stay at the top */
-  left: 0;
 }
 
 .navbar ul {
@@ -220,4 +221,19 @@ img {
   flex-wrap: wrap;
   justify-content: space-evenly;
   flex-shrink: 1;
+}
+
+.artist-description {
+  margin: auto;
+  width: 80%;
+}
+
+.history {
+  position: fixed;
+  height: 70%;
+  top: 30%;
+  right: 0;
+  max-width: 20%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

@@ -6,13 +6,13 @@ import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
+import placeholder from '../layout/placeholder.png';
 
 const AlbumList = () => {
   const libraryContext = useContext(LibraryContext);
-  const { loading, currentArtist } = libraryContext;
+  const { loading, currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
   const { isShowing, toggle, setIsShowing } = useModal();
-  console.log(Object.entries(currentArtist));
 
   useEffect(() => {
     setIsShowing(false);
@@ -23,11 +23,22 @@ const AlbumList = () => {
   }
 
   return (
-    <div className='wrapper'>
-      {albums && (
+    <Fragment>
+      <div className='container'>
+        {currentArtist.name}
+        <img
+          src={currentArtist.img[2] ? currentArtist.img[2].url : placeholder}
+          alt={currentArtist.name}
+        />
+        <input type='button' value='Back' onClick={clearCurrent} />
+      </div>
+      <div className='wrapper'>
         <Fragment>
           <Modal isShowing={isShowing} hide={toggle}>
-            <SearchModal searchType={'album'} />
+            <SearchModal
+              artistName={currentArtist.name}
+              artistID={currentArtist._id}
+            />
           </Modal>
           <Accordion openByDef={true} title={'Albums'} toggle={toggle}>
             {albums
@@ -55,8 +66,8 @@ const AlbumList = () => {
             </Accordion>
           )}
         </Fragment>
-      )}
-    </div>
+      </div>
+    </Fragment>
   );
 };
 

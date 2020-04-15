@@ -14,11 +14,11 @@ const Accordion = ({ title, children, openByDef, toggle }) => {
       </div>
       <div className={`accordion-item ${!isOpen ? 'collapsed' : ''}`}>
         <Fragment>
-          {title === 'Tracked' && (
+          {title === 'Tracked' || title === 'Albums' ? (
             <div className='card' onClick={toggle}>
-              Show Modal
+              Add
             </div>
-          )}
+          ) : null}
         </Fragment>
         {children}
       </div>
