@@ -28,7 +28,7 @@ router.get('/search', [auth, authSpotify], async (req, res) => {
   try {
     const spRes = await axios(options);
     if (spRes.data.albums.items.length > 0) {
-      const artist = await Artist.findOne({ _id: id });
+      const artist = await Artist.findOne({ _id: id }).lean();
       const savedAlbums = artist.albums;
       const aSpID = artist.spID;
       const albums = spRes.data.albums.items

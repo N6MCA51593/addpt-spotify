@@ -9,8 +9,8 @@ const History = require('../models/History');
 // @access    Private (jwt)
 router.get('/', [auth], async (req, res) => {
   try {
-    const user = await User.findOne({ spID: req.user.id });
-    const history = await History.findOne({ user: user._id });
+    const user = await User.findOne({ spID: req.user.id }).lean();
+    const history = await History.findOne({ user: user._id }).lean();
     res.send(history);
   } catch (err) {
     console.error(err);

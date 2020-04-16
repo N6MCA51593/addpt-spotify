@@ -11,8 +11,8 @@ const Artist = require('../models/Artist');
 router.get('/', [auth], async (req, res) => {
   const uSpID = req.user.id;
   try {
-    const user = await User.findOne({ spID: uSpID });
-    const artists = await Artist.find({ user: user._id });
+    const user = await User.findOne({ spID: uSpID }).lean();
+    const artists = await Artist.find({ user: user._id }).lean();
     res.json(artists);
   } catch (err) {
     const status = err.response ? err.response.status : 500;

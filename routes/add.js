@@ -22,10 +22,13 @@ router.get('/search', [auth, authSpotify], async (req, res) => {
     params: { q: query, type: 'artist', limit: 50 }
   };
   try {
-    const user = await User.findOne({ spID: uSpID });
+    const user = await User.findOne({ spID: uSpID }).lean();
     const spRes = await axios(options);
     if (spRes.data.artists.items.length > 0) {
-      const savedArtists = await Artist.find({ user: user._id }, 'spID -_id');
+      const savedArtists = await Artist.find(
+        { user: user._id },
+        'spID -_id'
+      ).lean();
       const artists = spRes.data.artists.items
         .map(e => {
           return { spID: e.id, name: e.name, img: e.images };

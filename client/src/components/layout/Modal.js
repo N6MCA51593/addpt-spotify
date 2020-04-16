@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import useOnClickOutside from '../../utils/useOnClickOutside';
@@ -9,8 +9,7 @@ const Modal = ({ isShowing, hide, children }) => {
 
   return isShowing
     ? ReactDOM.createPortal(
-        <React.Fragment>
-          <div className='modal-overlay' />
+        <Fragment>
           <div className='modal-wrapper'>
             <div className='modal' ref={ref}>
               <div className='modal-header'>
@@ -25,7 +24,7 @@ const Modal = ({ isShowing, hide, children }) => {
               {children}
             </div>
           </div>
-        </React.Fragment>,
+        </Fragment>,
         document.body
       )
     : null;

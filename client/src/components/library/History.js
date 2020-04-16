@@ -12,7 +12,11 @@ const History = () => {
   );
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <div className='history'>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   return (
