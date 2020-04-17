@@ -5,7 +5,7 @@ import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
-const AlbumItem = ({ album }) => {
+const AlbumItem = ({ album, artistID }) => {
   const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
 
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
@@ -22,7 +22,10 @@ const AlbumItem = ({ album }) => {
     setConfig({
       url: '/api/library/append/new',
       method: 'post',
-      params: { id: e.target.value }
+      params: {
+        artistid: e.target.dataset.artist,
+        albumid: e.target.dataset.album
+      }
     });
   };
 
@@ -38,7 +41,7 @@ const AlbumItem = ({ album }) => {
       )}
       <p>{album.name}</p>
       {!album._id ? (
-        <button onClick={add} value={album.spID}>
+        <button onClick={add} data-album={album.spID} data-artist={artistID}>
           Add
         </button>
       ) : (

@@ -6,15 +6,22 @@ import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
+import useAPIRequest from '../../utils/useAPIRequest';
 
 const ArtistList = () => {
-  const libraryContext = useContext(LibraryContext);
-  const { artists, loading } = libraryContext;
+  const { artists, loading, toggleArtistTracking } = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
+  const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
 
   useEffect(() => {
     setIsShowing(false);
   }, [artists]);
+
+  useEffect(() => {
+    if (data && !isError) {
+      toggleArtistTracking(data);
+    }
+  }, [data, isError]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -31,7 +38,13 @@ const ArtistList = () => {
             {artists
               .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
               .map(artistsE => {
-                return <ArtistItem key={artistsE._id} artist={artistsE} />;
+                return (
+                  <ArtistItem
+                    key={artistsE._id}
+                    artist={artistsE}
+                    toggleTrackingSetConfig={setConfig}
+                  />
+                );
               })}
           </Accordion>
           {artists.some(artistE => !artistE.isTracked) && (
@@ -39,7 +52,13 @@ const ArtistList = () => {
               {artists
                 .filter(artistsE => !artistsE.isTracked)
                 .map(artistsE => {
-                  return <ArtistItem key={artistsE._id} artist={artistsE} />;
+                  return (
+                    <ArtistItem
+                      key={artistsE._id}
+                      artist={artistsE}
+                      toggleTrackingSetConfig={setConfig}
+                    />
+                  );
                 })}
             </Accordion>
           )}
@@ -48,7 +67,13 @@ const ArtistList = () => {
               {artists
                 .filter(artistsE => artistsE.isArchived)
                 .map(artistsE => {
-                  return <ArtistItem key={artistsE._id} artist={artistsE} />;
+                  return (
+                    <ArtistItem
+                      key={artistsE._id}
+                      artist={artistsE}
+                      toggleTrackingSetConfig={setConfig}
+                    />
+                  );
                 })}
             </Accordion>
           )}

@@ -1,9 +1,14 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const Accordion = ({ title, children, openByDef, toggle }) => {
   const [isOpen, setOpen] = useState(openByDef ? true : false);
-  const [count] = useState(children.length);
+  const [count, setCount] = useState(children.length);
+
+  useEffect(() => {
+    setCount(children.length);
+  }, [children.length]);
+
   return (
     <Fragment>
       <div

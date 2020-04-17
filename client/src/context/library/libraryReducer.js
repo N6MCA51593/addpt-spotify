@@ -3,10 +3,11 @@ import {
   CLEAR_ERRORS,
   LOAD_FAIL,
   ADD_ARTIST,
+  ADD_ALBUM,
   SET_CURRENT_ARTIST,
   SET_CURRENT_ALBUM,
   CLEAR_CURRENT,
-  TOGGLE_TRACKING
+  TOGGLE_ARTIST_TRACKING
 } from '../types';
 
 export default (state, action) => {
@@ -20,7 +21,8 @@ export default (state, action) => {
     case CLEAR_ERRORS:
       return {
         ...state,
-        error: null
+        error: null,
+        message: null
       };
     case LOAD_FAIL:
       return {
@@ -31,7 +33,21 @@ export default (state, action) => {
       return {
         ...state,
         artists: [...state.artists, action.payload],
-        error: `${action.payload.name} added to your library`
+        message: `${action.payload.name} added to your library`
+      };
+    case ADD_ALBUM:
+      return {
+        ...state,
+        artists: [
+          ...state.artists.filter(
+            artistsE => artistsE._id !== action.payload._id
+          ),
+          action.payload
+        ],
+        currentArtist: action.payload,
+        message: `${
+          action.payload.albums[action.payload.albums.length - 1].name
+        } by ${action.payload.name} added to your library`
       };
     case SET_CURRENT_ARTIST:
       return {
@@ -49,12 +65,15 @@ export default (state, action) => {
         currentArtist: null,
         currentAlbum: null
       };
-    case TOGGLE_TRACKING:
+    case TOGGLE_ARTIST_TRACKING:
       return {
         ...state,
-        artists: [...state.artists, action.payload],
-        currentArtist: state.currentArtist ? action.payload : null,
-        currentAlbum: null
+        artists: [
+          ...state.artists.filter(
+            artistsE => artistsE._id !== action.payload._id
+          ),
+          action.payload
+        ]
       };
 
     default:

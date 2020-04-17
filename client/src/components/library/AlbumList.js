@@ -10,9 +10,9 @@ import placeholder from '../layout/placeholder.png';
 
 const AlbumList = () => {
   const libraryContext = useContext(LibraryContext);
+  const { isShowing, toggle, setIsShowing } = useModal();
   const { loading, currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
-  const { isShowing, toggle, setIsShowing } = useModal();
 
   useEffect(() => {
     setIsShowing(false);

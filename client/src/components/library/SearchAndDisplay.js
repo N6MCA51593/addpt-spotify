@@ -50,7 +50,7 @@ const SearchAndDisplay = ({
     <div className='search-results'>
       {data.map(dataE => {
         return artistID ? (
-          <AlbumItem key={dataE.spID} album={dataE} />
+          <AlbumItem key={dataE.spID} album={dataE} artistID={artistID} />
         ) : (
           <ArtistItem key={dataE.spID} artist={dataE} />
         );

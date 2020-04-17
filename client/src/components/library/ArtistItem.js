@@ -5,7 +5,7 @@ import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
-const ArtistItem = ({ artist }) => {
+const ArtistItem = ({ artist, toggleTrackingSetConfig }) => {
   const { addArtist, setCurrentArtist } = useContext(LibraryContext);
 
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
@@ -26,6 +26,14 @@ const ArtistItem = ({ artist }) => {
     });
   };
 
+  const toggleTracking = e => {
+    toggleTrackingSetConfig({
+      url: '/api/library',
+      method: 'put',
+      params: { artistid: e }
+    });
+  };
+
   return (
     <div className='card'>
       {isLoading ? (
@@ -42,11 +50,20 @@ const ArtistItem = ({ artist }) => {
           Add
         </button>
       ) : (
-        <input
-          type='button'
-          value='Set current'
-          onClick={() => setCurrentArtist(artist)}
-        />
+        <Fragment>
+          <input
+            type='button'
+            value='Set current'
+            onClick={() => setCurrentArtist(artist)}
+          />
+          {!artist.isArchived && (
+            <input
+              type='button'
+              value='Toggle tracking'
+              onClick={() => toggleTracking(artist._id)}
+            />
+          )}
+        </Fragment>
       )}
     </div>
   );

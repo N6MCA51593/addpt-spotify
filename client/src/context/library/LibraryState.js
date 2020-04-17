@@ -4,9 +4,11 @@ import {
   CLEAR_ERRORS,
   LOAD_FAIL,
   ADD_ARTIST,
+  ADD_ALBUM,
   SET_CURRENT_ARTIST,
   SET_CURRENT_ALBUM,
-  CLEAR_CURRENT
+  CLEAR_CURRENT,
+  TOGGLE_ARTIST_TRACKING
 } from '../types';
 import LibraryContext from './libraryContext';
 import libraryReducer from './libraryReducer';
@@ -16,6 +18,7 @@ const LibraryState = props => {
     artists: null,
     loading: true,
     error: null,
+    message: null,
     currentArtist: null,
     currentAlbum: null
   };
@@ -38,12 +41,20 @@ const LibraryState = props => {
     dispatch({ type: ADD_ARTIST, payload: artist });
   };
 
+  const addAlbum = album => {
+    dispatch({ type: ADD_ALBUM, payload: album });
+  };
+
   const setCurrentArtist = artist => {
     dispatch({ type: SET_CURRENT_ARTIST, payload: artist });
   };
 
-  const setCurrentAlbum = album => {
-    dispatch({ type: SET_CURRENT_ALBUM, payload: album });
+  const setCurrentAlbum = artist => {
+    dispatch({ type: SET_CURRENT_ALBUM, payload: artist });
+  };
+
+  const toggleArtistTracking = artist => {
+    dispatch({ type: TOGGLE_ARTIST_TRACKING, payload: artist });
   };
 
   const clearCurrent = () => {
@@ -57,14 +68,17 @@ const LibraryState = props => {
         artists: state.artists,
         loading: state.loading,
         error: state.error,
+        message: state.message,
         currentArtist: state.currentArtist,
         currentAlbum: state.currentAlbum,
         loadLibrary,
         clearErrors,
         addArtist,
+        addAlbum,
         setCurrentArtist,
         setCurrentAlbum,
-        clearCurrent
+        clearCurrent,
+        toggleArtistTracking
       }}
     >
       {props.children}

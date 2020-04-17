@@ -12,6 +12,7 @@ export const Library = () => {
     loading,
     loadLibrary,
     error,
+    message,
     clearErrors,
     currentArtist,
     currentAlbum
@@ -31,11 +32,15 @@ export const Library = () => {
 
   useEffect(() => {
     if (error) {
-      setAlert(error, 'success');
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    if (message) {
+      setAlert(message, 'success');
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error]);
+  }, [error, message]);
   return (
     <Fragment>
       {currentArtist ? <AlbumList /> : <ArtistList />}
