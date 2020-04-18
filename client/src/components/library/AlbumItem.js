@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import placeholder from '../layout/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
@@ -45,11 +45,18 @@ const AlbumItem = ({ album, artistID }) => {
           Add
         </button>
       ) : (
-        <input
-          type='button'
-          value='Set current'
-          onClick={() => setCurrentAlbum(album)}
-        />
+        <Fragment>
+          <input
+            type='button'
+            value='Set current'
+            onClick={() => setCurrentAlbum(album)}
+          />
+          <input
+            type='button'
+            value='Toggle tracking'
+            onClick={() => setCurrentAlbum(album)}
+          />
+        </Fragment>
       )}
     </div>
   );

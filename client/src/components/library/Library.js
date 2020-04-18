@@ -2,9 +2,10 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import AlertContext from '../../context/alert/alertContext';
 import useAPIRequest from '../../utils/useAPIRequest';
+import useCurrentArtistUpdate from '../../utils/useCurrentArtistUpdate';
 import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
-import History from './History';
+import TrackSection from '../layout/TrackSection';
 
 export const Library = () => {
   const {
@@ -23,6 +24,20 @@ export const Library = () => {
     url: '/api/library',
     method: 'get'
   });
+
+  const [artist, setParams] = useCurrentArtistUpdate();
+
+  useEffect(() => {
+    if (currentArtist) {
+      setParams({
+        artistParam: currentArtist,
+        albumParam: currentArtist.albums[0],
+        trackParam: currentArtist.albums[0].tracks[0]
+      });
+    }
+    // eslint-disable-next-line
+  }, [currentArtist]);
+
   useEffect(() => {
     if (state.data) {
       loadLibrary(state);
@@ -44,15 +59,7 @@ export const Library = () => {
   return (
     <Fragment>
       {currentArtist ? <AlbumList /> : <ArtistList />}
-      {currentAlbum ? (
-        <div className='history'>
-          {currentAlbum.tracks.map(currentAlbumE => (
-            <p key={currentAlbumE._id}>{currentAlbumE.name}</p>
-          ))}
-        </div>
-      ) : (
-        <History />
-      )}
+      <TrackSection currentAlbum={currentAlbum} />
     </Fragment>
   );
 };

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import TrackItem from './TrackItem';
 
 const History = () => {
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest(
@@ -20,12 +21,14 @@ const History = () => {
   }
 
   return (
-    <div className='history'>
+    <Fragment>
       {data.tracks &&
         data.tracks.map(dataE => (
-          <p key={dataE.tracks.lastListen}>{dataE.tracks.name}</p>
+          <div key={dataE.tracks.lastListen}>
+            <TrackItem track={dataE.tracks} />
+          </div>
         ))}
-    </div>
+    </Fragment>
   );
 };
 
