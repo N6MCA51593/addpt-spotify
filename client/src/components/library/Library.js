@@ -16,7 +16,8 @@ export const Library = () => {
     message,
     clearErrors,
     currentArtist,
-    currentAlbum
+    currentAlbum,
+    setCurrentArtist
   } = useContext(LibraryContext);
   const { setAlert } = useContext(AlertContext);
 
@@ -28,15 +29,8 @@ export const Library = () => {
   const [artist, setParams] = useCurrentArtistUpdate();
 
   useEffect(() => {
-    if (currentArtist) {
-      setParams({
-        artistParam: currentArtist,
-        albumParam: currentArtist.albums[0],
-        trackParam: currentArtist.albums[0].tracks[0]
-      });
-    }
-    // eslint-disable-next-line
-  }, [currentArtist]);
+    setCurrentArtist(artist);
+  }, [artist]);
 
   useEffect(() => {
     if (state.data) {

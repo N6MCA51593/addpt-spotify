@@ -7,16 +7,33 @@ import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
 import placeholder from '../layout/placeholder.png';
+import useCurrentArtistUpdate from '../../utils/useCurrentArtistUpdate';
 
 const AlbumList = () => {
   const libraryContext = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
-  const { loading, currentArtist, clearCurrent } = libraryContext;
+  const {
+    loading,
+    currentArtist,
+    clearCurrent,
+    setCurrentArtist
+  } = libraryContext;
+  const [artist, setParams] = useCurrentArtistUpdate();
   const albums = currentArtist.albums;
 
   useEffect(() => {
     setIsShowing(false);
-  }, [albums]);
+  }, [albums, setIsShowing]);
+
+  useEffect(() => {
+    if (artist) {
+      setCurrentArtist(artist);
+    }
+  }, [artist]);
+
+  const toggleTracking = albumID => {
+    setParams({ artistInit: currentArtist, albumID: albumID });
+  };
 
   if (loading) {
     return <LoadingSpinner />;
@@ -44,7 +61,13 @@ const AlbumList = () => {
             {albums
               .filter(albumsE => albumsE.releaseType === 'album')
               .map(albumsE => {
-                return <AlbumItem key={albumsE._id} album={albumsE} />;
+                return (
+                  <AlbumItem
+                    key={albumsE._id}
+                    album={albumsE}
+                    toggleTracking={toggleTracking}
+                  />
+                );
               })}
           </Accordion>
           {albums.some(albumsE => albumsE.releaseType === 'single') && (
@@ -52,7 +75,13 @@ const AlbumList = () => {
               {albums
                 .filter(albumsE => albumsE.releaseType === 'single')
                 .map(albumsE => {
-                  return <AlbumItem key={albumsE._id} album={albumsE} />;
+                  return (
+                    <AlbumItem
+                      key={albumsE._id}
+                      album={albumsE}
+                      toggleTracking={toggleTracking}
+                    />
+                  );
                 })}
             </Accordion>
           )}
@@ -61,7 +90,13 @@ const AlbumList = () => {
               {albums
                 .filter(albumsE => albumsE.releaseType === 'compilation')
                 .map(albumsE => {
-                  return <AlbumItem key={albumsE._id} album={albumsE} />;
+                  return (
+                    <AlbumItem
+                      key={albumsE._id}
+                      album={albumsE}
+                      toggleTracking={toggleTracking}
+                    />
+                  );
                 })}
             </Accordion>
           )}

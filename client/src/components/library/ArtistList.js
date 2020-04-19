@@ -9,17 +9,17 @@ import Modal from '../layout/Modal';
 import useAPIRequest from '../../utils/useAPIRequest';
 
 const ArtistList = () => {
-  const { artists, loading, toggleArtistTracking } = useContext(LibraryContext);
+  const { artists, loading, toggleArtist } = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
 
   useEffect(() => {
     setIsShowing(false);
-  }, [artists]);
+  }, [artists, setIsShowing]);
 
   useEffect(() => {
     if (data && !isError) {
-      toggleArtistTracking(data);
+      toggleArtist(data);
     }
   }, [data, isError]);
 
@@ -42,21 +42,23 @@ const ArtistList = () => {
                   <ArtistItem
                     key={artistsE._id}
                     artist={artistsE}
-                    toggleTrackingSetConfig={setConfig}
+                    toggleArtistSetConfig={setConfig}
                   />
                 );
               })}
           </Accordion>
-          {artists.some(artistE => !artistE.isTracked) && (
+          {artists.some(
+            artistE => !artistE.isTracked && !artistE.isArchived
+          ) && (
             <Accordion openByDef={false} title={'Not Tracked'}>
               {artists
-                .filter(artistsE => !artistsE.isTracked)
+                .filter(artistsE => !artistsE.isTracked && !artistsE.isArchived)
                 .map(artistsE => {
                   return (
                     <ArtistItem
                       key={artistsE._id}
                       artist={artistsE}
-                      toggleTrackingSetConfig={setConfig}
+                      toggleArtistSetConfig={setConfig}
                     />
                   );
                 })}
@@ -71,7 +73,7 @@ const ArtistList = () => {
                     <ArtistItem
                       key={artistsE._id}
                       artist={artistsE}
-                      toggleTrackingSetConfig={setConfig}
+                      toggleArtistSetConfig={setConfig}
                     />
                   );
                 })}

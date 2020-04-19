@@ -7,7 +7,7 @@ import {
   SET_CURRENT_ARTIST,
   SET_CURRENT_ALBUM,
   CLEAR_CURRENT,
-  TOGGLE_ARTIST_TRACKING
+  TOGGLE_ARTIST
 } from '../types';
 
 export default (state, action) => {
@@ -65,7 +65,7 @@ export default (state, action) => {
         currentArtist: null,
         currentAlbum: null
       };
-    case TOGGLE_ARTIST_TRACKING:
+    case TOGGLE_ARTIST:
       return {
         ...state,
         artists: [

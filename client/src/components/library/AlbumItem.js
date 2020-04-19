@@ -5,7 +5,7 @@ import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
-const AlbumItem = ({ album, artistID }) => {
+const AlbumItem = ({ album, artistID, toggleTracking }) => {
   const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
 
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
@@ -40,6 +40,7 @@ const AlbumItem = ({ album, artistID }) => {
         />
       )}
       <p>{album.name}</p>
+      <p>{album.isTracked.toString()}</p>
       {!album._id ? (
         <button onClick={add} data-album={album.spID} data-artist={artistID}>
           Add
@@ -54,7 +55,7 @@ const AlbumItem = ({ album, artistID }) => {
           <input
             type='button'
             value='Toggle tracking'
-            onClick={() => setCurrentAlbum(album)}
+            onClick={() => toggleTracking(album._id)}
           />
         </Fragment>
       )}

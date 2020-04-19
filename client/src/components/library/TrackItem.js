@@ -4,6 +4,7 @@ const TrackItem = ({ track }) => {
   return (
     <Fragment>
       <p>{track.name}</p>
+      <p>{track.isTracked.toString()}</p>
     </Fragment>
   );
 };
