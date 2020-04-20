@@ -88,7 +88,7 @@ const useCurrentArtistUpdate = () => {
         );
         console.log('change artist status to ' + !artistInit.isTracked);
         console.log(
-          'are all untracked ' +
+          'are all untracked' +
             artistInit.albums.every(albumE => albumE.isTracked === false)
         );
         setArtist({
