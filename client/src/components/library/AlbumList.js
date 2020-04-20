@@ -7,18 +7,11 @@ import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
 import placeholder from '../layout/placeholder.png';
-import useCurrentArtistUpdate from '../../utils/useCurrentArtistUpdate';
 
-const AlbumList = () => {
+const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const libraryContext = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
-  const {
-    loading,
-    currentArtist,
-    clearCurrent,
-    setCurrentArtist
-  } = libraryContext;
-  const [artist, setParams] = useCurrentArtistUpdate();
+  const { loading, currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
 
   useEffect(() => {
@@ -26,14 +19,10 @@ const AlbumList = () => {
   }, [albums, setIsShowing]);
 
   useEffect(() => {
-    if (artist) {
-      setCurrentArtist(artist);
-    }
-  }, [artist]);
-
-  const toggleTracking = albumID => {
-    setParams({ artistInit: currentArtist, albumID: albumID });
-  };
+    return () => {
+      setChildUnmounted(true);
+    };
+  }, [setChildUnmounted]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -42,7 +31,8 @@ const AlbumList = () => {
   return (
     <Fragment>
       <div className='container'>
-        {currentArtist.name}
+        <p>{currentArtist.name}</p>
+        <p>{currentArtist.isTracked.toString()}</p>
         <img
           src={currentArtist.img[2] ? currentArtist.img[2].url : placeholder}
           alt={currentArtist.name}

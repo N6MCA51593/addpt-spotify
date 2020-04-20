@@ -1,3 +1,4 @@
+// Updates the current artist without waiting for server response for higher responsiveness
 import { useState, useEffect } from 'react';
 
 const useCurrentArtistUpdate = () => {
@@ -7,6 +8,7 @@ const useCurrentArtistUpdate = () => {
   const [track, setTrack] = useState(null);
 
   const getParams = params => {
+    console.log(params);
     const { artistInit, albumID, trackID, listens } = params;
     const albumInit = artistInit.albums.find(album => album._id === albumID);
     const trackInit = trackID
@@ -74,10 +76,21 @@ const useCurrentArtistUpdate = () => {
     if (params && album) {
       const { artistInit } = getParams(params);
       if (
-        artistInit.albums.filter(albumE => albumE.isTracked === true).length ===
-          1 ||
-        artistInit.albums.every(albumE => albumE.isTracked === false)
+        (artistInit.albums.filter(albumE => albumE.isTracked === true)
+          .length === 1 &&
+          album.isTracked === false) ||
+        (artistInit.albums.every(albumE => albumE.isTracked === false) &&
+          album.isTracked === true)
       ) {
+        console.log(
+          'number of tracked ' +
+            artistInit.albums.filter(albumE => albumE.isTracked === true).length
+        );
+        console.log('change artist status to ' + !artistInit.isTracked);
+        console.log(
+          'are all untracked ' +
+            artistInit.albums.every(albumE => albumE.isTracked === false)
+        );
         setArtist({
           ...artistInit,
           isTracked: !artistInit.isTracked,
@@ -87,6 +100,9 @@ const useCurrentArtistUpdate = () => {
           ]
         });
       } else {
+        console.log(
+          'do not change artist status, it is' + artistInit.isTracked
+        );
         setArtist({
           ...artistInit,
           albums: [

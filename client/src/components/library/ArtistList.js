@@ -11,7 +11,7 @@ import useAPIRequest from '../../utils/useAPIRequest';
 const ArtistList = () => {
   const { artists, loading, toggleArtist } = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
-  const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
+  const [{ data, isError }, setConfig] = useAPIRequest({});
 
   useEffect(() => {
     setIsShowing(false);

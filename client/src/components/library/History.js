@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import TrackItem from './TrackItem';
 
 const History = () => {
-  const [{ data, isError, isLoading }, setConfig] = useAPIRequest(
+  const [{ data, isLoading }] = useAPIRequest(
     {
       url: '/api/history',
       method: 'get'

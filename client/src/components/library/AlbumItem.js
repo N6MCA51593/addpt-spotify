@@ -40,7 +40,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
         />
       )}
       <p>{album.name}</p>
-      <p>{album.isTracked.toString()}</p>
+      <p>{album._id && album.isTracked.toString()}</p>
       {!album._id ? (
         <button onClick={add} data-album={album.spID} data-artist={artistID}>
           Add
