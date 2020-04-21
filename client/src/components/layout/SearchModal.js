@@ -22,6 +22,7 @@ const SearchModal = ({ artistName, artistID }) => {
           id='query'
           value={query}
           onChange={onChange}
+          autoComplete='off'
         />
         <button type='submit' className='search-button'>
           Search

@@ -8,7 +8,6 @@ const useCurrentArtistUpdate = () => {
   const [track, setTrack] = useState(null);
 
   const getParams = params => {
-    console.log(params);
     const { artistInit, albumID, trackID, listens } = params;
     const albumInit = artistInit.albums.find(album => album._id === albumID);
     const trackInit = trackID
@@ -37,11 +36,14 @@ const useCurrentArtistUpdate = () => {
 
   useEffect(() => {
     if (params && track) {
+      console.log(track.isTracked);
       const { albumInit } = getParams(params);
       if (
-        albumInit.tracks.filter(trackE => trackE.isTracked === true).length ===
-          1 ||
-        albumInit.tracks.every(trackE => trackE.isTracked === false)
+        (albumInit.tracks.filter(trackE => trackE.isTracked === true).length ===
+          1 &&
+          track.isTracked === false) ||
+        (albumInit.tracks.every(trackE => trackE.isTracked === false) &&
+          track.isTracked === true)
       ) {
         setAlbum({
           ...albumInit,
@@ -82,15 +84,6 @@ const useCurrentArtistUpdate = () => {
         (artistInit.albums.every(albumE => albumE.isTracked === false) &&
           album.isTracked === true)
       ) {
-        console.log(
-          'number of tracked ' +
-            artistInit.albums.filter(albumE => albumE.isTracked === true).length
-        );
-        console.log('change artist status to ' + !artistInit.isTracked);
-        console.log(
-          'are all untracked' +
-            artistInit.albums.every(albumE => albumE.isTracked === false)
-        );
         setArtist({
           ...artistInit,
           isTracked: !artistInit.isTracked,
@@ -100,9 +93,6 @@ const useCurrentArtistUpdate = () => {
           ]
         });
       } else {
-        console.log(
-          'do not change artist status, it is' + artistInit.isTracked
-        );
         setArtist({
           ...artistInit,
           albums: [
@@ -112,9 +102,12 @@ const useCurrentArtistUpdate = () => {
         });
       }
     }
+    return () => {
+      setTrack(null);
+    };
   }, [album, params]);
 
-  return [artist, setParams];
+  return [artist, album, setParams];
 };
 
 export default useCurrentArtistUpdate;

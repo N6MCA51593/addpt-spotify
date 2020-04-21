@@ -7,7 +7,8 @@ import {
   SET_CURRENT_ARTIST,
   SET_CURRENT_ALBUM,
   CLEAR_CURRENT,
-  TOGGLE_ARTIST
+  TOGGLE_ARTIST,
+  DELETE_ARTIST
 } from '../types';
 
 export default (state, action) => {
@@ -74,6 +75,17 @@ export default (state, action) => {
           ),
           action.payload
         ]
+      };
+    case DELETE_ARTIST:
+      return {
+        ...state,
+        artists: [
+          ...state.artists.filter(artistsE => artistsE._id !== action.payload)
+        ],
+        message: `${
+          state.artists.filter(artistsE => artistsE._id === action.payload)[0]
+            .name
+        } has been removed from your library`
       };
 
     default:

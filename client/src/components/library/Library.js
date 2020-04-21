@@ -16,6 +16,7 @@ export const Library = () => {
     currentArtist,
     currentAlbum,
     setCurrentArtist,
+    setCurrentAlbum,
     toggleArtist
   } = useContext(LibraryContext);
   const { setAlert } = useContext(AlertContext);
@@ -27,7 +28,7 @@ export const Library = () => {
     method: 'get'
   });
 
-  const [artist, setParams] = useCurrentArtistUpdate();
+  const [artist, album, setParams] = useCurrentArtistUpdate();
 
   const toggleTracking = (albumID, trackID, listens) => {
     setParams({
@@ -53,6 +54,10 @@ export const Library = () => {
       setCurrentArtist(artist);
     }
   }, [artist]);
+
+  useEffect(() => {
+    setCurrentAlbum(album);
+  }, [album]);
 
   useEffect(() => {
     if (!childUnmounted && state.data && Array.isArray(state.data)) {

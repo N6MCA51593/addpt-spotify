@@ -8,7 +8,8 @@ import {
   SET_CURRENT_ARTIST,
   SET_CURRENT_ALBUM,
   CLEAR_CURRENT,
-  TOGGLE_ARTIST
+  TOGGLE_ARTIST,
+  DELETE_ARTIST
 } from '../types';
 import LibraryContext from './libraryContext';
 import libraryReducer from './libraryReducer';
@@ -57,6 +58,10 @@ const LibraryState = props => {
     dispatch({ type: TOGGLE_ARTIST, payload: artist });
   };
 
+  const deleteArtist = artistID => {
+    dispatch({ type: DELETE_ARTIST, payload: artistID });
+  };
+
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
   };
@@ -78,7 +83,8 @@ const LibraryState = props => {
         setCurrentArtist,
         setCurrentAlbum,
         clearCurrent,
-        toggleArtist
+        toggleArtist,
+        deleteArtist
       }}
     >
       {props.children}

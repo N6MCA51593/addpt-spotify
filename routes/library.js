@@ -63,14 +63,16 @@ router.put('/', [auth], async (req, res) => {
         } else {
           track.isTracked = !track.isTracked;
           if (
-            album.tracks.filter(trackE => trackE.isTracked === true).length ===
-              1 ||
+            (album.tracks.filter(trackE => trackE.isTracked === true).length ===
+              1 &&
+              track.isTracked === true) ||
             album.tracks.every(trackE => trackE.isTracked === false)
           ) {
             album.isTracked = track.isTracked;
             if (
-              artist.albums.filter(albumE => albumE.isTracked === true)
-                .length === 1 ||
+              (artist.albums.filter(albumE => albumE.isTracked === true)
+                .length === 1 &&
+                album.isTracked === true) ||
               artist.albums.every(albumE => albumE.isTracked === false)
             ) {
               artist.isTracked = album.isTracked;
@@ -85,8 +87,9 @@ router.put('/', [auth], async (req, res) => {
             : (trackE.isTracked = false)
         );
         if (
-          artist.albums.filter(albumE => albumE.isTracked === true).length ===
-            1 ||
+          (artist.albums.filter(albumE => albumE.isTracked === true).length ===
+            1 &&
+            album.isTracked === true) ||
           artist.albums.every(albumE => albumE.isTracked === false)
         ) {
           artist.isTracked = album.isTracked;

@@ -5,7 +5,7 @@ import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
-const ArtistItem = ({ artist, toggleArtistSetConfig }) => {
+const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
   const { addArtist, setCurrentArtist } = useContext(LibraryContext);
 
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
@@ -63,6 +63,11 @@ const ArtistItem = ({ artist, toggleArtistSetConfig }) => {
             type='button'
             value='Toggle archived'
             onClick={() => toggleArchived(artist._id)}
+          />
+          <input
+            type='button'
+            value='Delete artist'
+            onClick={() => delArtist(artist._id, artist.name)}
           />
           {!artist.isArchived && (
             <Fragment>
