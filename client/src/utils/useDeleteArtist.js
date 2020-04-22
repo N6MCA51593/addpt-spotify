@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useAPIRequest from './useAPIRequest';
 
 const useDeleteArtist = () => {
-  const [{}, setConfig] = useAPIRequest({});
+  const setConfig = useAPIRequest({})[1];
   const [id, setID] = useState(null);
   const [name, setName] = useState(null);
   const [confirmed, setConfirmed] = useState(false);

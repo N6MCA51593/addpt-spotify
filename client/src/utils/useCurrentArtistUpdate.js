@@ -36,7 +36,6 @@ const useCurrentArtistUpdate = () => {
 
   useEffect(() => {
     if (params && track) {
-      console.log(track.isTracked);
       const { albumInit } = getParams(params);
       if (
         (albumInit.tracks.filter(trackE => trackE.isTracked === true).length ===

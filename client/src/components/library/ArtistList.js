@@ -1,14 +1,15 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import ArtistItem from './ArtistItem';
-import DeleteArtistOrAlbum from './DeleteArtist';
+import DeleteArtist from './DeleteArtist';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
 import useAPIRequest from '../../utils/useAPIRequest';
-import useDeleteArtistOrAlbum from '../../utils/useDeleteArtist';
+import useDeleteArtist from '../../utils/useDeleteArtist';
+import useSettings from '../../utils/useSettings';
 
 const ArtistList = () => {
   const { artists, loading, toggleArtist, deleteArtist } = useContext(
@@ -16,7 +17,12 @@ const ArtistList = () => {
   );
   const { isShowing, type, toggle, setIsShowing, setType } = useModal();
   const [{ data, isError }, setConfig] = useAPIRequest({});
-  const { id, name, setName, setID, setConfirmed } = useDeleteArtistOrAlbum();
+  const { id, name, setName, setID, setConfirmed } = useDeleteArtist();
+  const { assessArtist } = useSettings();
+
+  if (artists) {
+    console.log(assessArtist(artists[0]));
+  }
 
   useEffect(() => {
     setIsShowing(false);
@@ -45,7 +51,7 @@ const ArtistList = () => {
         <Fragment>
           <Modal isShowing={isShowing} hide={toggle}>
             {type === 'delete' ? (
-              <DeleteArtistOrAlbum
+              <DeleteArtist
                 id={id}
                 name={name}
                 deleteArtist={deleteArtist}

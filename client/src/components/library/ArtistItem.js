@@ -48,7 +48,7 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
         <LoadingSpinner />
       ) : (
         <img
-          src={artist.img[2] ? artist.img[2].url : placeholder}
+          src={artist.img[0] ? artist.img[0].url : placeholder}
           alt={artist.name}
         />
       )}
