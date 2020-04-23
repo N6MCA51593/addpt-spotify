@@ -1,8 +1,7 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import ArtistItem from './ArtistItem';
 import DeleteArtist from './DeleteArtist';
-import LoadingSpinner from '../layout/LoadingSpinner';
 import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
@@ -12,17 +11,11 @@ import useDeleteArtist from '../../utils/useDeleteArtist';
 import useSettings from '../../utils/useSettings';
 
 const ArtistList = () => {
-  const { artists, loading, toggleArtist, deleteArtist } = useContext(
-    LibraryContext
-  );
+  const { artists, toggleArtist, deleteArtist } = useContext(LibraryContext);
   const { isShowing, type, toggle, setIsShowing, setType } = useModal();
   const [{ data, isError }, setConfig] = useAPIRequest({});
   const { id, name, setName, setID, setConfirmed } = useDeleteArtist();
-  const { assessArtist } = useSettings();
-
-  if (artists) {
-    console.log(assessArtist(artists[0]));
-  }
+  const { assessArr } = useSettings();
 
   useEffect(() => {
     setIsShowing(false);
@@ -41,77 +34,67 @@ const ArtistList = () => {
     setName(name);
   };
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   return (
     <div className='wrapper'>
-      {artists && (
-        <Fragment>
-          <Modal isShowing={isShowing} hide={toggle}>
-            {type === 'delete' ? (
-              <DeleteArtist
-                id={id}
-                name={name}
-                deleteArtist={deleteArtist}
-                hide={toggle}
-                setConfirmed={setConfirmed}
-                setType={setType}
+      <Modal isShowing={isShowing} hide={toggle}>
+        {type === 'delete' ? (
+          <DeleteArtist
+            id={id}
+            name={name}
+            deleteArtist={deleteArtist}
+            hide={toggle}
+            setConfirmed={setConfirmed}
+            setType={setType}
+          />
+        ) : (
+          <SearchModal />
+        )}
+      </Modal>
+      <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
+        {artists
+          .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
+          .map(artistsE => {
+            return (
+              <ArtistItem
+                key={artistsE._id}
+                artist={artistsE}
+                toggleArtistSetConfig={setConfig}
+                delArtist={delArtist}
               />
-            ) : (
-              <SearchModal />
-            )}
-          </Modal>
-          <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
-            {artists
-              .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
-              .map(artistsE => {
-                return (
-                  <ArtistItem
-                    key={artistsE._id}
-                    artist={artistsE}
-                    toggleArtistSetConfig={setConfig}
-                    delArtist={delArtist}
-                  />
-                );
-              })}
-          </Accordion>
-          {artists.some(
-            artistE => !artistE.isTracked && !artistE.isArchived
-          ) && (
-            <Accordion openByDef={false} title={'Not Tracked'}>
-              {artists
-                .filter(artistsE => !artistsE.isTracked && !artistsE.isArchived)
-                .map(artistsE => {
-                  return (
-                    <ArtistItem
-                      key={artistsE._id}
-                      artist={artistsE}
-                      toggleArtistSetConfig={setConfig}
-                      delArtist={delArtist}
-                    />
-                  );
-                })}
-            </Accordion>
-          )}
-          {artists.some(artistE => artistE.isArchived) && (
-            <Accordion openByDef={false} title={'Archived'}>
-              {artists
-                .filter(artistsE => artistsE.isArchived)
-                .map(artistsE => {
-                  return (
-                    <ArtistItem
-                      key={artistsE._id}
-                      artist={artistsE}
-                      toggleArtistSetConfig={setConfig}
-                      delArtist={delArtist}
-                    />
-                  );
-                })}
-            </Accordion>
-          )}
-        </Fragment>
+            );
+          })}
+      </Accordion>
+      {artists.some(artistE => !artistE.isTracked && !artistE.isArchived) && (
+        <Accordion openByDef={false} title={'Not Tracked'}>
+          {artists
+            .filter(artistsE => !artistsE.isTracked && !artistsE.isArchived)
+            .map(artistsE => {
+              return (
+                <ArtistItem
+                  key={artistsE._id}
+                  artist={artistsE}
+                  toggleArtistSetConfig={setConfig}
+                  delArtist={delArtist}
+                />
+              );
+            })}
+        </Accordion>
+      )}
+      {artists.some(artistE => artistE.isArchived) && (
+        <Accordion openByDef={false} title={'Archived'}>
+          {artists
+            .filter(artistsE => artistsE.isArchived)
+            .map(artistsE => {
+              return (
+                <ArtistItem
+                  key={artistsE._id}
+                  artist={artistsE}
+                  toggleArtistSetConfig={setConfig}
+                  delArtist={delArtist}
+                />
+              );
+            })}
+        </Accordion>
       )}
     </div>
   );

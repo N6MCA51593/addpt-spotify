@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import useAPIRequest from './useAPIRequest';
 
 const useSettings = () => {
@@ -53,6 +52,23 @@ const useSettings = () => {
     return res > 100 ? 100 : Math.round(res);
   };
 
+  const assessArr = arr => {
+    const reducer = (accum, ent) => {
+      if (ent.isTracked && ent.discNumber) {
+        accum[0] += assessTrack(ent);
+        accum[1] += 1;
+      } else if (ent.isTracked && !ent.discNumber && !ent.isArchived) {
+        const next = ent.albums ? ent.albums : ent.tracks;
+        accum[0] += assessArr(next);
+        accum[1] += 1;
+      }
+      return accum;
+    };
+    const res = arr.reduce(reducer, [0, 0]);
+    console.log(res);
+    return res[0] / res[1];
+  };
+
   const assessAlbum = album => {
     const reducer = (accum, track) => {
       if (track.isTracked) {
@@ -77,7 +93,7 @@ const useSettings = () => {
     return Math.round(res[0] / res[1]);
   };
 
-  return { assessTrack, assessAlbum, assessArtist };
+  return { assessTrack, assessAlbum, assessArtist, assessArr };
 };
 
 useSettings.propTypes = {};

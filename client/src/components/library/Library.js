@@ -6,6 +6,7 @@ import useCurrentArtistUpdate from '../../utils/useCurrentArtistUpdate';
 import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
 import TrackSection from '../layout/TrackSection';
+import LoadingSpinner from '../layout/LoadingSpinner';
 
 export const Library = () => {
   const {
@@ -17,13 +18,14 @@ export const Library = () => {
     currentAlbum,
     setCurrentArtist,
     setCurrentAlbum,
-    toggleArtist
+    toggleArtist,
+    loading
   } = useContext(LibraryContext);
   const { setAlert } = useContext(AlertContext);
 
-  const [childUnmounted, setChildUnmounted] = useState(false);
+  const [childUnmounted, setChildUnmounted] = useState(null);
 
-  const [state, setConfig] = useAPIRequest({
+  const [{ isError, data }, setConfig] = useAPIRequest({
     url: '/api/library',
     method: 'get'
   });
@@ -35,7 +37,7 @@ export const Library = () => {
       artistInit: currentArtist,
       albumID: albumID,
       ...(trackID ? { trackID: trackID } : {}),
-      ...(listens ? { listens: listens } : {})
+      ...(listens !== undefined ? { listens: listens } : {})
     });
     setConfig({
       url: '/api/library',
@@ -44,7 +46,7 @@ export const Library = () => {
         artistid: currentArtist._id,
         albumid: albumID,
         ...(trackID ? { trackid: trackID } : {}),
-        ...(listens ? { listens: listens } : {})
+        ...(listens !== undefined ? { listens: listens } : {})
       }
     });
   };
@@ -60,14 +62,14 @@ export const Library = () => {
   }, [album]);
 
   useEffect(() => {
-    if (!childUnmounted && state.data && Array.isArray(state.data)) {
-      loadLibrary(state);
-    } else if (childUnmounted && state.data && !Array.isArray(state.data)) {
-      setChildUnmounted(false);
-      toggleArtist(state.data);
+    if (!childUnmounted && data && Array.isArray(data)) {
+      loadLibrary(isError, data);
+    } else if (data && data._id === childUnmounted) {
+      setChildUnmounted(null);
+      toggleArtist(data);
     }
     // eslint-disable-next-line
-  }, [state, childUnmounted]);
+  }, [data, childUnmounted]);
 
   useEffect(() => {
     if (error) {
@@ -80,6 +82,10 @@ export const Library = () => {
     }
     // eslint-disable-next-line
   }, [error, message]);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <Fragment>

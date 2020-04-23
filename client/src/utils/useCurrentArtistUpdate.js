@@ -27,8 +27,9 @@ const useCurrentArtistUpdate = () => {
       if (trackInit) {
         setTrack({
           ...trackInit,
-          isTracked: listens ? trackInit.isTracked : !trackInit.isTracked,
-          listens: listens ? listens : trackInit.listens
+          isTracked:
+            listens !== undefined ? trackInit.isTracked : !trackInit.isTracked,
+          listens: listens !== undefined ? listens : trackInit.listens
         });
       }
     }

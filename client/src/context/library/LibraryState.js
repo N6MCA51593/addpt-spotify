@@ -27,7 +27,7 @@ const LibraryState = props => {
   const [state, dispatch] = useReducer(libraryReducer, initialState);
 
   // Load Library
-  const loadLibrary = ({ isError, data }) => {
+  const loadLibrary = (isError, data) => {
     if (!isError) {
       dispatch({
         type: GET_LIBRARY,

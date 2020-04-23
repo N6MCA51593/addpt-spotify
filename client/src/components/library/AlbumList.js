@@ -1,7 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import AlbumItem from './AlbumItem';
-import LoadingSpinner from '../layout/LoadingSpinner';
 import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
@@ -11,7 +10,7 @@ import placeholder from '../layout/placeholder.png';
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const libraryContext = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
-  const { loading, currentArtist, clearCurrent } = libraryContext;
+  const { currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
 
   useEffect(() => {
@@ -20,13 +19,9 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
 
   useEffect(() => {
     return () => {
-      setChildUnmounted(true);
+      setChildUnmounted(currentArtist._id);
     };
   }, [setChildUnmounted]);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <Fragment>
