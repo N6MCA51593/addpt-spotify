@@ -4,9 +4,11 @@ import placeholder from '../layout/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import useSettings from '../../utils/useSettings';
 
 const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
   const { addArtist, setCurrentArtist } = useContext(LibraryContext);
+  const { assessArr } = useSettings(artist);
 
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
 
@@ -59,6 +61,7 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
         </button>
       ) : (
         <Fragment>
+          <p>Artist progress: {assessArr(artist.albums)}</p>
           <input
             type='button'
             value='Toggle archived'

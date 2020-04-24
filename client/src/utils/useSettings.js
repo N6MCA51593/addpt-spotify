@@ -1,17 +1,26 @@
 import { useEffect, useState } from 'react';
 import useAPIRequest from './useAPIRequest';
 
-const useSettings = () => {
+const useSettings = (archivedArtist = null) => {
   const [{ data }, setConfig] = useAPIRequest({});
-  const [artistThresholds, setArtistThresholds] = useState(
-    JSON.parse(localStorage.getItem('artistThresholds'))
-  );
-  const [albumThresholds, setAlbumThresholds] = useState(
-    JSON.parse(localStorage.getItem('albumThresholds'))
-  );
-  const [trackThresholds, setTrackThresholds] = useState(
-    JSON.parse(localStorage.getItem('trackThresholds'))
-  );
+  const artistState =
+    archivedArtist && archivedArtist.isArchived
+      ? archivedArtist.settingsSnapshot[2]
+      : JSON.parse(localStorage.getItem('artistThresholds'));
+  const albumState =
+    archivedArtist && archivedArtist.isArchived
+      ? archivedArtist.settingsSnapshot[1]
+      : JSON.parse(localStorage.getItem('albumThresholds'));
+  const trackState =
+    archivedArtist && archivedArtist.isArchived
+      ? archivedArtist.settingsSnapshot[0]
+      : JSON.parse(localStorage.getItem('trackThresholds'));
+
+  const [artistThresholds, setArtistThresholds] = useState(artistState);
+
+  const [albumThresholds, setAlbumThresholds] = useState(albumState);
+
+  const [trackThresholds, setTrackThresholds] = useState(trackState);
 
   useEffect(() => {
     if (!albumThresholds || !artistThresholds || !trackThresholds) {
@@ -65,35 +74,10 @@ const useSettings = () => {
       return accum;
     };
     const res = arr.reduce(reducer, [0, 0]);
-    console.log(res);
     return res[0] / res[1];
   };
 
-  const assessAlbum = album => {
-    const reducer = (accum, track) => {
-      if (track.isTracked) {
-        accum[0] += assessTrack(track);
-        accum[1] += 1;
-      }
-      return accum;
-    };
-    const res = album.tracks.reduce(reducer, [0, 0]);
-    return Math.round(res[0] / res[1]);
-  };
-
-  const assessArtist = artist => {
-    const reducer = (accum, album) => {
-      if (album.isTracked) {
-        accum[0] += assessAlbum(album);
-        accum[1] += 1;
-      }
-      return accum;
-    };
-    const res = artist.albums.reduce(reducer, [0, 0]);
-    return Math.round(res[0] / res[1]);
-  };
-
-  return { assessTrack, assessAlbum, assessArtist, assessArr };
+  return { assessTrack, assessArr };
 };
 
 useSettings.propTypes = {};

@@ -36,6 +36,7 @@ const ArtistList = () => {
 
   return (
     <div className='wrapper'>
+      <p>Collection progress: {assessArr(artists)}</p>
       <Modal isShowing={isShowing} hide={toggle}>
         {type === 'delete' ? (
           <DeleteArtist

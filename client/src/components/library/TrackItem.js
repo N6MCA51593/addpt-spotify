@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import useSettings from '../../utils/useSettings';
 
 const TrackItem = ({ track, toggleTracking, albumID }) => {
   const [listens, setListens] = useState(track.listens);
-
+  const { assessTrack } = useSettings();
   const trackID = track._id;
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
     setListens(listens + 1);
   };
   const decListens = () => {
-    setListens(listens - 1);
+    setListens(listens === 0 ? listens : listens - 1);
   };
 
   return (
@@ -25,6 +26,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
       {albumID && (
         <Fragment>
           <p>{'Listens: ' + listens}</p>
+          <p>Track progress: {assessTrack(track)}</p>
           <p>{'Tracked: ' + track.isTracked.toString()}</p>
           <input
             type='button'

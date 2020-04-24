@@ -4,10 +4,11 @@ import placeholder from '../layout/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import useSettings from '../../utils/useSettings';
 
 const AlbumItem = ({ album, artistID, toggleTracking }) => {
   const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
-
+  const { assessArr } = useSettings();
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
         </button>
       ) : (
         <Fragment>
+          <p>Album progress: {assessArr(album.tracks)}</p>
           <input
             type='button'
             value='Set current'

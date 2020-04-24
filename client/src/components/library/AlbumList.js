@@ -6,10 +6,12 @@ import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
 import placeholder from '../layout/placeholder.png';
+import useSettings from '../../utils/useSettings';
 
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const libraryContext = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
+  const { assessArr } = useSettings();
   const { currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
 
@@ -28,6 +30,7 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
       <div className='container'>
         <p>{currentArtist.name}</p>
         <p>{currentArtist.isTracked.toString()}</p>
+        <p>Artist progress: {assessArr(albums)}</p>
         <img
           src={currentArtist.img[2] ? currentArtist.img[2].url : placeholder}
           alt={currentArtist.name}
