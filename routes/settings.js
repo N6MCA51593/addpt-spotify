@@ -10,7 +10,7 @@ router.get('/', [auth], async (req, res) => {
   try {
     const settings = await User.findOne(
       { spID: req.user.id },
-      'artistThresholds albumThresholds trackThresholds -_id',
+      'artistThresholds albumThresholds trackThresholds doNotTrack -_id',
       {
         lean: true
       }
@@ -30,6 +30,7 @@ router.get('/', [auth], async (req, res) => {
 // @desc      Change user settings
 // @access    Private (jwt)
 router.put('/', [auth], async (req, res) => {
+  console.log(req.body);
   const update = ({
     doNotTrack,
     trackThresholds,

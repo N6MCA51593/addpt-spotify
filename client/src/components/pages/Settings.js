@@ -1,9 +1,10 @@
 import React from 'react';
+import SettingsComponent from '../settings/SettingsComponent';
 
-export const Settings = () => {
+const Settings = () => {
   return (
-    <div>
-      <h1>Settings page</h1>
+    <div className='container'>
+      <SettingsComponent />
     </div>
   );
 };

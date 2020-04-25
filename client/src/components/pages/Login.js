@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/authContext';
 import AlertContext from '../../context/alert/alertContext';
 
-export const Login = props => {
+const Login = props => {
   const { isAuthenticated, error, clearErrors } = useContext(AuthContext);
   const { setAlert } = useContext(AlertContext);
 

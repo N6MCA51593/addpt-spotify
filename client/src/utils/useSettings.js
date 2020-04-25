@@ -22,8 +22,17 @@ const useSettings = (archivedArtist = null) => {
 
   const [trackThresholds, setTrackThresholds] = useState(trackState);
 
+  const [doNotTrack, setDoNotTrack] = useState(
+    JSON.parse(localStorage.getItem('doNotTrack'))
+  );
+
   useEffect(() => {
-    if (!albumThresholds || !artistThresholds || !trackThresholds) {
+    if (
+      !albumThresholds ||
+      !artistThresholds ||
+      !trackThresholds ||
+      doNotTrack === null
+    ) {
       setConfig({
         url: 'api/settings',
         method: 'get'
@@ -44,6 +53,8 @@ const useSettings = (archivedArtist = null) => {
           'trackThresholds',
           JSON.stringify(data.trackThresholds)
         );
+        setDoNotTrack(data.doNotTrack);
+        localStorage.setItem('trackThresholds', data.doNotTrack);
       }
     }
   }, [
@@ -53,6 +64,8 @@ const useSettings = (archivedArtist = null) => {
     setTrackThresholds,
     artistThresholds,
     trackThresholds,
+    doNotTrack,
+    setDoNotTrack,
     data
   ]);
 
@@ -77,7 +90,15 @@ const useSettings = (archivedArtist = null) => {
     return res[0] / res[1];
   };
 
-  return { assessTrack, assessArr };
+  return {
+    assessTrack,
+    assessArr,
+    albumThresholds,
+    trackThresholds,
+    artistThresholds,
+    doNotTrack,
+    setDoNotTrack
+  };
 };
 
 useSettings.propTypes = {};

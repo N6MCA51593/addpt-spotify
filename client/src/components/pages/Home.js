@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Library from '../library/Library';
 
-export const Home = () => {
+const Home = () => {
   return (
     <Fragment>
       <Library />
