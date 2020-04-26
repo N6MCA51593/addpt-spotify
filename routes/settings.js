@@ -30,7 +30,6 @@ router.get('/', [auth], async (req, res) => {
 // @desc      Change user settings
 // @access    Private (jwt)
 router.put('/', [auth], async (req, res) => {
-  console.log(req.body);
   const update = ({
     doNotTrack,
     trackThresholds,

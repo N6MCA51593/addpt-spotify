@@ -16,12 +16,10 @@ const useSettings = (archivedArtist = null) => {
       ? archivedArtist.settingsSnapshot[0]
       : JSON.parse(localStorage.getItem('trackThresholds'));
 
+  const [areLoaded, setAreLoaded] = useState(false);
   const [artistThresholds, setArtistThresholds] = useState(artistState);
-
   const [albumThresholds, setAlbumThresholds] = useState(albumState);
-
   const [trackThresholds, setTrackThresholds] = useState(trackState);
-
   const [doNotTrack, setDoNotTrack] = useState(
     JSON.parse(localStorage.getItem('doNotTrack'))
   );
@@ -54,8 +52,11 @@ const useSettings = (archivedArtist = null) => {
           JSON.stringify(data.trackThresholds)
         );
         setDoNotTrack(data.doNotTrack);
-        localStorage.setItem('trackThresholds', data.doNotTrack);
+        localStorage.setItem('doNotTrack', data.doNotTrack);
+        setAreLoaded(true);
       }
+    } else {
+      setAreLoaded(true);
     }
   }, [
     albumThresholds,
@@ -66,38 +67,43 @@ const useSettings = (archivedArtist = null) => {
     trackThresholds,
     doNotTrack,
     setDoNotTrack,
-    data
+    data,
+    setAreLoaded
   ]);
 
   const assessTrack = track => {
-    const res = track.listens * (100 / trackThresholds[3]);
-    return res > 100 ? 100 : Math.round(res);
+    if (areLoaded) {
+      const res = track.listens * (100 / trackThresholds[3]);
+      return res > 100 ? 100 : Math.round(res);
+    }
   };
 
   const assessArr = arr => {
-    const reducer = (accum, ent) => {
-      if (ent.isTracked && ent.discNumber) {
-        accum[0] += assessTrack(ent);
-        accum[1] += 1;
-      } else if (ent.isTracked && !ent.discNumber && !ent.isArchived) {
-        const next = ent.albums ? ent.albums : ent.tracks;
-        accum[0] += assessArr(next);
-        accum[1] += 1;
-      }
-      return accum;
-    };
-    const res = arr.reduce(reducer, [0, 0]);
-    return res[0] / res[1];
+    if (areLoaded) {
+      const reducer = (accum, ent) => {
+        if (ent.isTracked && ent.discNumber) {
+          accum[0] += assessTrack(ent);
+          accum[1] += 1;
+        } else if (ent.isTracked && !ent.discNumber && !ent.isArchived) {
+          const next = ent.albums ? ent.albums : ent.tracks;
+          accum[0] += assessArr(next);
+          accum[1] += 1;
+        }
+        return accum;
+      };
+      const res = arr.reduce(reducer, [0, 0]);
+      return res[0] / res[1];
+    }
   };
 
   return {
     assessTrack,
     assessArr,
+    setDoNotTrack,
     albumThresholds,
     trackThresholds,
     artistThresholds,
-    doNotTrack,
-    setDoNotTrack
+    doNotTrack
   };
 };
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import SettingsComponent from '../settings/SettingsComponent';
 
-const Settings = () => {
+const Settings = props => {
   return (
     <div className='container'>
-      <SettingsComponent />
+      <SettingsComponent {...props} />
     </div>
   );
 };
