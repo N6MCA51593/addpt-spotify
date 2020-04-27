@@ -17,7 +17,7 @@ const useCurrentArtistUpdate = () => {
   };
 
   const trackSorting = (a, b) => {
-    return a.discNumber >= b.discNumber && a.number >= b.number ? 1 : 0;
+    return a.discNumber >= b.discNumber && a.number >= b.number ? 1 : -1;
   };
 
   useEffect(() => {

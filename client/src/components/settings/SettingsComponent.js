@@ -22,7 +22,7 @@ const SettingsComponent = props => {
     trackClassName: 'example-track',
     renderThumb: (props, state) => <div {...props}>{state.valueNow}</div>,
     pearling: true,
-    minDistance: 5
+    minDistance: 1
   };
 
   useEffect(() => {

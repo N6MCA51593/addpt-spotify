@@ -7,11 +7,13 @@ import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
 import placeholder from '../layout/placeholder.png';
 import useSettings from '../../utils/useSettings';
+import useSorting from '../../utils/useSorting';
 
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const libraryContext = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
   const { assessArr } = useSettings();
+  const { sortArr } = useSorting();
   const { currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
 
@@ -46,7 +48,7 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
             />
           </Modal>
           <Accordion openByDef={true} title={'Albums'} toggle={toggle}>
-            {albums
+            {sortArr(albums)
               .filter(albumsE => albumsE.releaseType === 'album')
               .map(albumsE => {
                 return (
@@ -60,7 +62,7 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
           </Accordion>
           {albums.some(albumsE => albumsE.releaseType === 'single') && (
             <Accordion openByDef={false} title={'Singles'}>
-              {albums
+              {sortArr(albums)
                 .filter(albumsE => albumsE.releaseType === 'single')
                 .map(albumsE => {
                   return (
@@ -75,7 +77,7 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
           )}
           {albums.some(albumsE => albumsE.releaseType === 'compilation') && (
             <Accordion openByDef={false} title={'Compilations'}>
-              {albums
+              {sortArr(albums)
                 .filter(albumsE => albumsE.releaseType === 'compilation')
                 .map(albumsE => {
                   return (

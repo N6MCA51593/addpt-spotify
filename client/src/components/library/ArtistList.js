@@ -9,6 +9,7 @@ import Modal from '../layout/Modal';
 import useAPIRequest from '../../utils/useAPIRequest';
 import useDeleteArtist from '../../utils/useDeleteArtist';
 import useSettings from '../../utils/useSettings';
+import useSorting from '../../utils/useSorting';
 
 const ArtistList = () => {
   const { artists, toggleArtist, deleteArtist } = useContext(LibraryContext);
@@ -16,6 +17,7 @@ const ArtistList = () => {
   const [{ data, isError }, setConfig] = useAPIRequest({});
   const { id, name, setName, setID, setConfirmed } = useDeleteArtist();
   const { assessArr } = useSettings();
+  const { sortArr } = useSorting();
 
   useEffect(() => {
     setIsShowing(false);
@@ -52,7 +54,7 @@ const ArtistList = () => {
         )}
       </Modal>
       <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
-        {artists
+        {sortArr(artists)
           .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
           .map(artistsE => {
             return (
@@ -67,7 +69,7 @@ const ArtistList = () => {
       </Accordion>
       {artists.some(artistE => !artistE.isTracked && !artistE.isArchived) && (
         <Accordion openByDef={false} title={'Not Tracked'}>
-          {artists
+          {sortArr(artists)
             .filter(artistsE => !artistsE.isTracked && !artistsE.isArchived)
             .map(artistsE => {
               return (
@@ -83,7 +85,7 @@ const ArtistList = () => {
       )}
       {artists.some(artistE => artistE.isArchived) && (
         <Accordion openByDef={false} title={'Archived'}>
-          {artists
+          {sortArr(artists)
             .filter(artistsE => artistsE.isArchived)
             .map(artistsE => {
               return (
