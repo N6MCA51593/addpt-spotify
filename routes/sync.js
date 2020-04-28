@@ -22,4 +22,15 @@ router.post('/', [auth, authSpotify], async (req, res) => {
   }
 });
 
+router.get('/stream', (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    Connection: 'keep-alive'
+  });
+  req.app.on('message', data => {
+    res.write(data.toString());
+  });
+});
+
 module.exports = router;
