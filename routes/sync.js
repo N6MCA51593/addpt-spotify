@@ -26,7 +26,7 @@ router.get('/stream', (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
-    Connection: 'keep-alive'
+    Connection: 'keep-alive '
   });
   req.app.on('message', data => {
     res.write(data.toString());
