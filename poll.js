@@ -11,12 +11,16 @@ module.exports = async () => {
       const result = await Promise.allSettled(
         users.map(userE => updateHistory(null, userE.spID))
       );
+      const toStream = result
+        .filter(resultE => resultE.status === 'fulfilled')
+        .map(resultE => resultE.value);
       const report = `Update conducted at ${new Date()} yielded ${
         result.filter(resultE => resultE.status === 'rejected').length > 0
           ? result.filter(resultE => resultE.status === 'rejected').length
           : 'no'
       } errors`;
       console.log(report);
+      return toStream;
     }
   } catch (err) {
     console.error(err);

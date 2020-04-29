@@ -7,6 +7,7 @@ import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
 import TrackSection from '../layout/TrackSection';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import useSSE from '../../utils/useSSE';
 
 export const Library = () => {
   const {
@@ -22,7 +23,7 @@ export const Library = () => {
     loading
   } = useContext(LibraryContext);
   const { setAlert } = useContext(AlertContext);
-
+  useSSE();
   const [childUnmounted, setChildUnmounted] = useState(null);
 
   const [{ isError, data }, setConfig] = useAPIRequest({
