@@ -57,7 +57,7 @@ const SettingsComponent = props => {
         <ReactSlider {...sliderProps} value={trackThresholds} />
         <ReactSlider {...sliderProps} value={albumThresholds} />
         <ReactSlider {...sliderProps} value={artistThresholds} />
-        <label htmlFor='tracking'>Enable automatic tracking</label>
+        <label htmlFor='tracking'>Disable automatic tracking</label>
         <input
           type='checkbox'
           name='tracking'

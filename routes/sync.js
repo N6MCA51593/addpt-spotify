@@ -23,15 +23,22 @@ router.post('/', [auth, authSpotify], async (req, res) => {
 });
 
 router.get('/stream', [auth], (req, res) => {
+  const user = req.user.id;
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     Connection: 'keep-alive'
   });
   req.app.on('update', toStream => {
-    res.write('event: message\n');
-    res.write('data: hello\n');
-    res.write('\n\n');
+    if (toStream.some(toStreamE => toStreamE.user === user)) {
+      res.write('event: message\n');
+      res.write(
+        `data: ${JSON.stringify(
+          toStream.find(toStreamE => toStreamE.user === user)
+        )}\n`
+      );
+      res.write('\n\n');
+    }
   });
 });
 

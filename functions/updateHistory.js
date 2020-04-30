@@ -108,7 +108,7 @@ module.exports = async (accessToken, id) => {
         history.date = timestamp;
         await history.save();
         return {
-          user: userID,
+          user: id,
           msg: 'Recently listened tracks contain no tracked tracks'
         };
       }
@@ -162,9 +162,9 @@ module.exports = async (accessToken, id) => {
       }
       history.date = timestamp;
       await history.save();
-      return { user: userID, tracks: updatedTracks };
+      return { user: id, tracks: updatedTracks };
     } else {
-      return { user: userID, msg: 'No history changes since last sync' };
+      return { user: id, msg: 'No history changes since last sync' };
     }
   } catch (err) {
     const msg = err.response

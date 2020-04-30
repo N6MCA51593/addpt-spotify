@@ -2,7 +2,7 @@ import React from 'react';
 import History from '../library/History';
 import TrackItem from '../library/TrackItem';
 
-const TrackSection = ({ currentAlbum, toggleTracking }) => {
+const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
   return (
     <div className='history'>
       {currentAlbum ? (
@@ -16,7 +16,7 @@ const TrackSection = ({ currentAlbum, toggleTracking }) => {
           </div>
         ))
       ) : (
-        <History />
+        <History updArtists={updArtists} />
       )}
     </div>
   );

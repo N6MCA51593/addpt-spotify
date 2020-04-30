@@ -1,4 +1,3 @@
-import React from 'react';
 import useSettings from './useSettings';
 
 const useSorting = () => {

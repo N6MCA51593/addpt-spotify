@@ -68,7 +68,8 @@ const useSettings = (archivedArtist = null) => {
     doNotTrack,
     setDoNotTrack,
     data,
-    setAreLoaded
+    setAreLoaded,
+    setConfig
   ]);
 
   const assessTrack = track => {

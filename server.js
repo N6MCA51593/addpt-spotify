@@ -26,12 +26,11 @@ app.use('/api/sync', require('./routes/sync'));
 app.use('/api/history', require('./routes/history'));
 
 //Poll Spotify API for users' played tracks history changes
-const interval = 3600000;
+const interval = 60 * 60 * 1000;
 setInterval(async () => {
   const toStream = await poll();
   app.emit('update', toStream);
 }, interval);
-process.on('warning', e => console.warn(e.stack));
 app.get('/', (req, res) => res.json({ msg: 'Welcome to API' }));
 
 const PORT = process.env.PORT || 5000;

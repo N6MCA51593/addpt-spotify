@@ -10,6 +10,7 @@ import LoadingSpinner from '../layout/LoadingSpinner';
 import useSSE from '../../utils/useSSE';
 
 export const Library = () => {
+  const { setAlert } = useContext(AlertContext);
   const {
     loadLibrary,
     error,
@@ -22,8 +23,7 @@ export const Library = () => {
     toggleArtist,
     loading
   } = useContext(LibraryContext);
-  const { setAlert } = useContext(AlertContext);
-  useSSE();
+  const { msg, updArtists, reset } = useSSE();
   const [childUnmounted, setChildUnmounted] = useState(null);
 
   const [{ isError, data }, setConfig] = useAPIRequest({
@@ -40,6 +40,7 @@ export const Library = () => {
       ...(trackID ? { trackID: trackID } : {}),
       ...(listens !== undefined ? { listens: listens } : {})
     });
+
     setConfig({
       url: '/api/library',
       method: 'put',
@@ -55,12 +56,10 @@ export const Library = () => {
   useEffect(() => {
     if (artist) {
       setCurrentArtist(artist);
+    } else if (album) {
+      setCurrentAlbum(album);
     }
-  }, [artist]);
-
-  useEffect(() => {
-    setCurrentAlbum(album);
-  }, [album]);
+  }, [artist, album]);
 
   useEffect(() => {
     if (!childUnmounted && data && Array.isArray(data)) {
@@ -77,12 +76,23 @@ export const Library = () => {
       setAlert(error, 'danger');
       clearErrors();
     }
+
     if (message) {
       setAlert(message, 'success');
       clearErrors();
     }
+
+    if (msg) {
+      setAlert(msg, 'success');
+      reset();
+    }
+
+    if (updArtists) {
+      setAlert('Artists updated', 'success');
+      reset();
+    }
     // eslint-disable-next-line
-  }, [error, message]);
+  }, [error, message, msg, reset, updArtists]);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -101,6 +111,7 @@ export const Library = () => {
       <TrackSection
         currentAlbum={currentAlbum}
         toggleTracking={toggleTracking}
+        updArtists={updArtists}
       />
     </Fragment>
   );
