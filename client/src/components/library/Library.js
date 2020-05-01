@@ -8,6 +8,7 @@ import AlbumList from './AlbumList';
 import TrackSection from '../layout/TrackSection';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import useSSE from '../../utils/useSSE';
+import SSEUpdate from './SSEUpdate';
 
 export const Library = () => {
   const { setAlert } = useContext(AlertContext);
@@ -100,6 +101,7 @@ export const Library = () => {
 
   return (
     <Fragment>
+      <SSEUpdate updArtists={updArtists} />
       {currentArtist ? (
         <AlbumList
           toggleTracking={toggleTracking}

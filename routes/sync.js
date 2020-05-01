@@ -11,6 +11,7 @@ router.post('/', [auth, authSpotify], async (req, res) => {
   const { accessToken, id } = req.user;
   try {
     const result = await updateHistory(accessToken, id);
+    req.app.emit('update', [result]);
     res.json(result);
   } catch (err) {
     const status = err.response ? err.response.status : 500;
@@ -27,6 +28,7 @@ router.get('/stream', [auth], (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
+    'Content-Encoding': 'none',
     Connection: 'keep-alive'
   });
   req.app.on('update', toStream => {
