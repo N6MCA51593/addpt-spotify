@@ -5,6 +5,7 @@ const app = express();
 const cors = require('cors');
 const rateLimiter = require('./middleware/rateLimiter');
 const poll = require('./poll');
+const emitterObj = require('./emitter');
 const frontEndURI = process.env.FRONT_END_URI;
 
 connectDB();
@@ -29,7 +30,7 @@ app.use('/api/history', require('./routes/history'));
 const interval = 60 * 60 * 1000;
 setInterval(async () => {
   const toStream = await poll();
-  app.emit('update', toStream);
+  emitterObj.emitFunc('update', toStream);
 }, interval);
 app.get('/', (req, res) => res.json({ msg: 'Welcome to API' }));
 

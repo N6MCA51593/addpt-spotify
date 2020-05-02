@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const authSpotify = require('../middleware/authSpotify');
 const updateHistory = require('../functions/updateHistory');
+const emitterObj = require('../emitter');
 
 // @route     POST api/sync
 // @desc      Update listens and history
@@ -11,7 +12,7 @@ router.post('/', [auth, authSpotify], async (req, res) => {
   const { accessToken, id } = req.user;
   try {
     const result = await updateHistory(accessToken, id);
-    req.app.emit('update', [result]);
+    emitterObj.emitFunc('update', [result]);
     res.json(result);
   } catch (err) {
     const status = err.response ? err.response.status : 500;
@@ -24,24 +25,23 @@ router.post('/', [auth, authSpotify], async (req, res) => {
 });
 
 router.get('/stream', [auth], (req, res) => {
-  const user = req.user.id;
+  emitterObj.addCon(res);
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     'Content-Encoding': 'none',
     Connection: 'keep-alive'
   });
-  req.app.on('update', toStream => {
-    if (toStream.some(toStreamE => toStreamE.user === user)) {
-      res.write('event: message\n');
-      res.write(
-        `data: ${JSON.stringify(
-          toStream.find(toStreamE => toStreamE.user === user)
-        )}\n`
-      );
-      res.write('\n\n');
-    }
+  res.write('\n');
+  const intervalID = setInterval(() => {
+    res.write(`event: ping\n`);
+    res.write(`data: keep connection alive\n\n`);
+  }, 60 * 1000);
+  req.on('close', () => {
+    clearInterval(intervalID);
+    emitterObj.deleteCon(req);
   });
+  emitterObj.listenFunc;
 });
 
 module.exports = router;
