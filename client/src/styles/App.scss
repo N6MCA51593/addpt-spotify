@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import 'palette';
+
 :root {
   --primary-color: #003699;
   --dark-color: #333333;
@@ -19,7 +20,7 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
-  color: #333;
+  color: $dark-900;
 }
 
 .container {

@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.scss';
+import './styles/App.scss';
 import Login from './components/pages/Login';
 import Home from './components/pages/Home';
 import Settings from './components/pages/Settings';
