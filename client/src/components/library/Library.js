@@ -101,15 +101,17 @@ export const Library = () => {
 
   return (
     <Fragment>
-      <SSEUpdate updArtists={updArtists} />
-      {currentArtist ? (
-        <AlbumList
-          toggleTracking={toggleTracking}
-          setChildUnmounted={setChildUnmounted}
-        />
-      ) : (
-        <ArtistList />
-      )}
+      <div className='main-content'>
+        <SSEUpdate updArtists={updArtists} />
+        {currentArtist ? (
+          <AlbumList
+            toggleTracking={toggleTracking}
+            setChildUnmounted={setChildUnmounted}
+          />
+        ) : (
+          <ArtistList />
+        )}
+      </div>
       <TrackSection
         currentAlbum={currentAlbum}
         toggleTracking={toggleTracking}

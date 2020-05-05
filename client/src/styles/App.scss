@@ -19,8 +19,66 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
-  color: $dark-900;
+  background-color: $bg-main;
+  color: $text;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 20fr 5fr;
+  column-gap: 1rem;
+  min-height: 90vh;
+}
+
+// Navbar
+.navbar {
+  z-index: 1;
+  height: 100%;
+  opacity: 0.9;
+  text-align: center;
+  background-color: $bg-secondary;
+
+  ul {
+    list-style-type: none;
+    margin-top: 7rem;
+  }
+
+  li {
+    &:hover {
+      color: $bg-main;
+      background-color: $text;
+    }
+  }
+
+  .nav-link {
+    text-decoration: none;
+    display: block;
+
+    &:visited {
+      color: inherit;
+    }
+  }
+
+  .nav-link,
+  p {
+    cursor: pointer;
+    color: inherit;
+    padding: 1rem;
+    margin: 2rem 0rem;
+  }
+}
+
+// Footer
+.footer {
+  height: 100px;
+  background-color: $bg-secondary;
+}
+
+// Track section
+.track-section {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2rem;
 }
 
 .container {
@@ -140,25 +198,6 @@ body {
   }
 }
 
-.navbar {
-  background-color: var(--dark-color);
-  color: var(--light-color);
-  z-index: 1;
-  height: 100vh;
-  position: fixed;
-  width: 10%;
-  opacity: 0.9;
-  text-align: center;
-}
-
-.navbar ul {
-  list-style-type: none;
-}
-
-a:visited {
-  color: var(--light-color);
-}
-
 img {
   width: 140px;
   height: 140px;
@@ -224,17 +263,6 @@ img {
 .artist-description {
   margin: auto;
   width: 80%;
-}
-
-.history {
-  position: fixed;
-  height: 70%;
-  top: 30%;
-  right: 0;
-  max-width: 20%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 2rem;
 }
 
 .horizontal-slider {

@@ -10,10 +10,20 @@ import AuthContext from './context/auth/authContext';
 import PrivateRoute from './components/routing/PrivateRoute';
 import AlertState from './context/alert/AlertState';
 import LibraryState from './context/library/LibraryState';
+import Footer from './components/layout/Footer';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+  faHome,
+  faCog,
+  faDoorOpen,
+  faSyncAlt,
+  faCalendarAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
   const authContext = useContext(AuthContext);
   const { loadUser, isAuthenticated } = authContext;
+  library.add(faHome, faCog, faDoorOpen, faSyncAlt, faCalendarAlt);
 
   useEffect(() => {
     loadUser();
@@ -24,13 +34,16 @@ const App = () => {
       <LibraryState>
         <Router>
           <Fragment>
-            {isAuthenticated && <Navbar />}
-            <Alerts />
-            <Switch>
-              <Route exact path='/login' component={Login} />
-              <PrivateRoute exact path='/' component={Home} />
-              <PrivateRoute exact path='/settings' component={Settings} />
-            </Switch>
+            <div className='main-grid'>
+              {isAuthenticated && <Navbar />}
+              <Alerts />
+              <Switch>
+                <Route exact path='/login' component={Login} />
+                <PrivateRoute exact path='/' component={Home} />
+                <PrivateRoute exact path='/settings' component={Settings} />
+              </Switch>
+            </div>
+            <Footer />
           </Fragment>
         </Router>
       </LibraryState>

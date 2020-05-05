@@ -4,7 +4,7 @@ import TrackItem from '../library/TrackItem';
 
 const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
   return (
-    <div className='history'>
+    <div className='track-section'>
       {currentAlbum ? (
         currentAlbum.tracks.map(currentAlbumE => (
           <div key={currentAlbumE.spID}>

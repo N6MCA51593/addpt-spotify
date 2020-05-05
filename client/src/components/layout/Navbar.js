@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import useAPIRequest from '../../utils/useAPIRequest';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
@@ -12,16 +13,14 @@ const Navbar = () => {
     <div className='navbar'>
       <ul>
         <li>
-          <Link to='/'>Home</Link>
+          <Link to='/' className='nav-link'>
+            <FontAwesomeIcon icon='home' size='lg' />
+          </Link>
         </li>
         <li>
-          <Link to='/settings'>Settings</Link>
-        </li>
-        <li>
-          <Link to='/login'>Login</Link>
-        </li>
-        <li>
-          <p onClick={logout}>Logout</p>
+          <Link to='/settings' className='nav-link'>
+            <FontAwesomeIcon icon='cog' size='lg' />
+          </Link>
         </li>
         <li>
           <p
@@ -32,7 +31,12 @@ const Navbar = () => {
               })
             }
           >
-            Sync
+            <FontAwesomeIcon icon='sync-alt' size='lg' />
+          </p>
+        </li>
+        <li>
+          <p onClick={logout}>
+            <FontAwesomeIcon icon='door-open' size='lg' />
           </p>
         </li>
       </ul>
