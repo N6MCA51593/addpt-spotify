@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 @import 'palette';
 
 :root {
@@ -74,6 +74,62 @@ body {
   background-color: $bg-secondary;
 }
 
+// Accordion
+.accordion-wrapper {
+  margin: 3rem;
+  padding: 2rem;
+}
+
+.accordion-item {
+  background-color: $bg-secondary;
+  overflow: auto;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.accordion-item.collapsed {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.accordion-title {
+  font-weight: 300;
+  cursor: pointer;
+  color: $text;
+  padding: 0.5em 1.5em;
+  border-bottom: solid 1px $text;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid currentColor;
+  }
+
+  &:hover {
+    background-color: $dark-700;
+  }
+
+  &.open {
+    font-weight: 500;
+  }
+
+  &.open {
+    &::after {
+      content: '';
+      border-top: 0;
+      border-bottom: 5px solid;
+    }
+  }
+}
+
 // Track section
 .track-section {
   overflow-y: auto;
@@ -142,60 +198,6 @@ body {
 
 .card p {
   flex-grow: 0;
-}
-
-.wrapper {
-  width: 70%;
-  padding-left: 10%;
-}
-
-.accordion-item {
-  overflow: auto;
-  // transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
-  height: auto;
-  display: flex;
-  flex-wrap: wrap;
-  max-height: 60vh;
-}
-
-.accordion-item.collapsed {
-  max-height: 0;
-  overflow: hidden;
-  // transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
-}
-
-.accordion-title {
-  font-weight: 600;
-  cursor: pointer;
-  color: #666;
-  padding: 0.5em 1.5em;
-  border: solid 1px #ccc;
-  border-radius: 1.5em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &::after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid currentColor;
-  }
-
-  &:hover,
-  &.open {
-    color: black;
-  }
-
-  &.open {
-    &::after {
-      content: '';
-      border-top: 0;
-      border-bottom: 5px solid;
-    }
-  }
 }
 
 img {

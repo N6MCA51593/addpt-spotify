@@ -39,17 +39,30 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
         />
         <input type='button' value='Back' onClick={clearCurrent} />
       </div>
-      <div className='wrapper'>
-        <Fragment>
-          <Modal isShowing={isShowing} hide={toggle}>
-            <SearchModal
-              artistName={currentArtist.name}
-              artistID={currentArtist._id}
-            />
-          </Modal>
-          <Accordion openByDef={true} title={'Albums'} toggle={toggle}>
+      <div className='accordion-wrapper'>
+        <Modal isShowing={isShowing} hide={toggle}>
+          <SearchModal
+            artistName={currentArtist.name}
+            artistID={currentArtist._id}
+          />
+        </Modal>
+        <Accordion openByDef={true} title={'Albums'} toggle={toggle}>
+          {sortArr(albums)
+            .filter(albumsE => albumsE.releaseType === 'album')
+            .map(albumsE => {
+              return (
+                <AlbumItem
+                  key={albumsE._id}
+                  album={albumsE}
+                  toggleTracking={toggleTracking}
+                />
+              );
+            })}
+        </Accordion>
+        {albums.some(albumsE => albumsE.releaseType === 'single') && (
+          <Accordion openByDef={false} title={'Singles'}>
             {sortArr(albums)
-              .filter(albumsE => albumsE.releaseType === 'album')
+              .filter(albumsE => albumsE.releaseType === 'single')
               .map(albumsE => {
                 return (
                   <AlbumItem
@@ -60,37 +73,22 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
                 );
               })}
           </Accordion>
-          {albums.some(albumsE => albumsE.releaseType === 'single') && (
-            <Accordion openByDef={false} title={'Singles'}>
-              {sortArr(albums)
-                .filter(albumsE => albumsE.releaseType === 'single')
-                .map(albumsE => {
-                  return (
-                    <AlbumItem
-                      key={albumsE._id}
-                      album={albumsE}
-                      toggleTracking={toggleTracking}
-                    />
-                  );
-                })}
-            </Accordion>
-          )}
-          {albums.some(albumsE => albumsE.releaseType === 'compilation') && (
-            <Accordion openByDef={false} title={'Compilations'}>
-              {sortArr(albums)
-                .filter(albumsE => albumsE.releaseType === 'compilation')
-                .map(albumsE => {
-                  return (
-                    <AlbumItem
-                      key={albumsE._id}
-                      album={albumsE}
-                      toggleTracking={toggleTracking}
-                    />
-                  );
-                })}
-            </Accordion>
-          )}
-        </Fragment>
+        )}
+        {albums.some(albumsE => albumsE.releaseType === 'compilation') && (
+          <Accordion openByDef={false} title={'Compilations'}>
+            {sortArr(albums)
+              .filter(albumsE => albumsE.releaseType === 'compilation')
+              .map(albumsE => {
+                return (
+                  <AlbumItem
+                    key={albumsE._id}
+                    album={albumsE}
+                    toggleTracking={toggleTracking}
+                  />
+                );
+              })}
+          </Accordion>
+        )}
       </div>
     </Fragment>
   );
