@@ -97,9 +97,53 @@ const useSettings = (archivedArtist = null) => {
     }
   };
 
+  const assessPresentational = (progress, type) => {
+    if (progress === undefined) {
+      return { classMod: 0, status: '--' };
+    }
+
+    const progressSteps = [
+      { classMod: 0, status: 'New' },
+      { classMod: 1, status: 'Unfamiliar' },
+      { classMod: 2, status: 'Accustomed' },
+      { classMod: 3, status: 'Mastered' },
+      { classMod: 4, status: 'Fully discovered' },
+      { classMod: 5, status: 'Not tracked' }
+    ];
+
+    if (isNaN(progress)) {
+      return progressSteps[5];
+    }
+
+    const settingsArr = type => {
+      if (type === 'artist') {
+        return artistThresholds;
+      }
+      if (type === 'album') {
+        return albumThresholds;
+      }
+      if (type === 'track') {
+        return trackThresholds;
+      }
+    };
+
+    if (progress < settingsArr(type)[0]) {
+      return progressSteps[0];
+    } else if (progress < settingsArr(type)[1]) {
+      return progressSteps[1];
+    } else if (progress < settingsArr(type)[2]) {
+      return progressSteps[2];
+    } else if (progress < settingsArr(type)[3]) {
+      return progressSteps[3];
+    } else {
+      return progressSteps[4];
+    }
+  };
+
   return {
     assessTrack,
     assessArr,
+    assessPresentational,
     setDoNotTrack,
     albumThresholds,
     trackThresholds,

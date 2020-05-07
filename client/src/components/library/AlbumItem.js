@@ -8,7 +8,7 @@ import useSettings from '../../utils/useSettings';
 
 const AlbumItem = ({ album, artistID, toggleTracking }) => {
   const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
-  const { assessArr } = useSettings();
+  const { assessArr, assessPresentational } = useSettings();
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
 
   useEffect(() => {
@@ -30,6 +30,9 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
     });
   };
 
+  const progress = album._id && assessArr(album.tracks);
+  const { status, classMod } = assessPresentational(progress, 'album');
+
   return (
     <div className='card'>
       {isLoading ? (
@@ -48,7 +51,8 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
         </button>
       ) : (
         <Fragment>
-          <p>Album progress: {assessArr(album.tracks)}</p>
+          <p>Album progress: {progress}</p>
+          <p>Album status: {status}</p>
           <input
             type='button'
             value='Set current'
