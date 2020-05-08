@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import SearchAndDisplay from '../library/SearchAndDisplay';
 
 const SearchModal = ({ artistName, artistID }) => {
@@ -14,7 +14,7 @@ const SearchModal = ({ artistName, artistID }) => {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <form onSubmit={onSubmit} className='search-form'>
         <input
           type='text'
@@ -35,7 +35,7 @@ const SearchModal = ({ artistName, artistID }) => {
           artistID={artistID}
         />
       </form>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

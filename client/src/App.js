@@ -19,11 +19,29 @@ import {
   faSyncAlt,
   faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEye,
+  faEyeSlash,
+  faTrashAlt,
+  faPlus,
+  faFileArchive
+} from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
   const authContext = useContext(AuthContext);
   const { loadUser, isAuthenticated } = authContext;
-  library.add(faHome, faCog, faDoorOpen, faSyncAlt, faCalendarAlt);
+  library.add(
+    faHome,
+    faCog,
+    faDoorOpen,
+    faSyncAlt,
+    faCalendarAlt,
+    faEye,
+    faEyeSlash,
+    faTrashAlt,
+    faPlus,
+    faFileArchive
+  );
 
   useEffect(() => {
     loadUser();
