@@ -1,0 +1,59 @@
+// Accordion
+.accordion-wrapper {
+  margin: 3rem;
+  padding: 2rem;
+}
+
+.accordion-item {
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 5px;
+  background-color: $bg-secondary;
+  margin: 0.5rem 0rem;
+  overflow: auto;
+  height: auto;
+
+  &.collapsed {
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+.accordion-title {
+  font-weight: 300;
+  cursor: pointer;
+  color: $text;
+  padding: 0.5rem 1.5rem;
+  border-bottom: solid 1px $text;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid currentColor;
+  }
+
+  &:hover {
+    background-color: $dark-700;
+  }
+
+  &.open {
+    font-weight: 500;
+  }
+
+  &.open {
+    &::after {
+      content: '';
+      border-top: 0;
+      border-bottom: 5px solid;
+    }
+  }
+}

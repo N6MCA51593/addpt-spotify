@@ -36,7 +36,10 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
   const { status, classMod } = assessPresentational(progress, 'album');
 
   return (
-    <div className='card' onClick={() => album._id && setCurrentAlbum(album)}>
+    <div
+      className={`card card-${classMod}`}
+      onClick={() => album._id && setCurrentAlbum(album)}
+    >
       <div className='img-container'>
         {isLoading ? (
           <LoadingSpinner />
@@ -72,14 +75,15 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
           </Fragment>
         )}
       </div>
-      <p>{album.name}</p>
-      <p>{album._id && album.isTracked.toString()}</p>
-      {!album._id && (
-        <Fragment>
-          <p>Album progress: {progress}</p>
-          <p>Album status: {status}</p>
-        </Fragment>
-      )}
+      <div className='text'>
+        <p>{album.name}</p>
+        {album._id && (
+          <Fragment>
+            <p>Album progress: {progress}</p>
+            <p>Album status: {status}</p>
+          </Fragment>
+        )}
+      </div>
     </div>
   );
 };

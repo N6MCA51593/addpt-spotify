@@ -1,5 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
 @import 'palette';
+@import 'accordion';
+@import 'card';
+@import 'navbar';
+@import 'footer';
 
 :root {
   --primary-color: #003699;
@@ -30,107 +34,10 @@ body {
   min-height: 90vh;
 }
 
-// Navbar
-.navbar {
-  z-index: 1;
-  height: 100%;
-  opacity: 0.9;
-  text-align: center;
-  background-color: $bg-secondary;
-
-  ul {
-    list-style-type: none;
-    margin-top: 7rem;
-  }
-
-  li {
-    &:hover {
-      color: $bg-main;
-      background-color: $text;
-    }
-  }
-
-  .nav-link {
-    text-decoration: none;
-    display: block;
-
-    &:visited {
-      color: inherit;
-    }
-  }
-
-  .nav-link,
-  p {
-    cursor: pointer;
-    color: inherit;
-    padding: 1rem;
-    margin: 2rem 0rem;
-  }
-}
-
-// Footer
-.footer {
-  height: 100px;
-  background-color: $bg-secondary;
-}
-
-// Accordion
-.accordion-wrapper {
-  margin: 3rem;
-  padding: 2rem;
-}
-
-.accordion-item {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 5px;
-  background-color: $bg-secondary;
-  margin: 0.5rem 0rem;
-  overflow: auto;
-  height: auto;
-
-  &.collapsed {
-    max-height: 0;
-    overflow: hidden;
-  }
-}
-
-.accordion-title {
-  font-weight: 300;
-  cursor: pointer;
-  color: $text;
-  padding: 0.5rem 1.5rem;
-  border-bottom: solid 1px $text;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &::after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid currentColor;
-  }
-
-  &:hover {
-    background-color: $dark-700;
-  }
-
-  &.open {
-    font-weight: 500;
-  }
-
-  &.open {
-    &::after {
-      content: '';
-      border-top: 0;
-      border-bottom: 5px solid;
-    }
-  }
+img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
 }
 
 // Track section
@@ -138,57 +45,6 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   padding: 2rem;
-}
-
-// Card
-.card {
-  cursor: pointer;
-  background-color: $bg-main;
-  box-shadow: inset 0 0 0 1px rgba(221, 238, 255, 0.35);
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0.5rem;
-  margin: 0.2rem;
-  max-width: 500px;
-  max-height: 500px;
-
-  .img-container {
-    position: relative;
-
-    img {
-      position: relative;
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .controls {
-    visibility: hidden;
-  }
-
-  &:hover {
-    .controls {
-      visibility: visible;
-    }
-  }
-}
-
-img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-}
-
-// Card button
-.button {
-  display: inline-block;
-  position: absolute;
-  z-index: 2;
-  background-color: $dark-500;
-  padding: 0.2rem 0.7rem;
 }
 
 .container {
