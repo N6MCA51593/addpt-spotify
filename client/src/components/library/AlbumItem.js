@@ -7,6 +7,7 @@ import LoadingSpinner from '../layout/LoadingSpinner';
 import useSettings from '../../utils/useSettings';
 import Controls from '../layout/Controls';
 import Button from '../layout/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AlbumItem = ({ album, artistID, toggleTracking }) => {
   const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
@@ -79,8 +80,15 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
         <p>{album.name}</p>
         {album._id && (
           <Fragment>
-            <p>Album progress: {progress}</p>
-            <p>Album status: {status}</p>
+            <p>
+              {<FontAwesomeIcon icon='ruler-vertical' />}{' '}
+              <span className='color'>
+                {isNaN(progress) ? '--' : progress.toFixed(2) + '%'}
+              </span>
+            </p>
+            <p>
+              Status: <span className='status color'>{status}</span>
+            </p>
           </Fragment>
         )}
       </div>

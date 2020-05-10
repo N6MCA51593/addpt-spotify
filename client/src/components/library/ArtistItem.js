@@ -45,12 +45,7 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
   };
 
   return (
-    <div
-      className='card'
-      onClick={() =>
-        artist._id && !artist.isArchived ? setCurrentArtist(artist) : null
-      }
-    >
+    <div className='card'>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -67,6 +62,13 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
       ) : (
         <Fragment>
           <p>Artist progress: {assessArr(artist.albums)}</p>
+          <input
+            type='button'
+            value='Set current'
+            onClick={() =>
+              artist._id && !artist.isArchived ? setCurrentArtist(artist) : null
+            }
+          />
           <input
             type='button'
             value='Toggle archived'

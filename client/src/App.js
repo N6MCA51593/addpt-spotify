@@ -24,7 +24,10 @@ import {
   faEyeSlash,
   faTrashAlt,
   faPlus,
-  faFileArchive
+  faFileArchive,
+  faLock,
+  faUnlock,
+  faRulerVertical
 } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
@@ -40,7 +43,10 @@ const App = () => {
     faEyeSlash,
     faTrashAlt,
     faPlus,
-    faFileArchive
+    faFileArchive,
+    faLock,
+    faUnlock,
+    faRulerVertical
   );
 
   useEffect(() => {
