@@ -17,6 +17,8 @@ $anim-delay-controls: 0.4s;
   margin: 1rem 0.2rem;
   max-width: 500px;
   max-height: 500px;
+  backface-visibility: hidden;
+  user-select: none;
 
   .img-container {
     position: relative;
@@ -44,7 +46,7 @@ $anim-delay-controls: 0.4s;
   }
 
   &:hover {
-    transform: scale(1.025);
+    transform: translate3d(0, -3px, 0);
     box-shadow: inset 0 0 0 2px transparentize($dark-100, 0.2),
       0px 25px 25px -15px $dark-900;
     transition: $anim-delay-card ease;
@@ -110,34 +112,58 @@ $anim-delay-controls: 0.4s;
 }
 
 // Variations
+@mixin variations($col, $h-col, $h-bg-col) {
+  .color {
+    color: $col;
+  }
+
+  &:hover {
+    background: linear-gradient(
+      336deg,
+      $dark-900 20%,
+      transparentize($h-bg-col, 0.2) 80%
+    );
+
+    .color {
+      color: $h-col;
+    }
+  }
+}
+
 .card {
   &-0 {
+    @include variations($red-500, $red-300, $red-600);
   }
 
   &-1 {
+    @include variations($orange-500, $orange-200, $orange-700);
   }
 
   &-2 {
+    @include variations($yellow-500, $yellow-200, $yellow-800);
   }
 
   &-3 {
+    @include variations($blue-500, $blue-300, $blue-600);
   }
   &-4 {
-    .color {
-      color: $green-500;
-    }
-    &:hover {
-      background: linear-gradient(
-        336deg,
-        $dark-900 15%,
-        transparentize($green-600, 0.45) 85%
-      );
-      .color {
-        color: $green-300;
-      }
-    }
+    @include variations($green-500, $green-300, $green-600);
   }
 
   &-5 {
+    .img-container {
+      img {
+        transition: filter $anim-delay-controls ease;
+        filter: grayscale(100%);
+      }
+    }
+
+    &:hover {
+      .img-container {
+        img {
+          filter: grayscale(0%);
+        }
+      }
+    }
   }
 }

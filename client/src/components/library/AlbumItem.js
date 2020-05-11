@@ -21,15 +21,13 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
     // eslint-disable-next-line
   }, [data, isError]);
 
-  const add = e => {
-    e.preventDefault();
+  const add = (artistid, albumid) => {
+    console.log(artistid);
+    console.log(albumid);
     setConfig({
       url: '/api/library/append/new',
       method: 'post',
-      params: {
-        artistid: e.target.dataset.artist,
-        albumid: e.target.dataset.album
-      }
+      params: { albumid, artistid }
     });
   };
 
@@ -38,7 +36,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
 
   return (
     <div
-      className={`card card-${classMod}`}
+      className={`card card-${album.isTracked ? classMod : '5'}`}
       onClick={() => album._id && setCurrentAlbum(album)}
     >
       <div className='img-container'>
@@ -49,9 +47,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
             <Controls>
               {!album._id ? (
                 <Button
-                  onClick={add}
-                  data-album={album.spID}
-                  data-artist={artistID}
+                  onClick={() => add(artistID, album.spID)}
                   type='add'
                   icon='plus'
                 />

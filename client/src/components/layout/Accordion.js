@@ -18,6 +18,7 @@ const Accordion = ({ title, children, openByDef, toggle }) => {
         {title} ({count})
       </div>
       <div className={`accordion-item ${!isOpen ? 'collapsed' : ''}`}>
+        {children}
         <Fragment>
           {title === 'Tracked' || title === 'Albums' ? (
             <div className='card' onClick={toggle}>
@@ -25,7 +26,6 @@ const Accordion = ({ title, children, openByDef, toggle }) => {
             </div>
           ) : null}
         </Fragment>
-        {children}
       </div>
     </Fragment>
   );

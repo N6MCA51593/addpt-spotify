@@ -62,13 +62,13 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
       ) : (
         <Fragment>
           <p>Artist progress: {assessArr(artist.albums)}</p>
-          <input
-            type='button'
-            value='Set current'
-            onClick={() =>
-              artist._id && !artist.isArchived ? setCurrentArtist(artist) : null
-            }
-          />
+          {artist._id && !artist.isArchived && (
+            <input
+              type='button'
+              value='Set current'
+              onClick={() => setCurrentArtist(artist)}
+            />
+          )}
           <input
             type='button'
             value='Toggle archived'
