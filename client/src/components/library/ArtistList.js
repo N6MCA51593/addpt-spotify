@@ -29,7 +29,8 @@ const ArtistList = () => {
     }
   }, [data, isError]);
 
-  const delArtist = (id, name) => {
+  const delArtist = (id, name, e) => {
+    e.stopPropagation();
     toggle();
     setType('delete');
     setID(id);

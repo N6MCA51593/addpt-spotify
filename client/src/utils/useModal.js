@@ -6,6 +6,7 @@ const useModal = () => {
 
   const toggle = useCallback(() => {
     setIsShowing(!isShowing);
+    setType(null);
   }, [isShowing]);
 
   return {

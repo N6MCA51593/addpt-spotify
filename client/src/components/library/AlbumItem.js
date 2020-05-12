@@ -22,8 +22,6 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
   }, [data, isError]);
 
   const add = (artistid, albumid) => {
-    console.log(artistid);
-    console.log(albumid);
     setConfig({
       url: '/api/library/append/new',
       method: 'post',
@@ -36,7 +34,9 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
 
   return (
     <div
-      className={`card card-${album.isTracked ? classMod : '5'}`}
+      className={`card card-${album.isTracked ? classMod : '5'} ${
+        !album._id && ' card-search-item'
+      } `}
       onClick={() => album._id && setCurrentAlbum(album)}
     >
       <div className='img-container'>
