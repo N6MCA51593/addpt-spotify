@@ -23,9 +23,9 @@ const History = ({ updArtists }) => {
 
   if (isLoading) {
     return (
-      <div className='history'>
+      <Fragment>
         <LoadingSpinner />
-      </div>
+      </Fragment>
     );
   }
 
@@ -33,9 +33,15 @@ const History = ({ updArtists }) => {
     <Fragment>
       {data.tracks &&
         data.tracks.map(dataE => (
-          <div key={dataE.tracks.lastListen}>
-            <TrackItem track={dataE.tracks} />
-          </div>
+          <Fragment key={dataE.tracks.lastListen}>
+            <TrackItem
+              track={{
+                ...dataE.tracks,
+                artistName: dataE.name,
+                albumName: dataE.albums.name
+              }}
+            />
+          </Fragment>
         ))}
     </Fragment>
   );

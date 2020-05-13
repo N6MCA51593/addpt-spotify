@@ -6,7 +6,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
   const [listensChanged, setListensChanged] = useState(false);
   const [tracking, setTracking] = useState(track.isTracked);
   const [trackingToggleBool, setTrackingToggleBool] = useState(true);
-  const { assessTrack } = useSettings();
+  const { assessTrack, assessPresentational } = useSettings();
   const trackID = track._id;
 
   useEffect(() => {
@@ -38,13 +38,19 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
     setTracking(!tracking);
   };
 
+  const { classMod } = assessPresentational(listens, 'track');
   return (
-    <Fragment>
-      <p>{'Name: ' + track.name}</p>
+    <div className={`track track-${classMod}`}>
+      <div className='listens'>{listens}</div>
+      <div className='track-text ell'>
+        <p className='track-name ell'>{track.name}</p>
+        <p className='track-info ell'>
+          {!albumID && track.artistName + ' - ' + track.albumName}
+        </p>
+      </div>
 
       {albumID && (
         <Fragment>
-          <p>{'Listens: ' + listens}</p>
           <p>Track progress: {assessTrack({ ...track, listens: listens })}</p>
           <p>{'Tracked: ' + tracking.toString()}</p>
           <input
@@ -59,7 +65,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
           <input type='button' value='-' onClick={decListens} />
         </Fragment>
       )}
-    </Fragment>
+    </div>
   );
 };
 
