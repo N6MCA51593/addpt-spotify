@@ -11,48 +11,18 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import AlertState from './context/alert/AlertState';
 import LibraryState from './context/library/LibraryState';
 import Footer from './components/layout/Footer';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faHome,
-  faCog,
-  faDoorOpen,
-  faSyncAlt,
-  faCalendarAlt
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faEye,
-  faEyeSlash,
-  faTrashAlt,
-  faPlus,
-  faFileArchive,
-  faLock,
-  faUnlock,
-  faRulerVertical
-} from '@fortawesome/free-solid-svg-icons';
+import useFA from './utils/useFA';
 
 const App = () => {
-  const authContext = useContext(AuthContext);
-  const { loadUser, isAuthenticated } = authContext;
-  library.add(
-    faHome,
-    faCog,
-    faDoorOpen,
-    faSyncAlt,
-    faCalendarAlt,
-    faEye,
-    faEyeSlash,
-    faTrashAlt,
-    faPlus,
-    faFileArchive,
-    faLock,
-    faUnlock,
-    faRulerVertical
-  );
+  const { loadUser, isAuthenticated } = useContext(AuthContext);
+
+  useFA();
 
   useEffect(() => {
     loadUser();
     // eslint-disable-next-line
   }, []);
+
   return (
     <AlertState>
       <LibraryState>

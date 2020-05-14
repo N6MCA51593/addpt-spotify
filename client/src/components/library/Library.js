@@ -9,6 +9,7 @@ import TrackSection from '../layout/TrackSection';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import useSSE from '../../utils/useSSE';
 import SSEUpdate from './SSEUpdate';
+import useSettings from '../../utils/useSettings';
 
 export const Library = () => {
   const { setAlert } = useContext(AlertContext);
@@ -24,15 +25,16 @@ export const Library = () => {
     toggleArtist,
     loading
   } = useContext(LibraryContext);
+
   const { msg, updArtists, reset } = useSSE();
+  useSettings();
   const [childUnmounted, setChildUnmounted] = useState(null);
+  const [artist, album, setParams] = useCurrentArtistUpdate();
 
   const [{ isError, data }, setConfig] = useAPIRequest({
     url: '/api/library',
     method: 'get'
   });
-
-  const [artist, album, setParams] = useCurrentArtistUpdate();
 
   const toggleTracking = (albumID, trackID, listens) => {
     setParams({

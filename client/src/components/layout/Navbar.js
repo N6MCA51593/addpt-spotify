@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
+import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
+  const { clearCurrent } = useContext(LibraryContext);
+
+  const loc = useLocation();
 
   const setConfig = useAPIRequest()[1];
 
@@ -13,7 +17,13 @@ const Navbar = () => {
     <div className='navbar'>
       <ul>
         <li>
-          <Link to='/' className='nav-link'>
+          <Link
+            to='/'
+            className='nav-link'
+            onClick={() => {
+              loc.pathname === '/' && clearCurrent();
+            }}
+          >
             <FontAwesomeIcon icon='home' size='lg' />
           </Link>
         </li>

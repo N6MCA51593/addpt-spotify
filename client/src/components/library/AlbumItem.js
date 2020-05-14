@@ -51,16 +51,10 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
                   type='add'
                   icon='plus'
                 />
-              ) : album.isTracked ? (
-                <Button
-                  type='track-on'
-                  icon='eye'
-                  onClick={() => toggleTracking(album._id)}
-                />
               ) : (
                 <Button
-                  type='track-off'
-                  icon='eye-slash'
+                  type={album.isTracked ? 'track-on' : 'track-off'}
+                  icon={album.isTracked ? 'eye' : 'eye-slash'}
                   onClick={() => toggleTracking(album._id)}
                 />
               )}

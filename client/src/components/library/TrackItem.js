@@ -1,12 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import useSettings from '../../utils/useSettings';
+import Button from '../layout/Button';
+import Controls from '../layout/Controls';
 
 const TrackItem = ({ track, toggleTracking, albumID }) => {
   const [listens, setListens] = useState(track.listens);
   const [listensChanged, setListensChanged] = useState(false);
   const [tracking, setTracking] = useState(track.isTracked);
   const [trackingToggleBool, setTrackingToggleBool] = useState(true);
-  const { assessTrack, assessPresentational } = useSettings();
+  const { assessPresentational } = useSettings();
   const trackID = track._id;
 
   useEffect(() => {
@@ -39,9 +41,17 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
   };
 
   const { classMod } = assessPresentational(listens, 'track');
+  console.log(tracking + ' ' + track.name);
+
   return (
-    <div className={`track track-${classMod}`}>
-      <div className='listens'>{listens}</div>
+    <div
+      className={`track track-${
+        tracking === (undefined || true) ? classMod : '5'
+      }`}
+    >
+      <div className={`listens ${listens > 99 ? 'listens-big' : ''}`}>
+        {listens > 99 ? '99' : listens}
+      </div>
       <div className='track-text ell'>
         <p className='track-name ell'>{track.name}</p>
         <p className='track-info ell'>
@@ -50,20 +60,18 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
       </div>
 
       {albumID && (
-        <Fragment>
-          <p>Track progress: {assessTrack({ ...track, listens: listens })}</p>
-          <p>{'Tracked: ' + tracking.toString()}</p>
-          <input
-            type='button'
-            value='Toggle'
+        <Controls>
+          <Button type='inc' icon='caret-up' onClick={incListens} />
+          <Button
+            type={tracking ? 'track-on' : 'track-off'}
+            icon={tracking ? 'eye' : 'eye-slash'}
             onClick={() => {
               toggleTracking(albumID, trackID);
               toggleState();
             }}
           />
-          <input type='button' value='+' onClick={incListens} />
-          <input type='button' value='-' onClick={decListens} />
-        </Fragment>
+          <Button type='dec' icon='caret-down' onClick={decListens} />
+        </Controls>
       )}
     </div>
   );

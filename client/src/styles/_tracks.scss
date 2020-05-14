@@ -1,9 +1,7 @@
 // Track section and tracks
-
-.track-section {
-}
-
 .tracks {
+  position: sticky;
+  top: 2rem;
   width: 85%;
   min-height: 65vh;
   background-color: $bg-secondary;
@@ -12,6 +10,7 @@
 }
 
 .track {
+  position: relative;
   user-select: none;
   display: flex;
   align-items: center;
@@ -23,10 +22,14 @@
   &:hover {
     transform: scale(1.2);
     transition: transform 0.1s ease;
+
+    .controls {
+      opacity: 1;
+    }
   }
 
   .listens {
-    min-width: 17%;
+    min-width: 3.2rem;
     text-align: center;
     position: relative;
     right: 15px;
@@ -34,6 +37,13 @@
     z-index: 1;
     padding: 0 1rem;
     box-shadow: 3px 1px 4px 1px rgba(0, 0, 0, 0.54);
+
+    &-big {
+      &::after {
+        content: '+';
+        position: absolute;
+      }
+    }
   }
 
   .ell {
@@ -48,14 +58,62 @@
     flex-direction: column;
     max-width: 85%;
     line-height: 1.4;
+    margin: 0 0.5rem 0 0;
 
     .track-name {
       flex: 1 0 auto;
+      max-width: 15rem;
     }
 
     .track-info {
       font-size: 0.7rem;
       flex-shrink: 2;
+      color: $dark-500;
+    }
+  }
+
+  .controls {
+    display: flex;
+    margin: 0 0.5rem 0 auto;
+    opacity: 0.2;
+    padding: 0 0.1rem;
+    transition: opacity 0.3s ease;
+
+    .button {
+      cursor: pointer;
+      margin: 0 0.25rem;
+
+      &-inc {
+        color: $blue-500;
+
+        &:hover {
+          color: $blue-300;
+        }
+      }
+
+      &-dec {
+        color: $red-500;
+
+        &:hover {
+          color: $red-300;
+        }
+      }
+
+      &-track-on {
+        color: $green-500;
+
+        &:hover {
+          color: $green-300;
+        }
+      }
+
+      &-track-off {
+        color: $yellow-500;
+
+        &:hover {
+          color: $yellow-300;
+        }
+      }
     }
   }
 }
@@ -71,18 +129,41 @@
     transition: 0.15s background-size linear;
   }
 
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+      270deg,
+      $dark-900 42%,
+      transparentize($h-bg-col, 0.3) 100%
+    );
+    z-index: -5;
+    transition: opacity 0.3s ease-out;
+    opacity: 0;
+  }
+
   &:hover {
+    z-index: 3;
+
     .listens {
       background-image: linear-gradient($h-list-bg, $h-list-bg);
       background-size: 100% 100%;
       color: $green-800;
     }
 
-    background: linear-gradient(
-      270deg,
-      $dark-900 20%,
-      transparentize($h-bg-col, 0.2) 80%
-    );
+    &::before {
+      opacity: 1;
+    }
+
+    .track-info {
+      color: $dark-300;
+    }
   }
 }
 
@@ -104,5 +185,12 @@
   }
   &-4 {
     @include variations($green-800, $green-600, $green-600);
+  }
+  &-5 {
+    color: $dark-400;
+
+    .listens {
+      background-color: $dark-700;
+    }
   }
 }
