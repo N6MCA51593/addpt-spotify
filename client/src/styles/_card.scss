@@ -102,6 +102,19 @@ $anim-delay-controls: 0.4s;
       font-weight: 500;
     }
   }
+
+  &-add {
+    background-color: transparentize($dark-900, 0.6);
+    font-weight: 300;
+    height: 100px;
+    width: 100px;
+    font-size: 7rem;
+
+    &:hover {
+      background-color: $dark-900;
+      color: $green-500;
+    }
+  }
 }
 
 // Card button
@@ -215,6 +228,12 @@ $anim-delay-controls: 0.4s;
   }
 
   &-search-item {
+    .text {
+      p:last-child {
+        height: 2.1rem;
+      }
+    }
+
     .img-container {
       img {
         transition: none;

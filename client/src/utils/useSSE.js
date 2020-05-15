@@ -12,7 +12,7 @@ const useSSE = () => {
   }, []);
 
   const evtSrc = useRef(null);
-  const streamURI = 'http://localhost:5000/api/sync/stream';
+  const streamURI = process.env.REACT_APP_SSE_URI;
 
   const listenEvt = useCallback(() => {
     if (!evtSrc.current && !doNotTrack) {

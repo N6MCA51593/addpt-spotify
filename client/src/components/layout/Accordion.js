@@ -21,8 +21,8 @@ const Accordion = ({ title, children, openByDef, toggle }) => {
         {children}
         <Fragment>
           {title === 'Tracked' || title === 'Albums' ? (
-            <div className='card' onClick={toggle}>
-              Add
+            <div className='card card-add' onClick={toggle}>
+              +
             </div>
           ) : null}
         </Fragment>

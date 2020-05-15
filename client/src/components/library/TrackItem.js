@@ -41,7 +41,6 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
   };
 
   const { classMod } = assessPresentational(listens, 'track');
-  console.log(tracking + ' ' + track.name);
 
   return (
     <div

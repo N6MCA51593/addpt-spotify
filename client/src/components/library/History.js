@@ -29,6 +29,10 @@ const History = ({ updArtists }) => {
     );
   }
 
+  if (data.tracks && data.tracks.length === 0) {
+    return <h3>Your Spotify tracked song listening history is empty</h3>;
+  }
+
   return (
     <Fragment>
       {data.tracks &&

@@ -7,6 +7,22 @@ const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
     <div className='track-section'>
       <div className='tracks'>
         {currentAlbum ? (
+          <div className='header-container'>
+            <div
+              className='header-bg'
+              style={{
+                backgroundImage: `url(${
+                  currentAlbum.img[1] && currentAlbum.img[1].url
+                })`
+              }}
+            ></div>
+            <h2 className='album-name'>{currentAlbum.name}</h2>
+          </div>
+        ) : (
+          <h2>Your recently played tracked songs</h2>
+        )}
+
+        {currentAlbum ? (
           currentAlbum.tracks.map(currentAlbumE => (
             <Fragment key={currentAlbumE.spID}>
               <TrackItem
