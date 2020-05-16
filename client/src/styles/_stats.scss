@@ -1,0 +1,55 @@
+// Stats
+.stats {
+  background-color: $bg-secondary;
+  margin: 3rem 5rem;
+  padding: 2rem;
+  user-select: none;
+
+  h1 {
+    border-bottom: 1px solid #fff;
+    margin: 0 0 2rem;
+  }
+
+  &-data {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    line-height: 1.8;
+    width: 100%;
+    gap: 1rem;
+    min-width: 0;
+    overflow: hidden;
+
+    h3 {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    p {
+      color: $dark-300;
+      border-bottom: 1px solid $dark-400;
+      margin: 0 0 1rem;
+    }
+  }
+}
+
+.data-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  flex: 1 1 auto;
+  background-color: $dark-900;
+  border: 1px solid #fff;
+
+  svg {
+    margin: 0.5rem;
+  }
+
+  .stat-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem;
+  }
+}

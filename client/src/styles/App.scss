@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&display=swap');
 @import 'palette';
+@import 'stats';
 @import 'accordion';
 @import 'card';
 @import 'tracks';
@@ -26,6 +28,12 @@ body {
   line-height: 1.6;
   background-color: $bg-main;
   color: $text;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Raleway', sans-serif;
 }
 
 .main-grid {
