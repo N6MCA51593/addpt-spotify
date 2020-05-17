@@ -16,25 +16,25 @@ const Stats = ({
       <h1>Collection tracking stats</h1>
       <div className='stats-data'>
         <div className='data-item'>
-          <FontAwesomeIcon icon='user' size='3x' />
+          <FontAwesomeIcon icon='user' size='3x' fixedWidth={true} />
           <div className='stat-text'>
             <p>Artists</p> <h3>{artists}</h3>
           </div>
         </div>
         <div className='data-item'>
-          <FontAwesomeIcon icon='compact-disc' size='3x' />
+          <FontAwesomeIcon icon='compact-disc' size='3x' fixedWidth={true} />
           <div className='stat-text'>
             <p>Albums</p> <h3>{albums}</h3>
           </div>
         </div>
         <div className='data-item'>
-          <FontAwesomeIcon icon='file-audio' size='3x' />
+          <FontAwesomeIcon icon='file-audio' size='3x' fixedWidth={true} />
           <div className='stat-text'>
             <p>Tracks</p> <h3>{tracks}</h3>
           </div>
         </div>
         <div className='data-item'>
-          <FontAwesomeIcon icon='ruler-vertical' size='3x' />
+          <FontAwesomeIcon icon='ruler-vertical' size='3x' fixedWidth={true} />
           <div className='stat-text'>
             <p>Progress</p> <h3>{progress.toFixed(2) + '%'}</h3>
           </div>

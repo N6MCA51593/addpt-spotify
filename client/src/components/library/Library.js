@@ -59,7 +59,8 @@ export const Library = () => {
   useEffect(() => {
     if (artist) {
       setCurrentArtist(artist);
-    } else if (album) {
+    }
+    if (album && album._id === currentAlbum._id) {
       setCurrentAlbum(album);
     }
   }, [artist, album]);

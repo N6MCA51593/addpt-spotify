@@ -10,6 +10,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
   const [trackingToggleBool, setTrackingToggleBool] = useState(true);
   const { assessPresentational } = useSettings();
   const trackID = track._id;
+  //console.log(track);
 
   useEffect(() => {
     if (listensChanged && !trackingToggleBool) {
