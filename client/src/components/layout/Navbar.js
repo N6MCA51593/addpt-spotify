@@ -21,6 +21,7 @@ const Navbar = () => {
             to='/'
             className='nav-link'
             onClick={() => {
+              window.scrollTo(0, 0);
               loc.pathname === '/' && clearCurrent();
             }}
           >

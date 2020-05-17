@@ -53,7 +53,7 @@ const ArtistList = () => {
   return (
     <Fragment>
       <Stats
-        type='collection'
+        type='Collection'
         progress={assessArr(artists)}
         artists={artistStat.length}
         albums={albumStat.length}

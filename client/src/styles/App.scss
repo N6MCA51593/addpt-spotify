@@ -7,6 +7,7 @@
 @import 'tracks';
 @import 'navbar';
 @import 'footer';
+@import 'bottom-nav';
 
 :root {
   --primary-color: #003699;
@@ -41,13 +42,10 @@ h3 {
   grid-template-columns: 1fr 19fr 6fr;
   column-gap: 1rem;
   min-height: 90vh;
-}
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  overflow: hidden;
-  padding: 0 2rem;
+  .main-content {
+    position: relative;
+  }
 }
 
 .alert {

@@ -1,0 +1,102 @@
+// Bottom nav button
+.bottom-nav {
+  position: absolute;
+  height: 70%;
+  width: 75px;
+  bottom: 40px;
+  right: 1px;
+  z-index: 2;
+
+  .button-container {
+    margin: 0 0 0 0.9rem;
+    overflow: hidden;
+    position: sticky;
+    top: 90vh;
+    display: block;
+    width: 60px;
+    height: 60px;
+    background-color: $dark-500;
+    border: 1px solid $dark-500;
+    opacity: 0.3;
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 1;
+
+      .box-disabled {
+        background-color: transparentize($color: $dark-100, $amount: 0.7);
+      }
+    }
+  }
+
+  .box {
+    font-size: 13px;
+    cursor: pointer;
+    position: absolute;
+    overflow: hidden;
+    height: 80px;
+    width: 80px;
+
+    &-1 {
+      background-color: $dark-900;
+      bottom: 18px;
+      left: 18px;
+      transform: rotate(45deg);
+
+      svg {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: rotate(-45deg);
+      }
+
+      &:hover {
+        background-color: $dark-100;
+
+        svg {
+          color: $dark-900;
+          transform: rotate(-45deg) translateY(-8px);
+          transition: transform 0.4s ease-out;
+        }
+      }
+    }
+
+    &-2 {
+      background-color: $dark-100;
+      top: 18px;
+      right: 18px;
+      transform: rotate(45deg);
+
+      svg {
+        color: $dark-900;
+        position: absolute;
+        transform: rotate(-45deg);
+        top: 1px;
+        right: 26%;
+      }
+
+      &:hover {
+        background-color: $dark-900;
+
+        svg {
+          color: $dark-100;
+          transform: rotate(-45deg) translateX(-8px);
+          transition: transform 0.4s ease-out;
+        }
+      }
+    }
+
+    &-disabled {
+      svg {
+        color: $dark-600;
+      }
+
+      &:hover {
+        svg {
+          transform: rotate(-45deg);
+          color: $dark-600;
+        }
+      }
+    }
+  }
+}

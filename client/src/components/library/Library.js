@@ -7,6 +7,7 @@ import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
 import TrackSection from '../layout/TrackSection';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import BottomNav from '../layout/BottomNav';
 import useSSE from '../../utils/useSSE';
 import SSEUpdate from './SSEUpdate';
 import useSettings from '../../utils/useSettings';
@@ -18,6 +19,7 @@ export const Library = () => {
     error,
     message,
     clearErrors,
+    clearCurrent,
     currentArtist,
     currentAlbum,
     setCurrentArtist,
@@ -105,6 +107,7 @@ export const Library = () => {
   return (
     <Fragment>
       <div className='main-content'>
+        <BottomNav clearCurrent={currentArtist && clearCurrent} />
         <SSEUpdate updArtists={updArtists} />
         {currentArtist ? (
           <AlbumList

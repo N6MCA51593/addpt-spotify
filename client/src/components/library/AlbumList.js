@@ -5,14 +5,14 @@ import Accordion from '../layout/Accordion';
 import useModal from '../../utils/useModal';
 import SearchModal from '../layout/SearchModal';
 import Modal from '../layout/Modal';
-import placeholder from '../layout/placeholder.png';
 import useSettings from '../../utils/useSettings';
 import useSorting from '../../utils/useSorting';
+import Stats from '../layout/Stats';
 
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const libraryContext = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing } = useModal();
-  const { assessArr } = useSettings();
+  const { assessArr, assessPresentational } = useSettings();
   const { sortArr } = useSorting();
   const { currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
@@ -27,18 +27,30 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
     };
   }, [setChildUnmounted]);
 
+  const albumStat = albums.length;
+  const trackStat =
+    albumStat > 0 &&
+    albums
+      .map(albumE => albumE.tracks)
+      .flat()
+      .filter(trackE => trackE.isTracked).length;
+
+  const progress = assessArr(albums);
+  const { status, classMod } = assessPresentational(progress, 'artist');
+
   return (
     <Fragment>
-      <div className='container'>
-        <p>{currentArtist.name}</p>
-        <p>{currentArtist.isTracked.toString()}</p>
-        <p>Artist progress: {assessArr(albums)}</p>
-        <img
-          src={currentArtist.img[2] ? currentArtist.img[2].url : placeholder}
-          alt={currentArtist.name}
-        />
-        <input type='button' value='Back' onClick={clearCurrent} />
-      </div>
+      <Stats
+        type={currentArtist.name}
+        progress={progress}
+        albums={albumStat}
+        tracks={trackStat}
+        status={status}
+        classMod={classMod}
+      />
+
+      {/* <input type='button' value='Back' onClick={clearCurrent} /> */}
+
       <div className='accordion-wrapper'>
         <Modal isShowing={isShowing} hide={toggle}>
           <SearchModal

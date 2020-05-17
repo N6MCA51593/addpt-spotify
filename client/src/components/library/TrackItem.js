@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useSettings from '../../utils/useSettings';
 import Button from '../layout/Button';
 import Controls from '../layout/Controls';
@@ -10,7 +10,6 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
   const [trackingToggleBool, setTrackingToggleBool] = useState(true);
   const { assessPresentational } = useSettings();
   const trackID = track._id;
-  //console.log(track);
 
   useEffect(() => {
     if (listensChanged && !trackingToggleBool) {

@@ -4,23 +4,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Stats = ({
   type,
-  img,
   artists = 0,
   albums = 0,
   tracks = 0,
   progress = 0,
-  status = '--'
+  status = '--',
+  classMod = ''
 }) => {
   return (
     <div className='stats'>
-      <h1>Collection tracking stats</h1>
+      <h1>{type} tracking stats</h1>
       <div className='stats-data'>
-        <div className='data-item'>
-          <FontAwesomeIcon icon='user' size='3x' fixedWidth={true} />
-          <div className='stat-text'>
-            <p>Artists</p> <h3>{artists}</h3>
+        {type === 'Collection' && (
+          <div className='data-item'>
+            <FontAwesomeIcon icon='user' size='3x' fixedWidth={true} />
+            <div className='stat-text'>
+              <p>Artists</p> <h3>{artists}</h3>
+            </div>
           </div>
-        </div>
+        )}
         <div className='data-item'>
           <FontAwesomeIcon icon='compact-disc' size='3x' fixedWidth={true} />
           <div className='stat-text'>
@@ -36,14 +38,31 @@ const Stats = ({
         <div className='data-item'>
           <FontAwesomeIcon icon='ruler-vertical' size='3x' fixedWidth={true} />
           <div className='stat-text'>
-            <p>Progress</p> <h3>{progress.toFixed(2) + '%'}</h3>
+            <p>Progress</p>{' '}
+            <h3>{!isNaN(progress) ? progress.toFixed(2) + '%' : '--'}</h3>
           </div>
         </div>
+        {type !== 'Collection' && (
+          <div className='data-item'>
+            <FontAwesomeIcon icon='info' size='3x' fixedWidth={true} />
+            <div className='stat-text'>
+              <p>Status</p> <h3 className={'header-' + classMod}>{status}</h3>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-Stats.propTypes = {};
+Stats.propTypes = {
+  type: PropTypes.string,
+  artists: PropTypes.number,
+  albums: PropTypes.number,
+  tracks: PropTypes.number,
+  progress: PropTypes.number,
+  status: PropTypes.string,
+  classMod: PropTypes.number
+};
 
 export default Stats;

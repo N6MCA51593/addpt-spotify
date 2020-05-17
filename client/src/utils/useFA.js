@@ -5,9 +5,7 @@ import {
   faDoorOpen,
   faSyncAlt,
   faCalendarAlt,
-  faUser
-} from '@fortawesome/free-solid-svg-icons';
-import {
+  faUser,
   faEye,
   faEyeSlash,
   faTrashAlt,
@@ -19,7 +17,12 @@ import {
   faCaretUp,
   faCaretDown,
   faCompactDisc,
-  faFileAudio
+  faFileAudio,
+  faInfo,
+  faArrowUp,
+  faArrowLeft,
+  faLongArrowAltUp,
+  faLongArrowAltLeft
 } from '@fortawesome/free-solid-svg-icons';
 
 function useFA() {
@@ -41,7 +44,12 @@ function useFA() {
     faCaretDown,
     faUser,
     faCompactDisc,
-    faFileAudio
+    faFileAudio,
+    faInfo,
+    faArrowLeft,
+    faArrowUp,
+    faLongArrowAltUp,
+    faLongArrowAltLeft
   );
   return null;
 }
