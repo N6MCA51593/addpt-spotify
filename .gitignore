@@ -3,8 +3,7 @@ node_modules/
 *.txt
 /client/build
 
-/.vscode
-.vscode
+**/.vscode/
 
 .DS_Store
 /client/.env.local
