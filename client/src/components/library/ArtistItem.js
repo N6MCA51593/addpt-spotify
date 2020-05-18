@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import placeholder from '../layout/placeholder.png';
+import placeholder from '../../assets/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LoadingSpinner from '../layout/LoadingSpinner';

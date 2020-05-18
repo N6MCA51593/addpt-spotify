@@ -1,5 +1,52 @@
 // Footer
 .footer {
-  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   background-color: $bg-secondary;
+  border-top: solid 1px #fff;
+
+  img {
+    max-width: 100px;
+    margin: 0 1rem;
+    max-height: 33px;
+  }
+
+  a {
+    display: inline-block;
+
+    &:hover {
+      img {
+        filter: invert(0.3);
+      }
+    }
+  }
+
+  h3,
+  .links {
+    padding: 0.7rem 1rem;
+    border-left: 1px solid $dark-500;
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+
+    div {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+
+      .icon {
+        margin-right: 0;
+        width: 33px;
+      }
+
+      img:nth-child(2) {
+        margin-left: 0.1rem;
+        max-width: 80px;
+      }
+    }
+  }
 }

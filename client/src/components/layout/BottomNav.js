@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const BottomNav = ({ clearCurrent }) => {
-  console.log(clearCurrent);
   return (
     <div className='bottom-nav'>
       <div className='button-container'>
