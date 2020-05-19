@@ -21,6 +21,7 @@ const AuthState = props => {
     dispatch({
       type: LOGOUT
     });
+    localStorage.clear();
   };
 
   const loadUser = async () => {
