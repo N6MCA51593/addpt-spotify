@@ -1,8 +1,8 @@
 .alert {
+  visibility: hidden;
   user-select: none;
   font-weight: 500;
   font-size: 1.2rem;
-  opacity: 0.9;
   position: fixed;
   bottom: 20px;
   left: 20px;
@@ -10,11 +10,6 @@
   z-index: 9999;
   text-shadow: 1px 1px 1px $dark-900;
   padding: 1.5rem;
-  box-shadow: 0px 3px 5px -1px transparentize($dark-900, 0.7),
-    0px 6px 10px 0px transparentize($dark-900, 0.7),
-    0px 1px 18px 0px transparentize($dark-900, 0.7);
-
-  transform: translateY(100px);
   transition: transform 0.4s;
 
   p {
@@ -27,8 +22,13 @@
   }
 
   &-danger {
+    visibility: visible;
+    display: block;
     background: $red-600;
     color: $red-100;
+    box-shadow: 0px 3px 5px -1px transparentize($dark-900, 0.7),
+      0px 6px 10px 0px transparentize($dark-900, 0.7),
+      0px 1px 18px 0px transparentize($dark-900, 0.7);
 
     p {
       color: $red-800;
@@ -36,20 +36,36 @@
   }
 
   &-success {
+    visibility: visible;
+    display: block;
     background: $green-500;
     color: $green-100;
+    box-shadow: 0px 3px 5px -1px transparentize($dark-900, 0.7),
+      0px 6px 10px 0px transparentize($dark-900, 0.7),
+      0px 1px 18px 0px transparentize($dark-900, 0.7);
 
     p {
       color: $green-700;
     }
   }
 
-  &-animate {
-    transform: translateY(0px);
-    transition: transform 0.4s;
+  &-item-enter {
+    transform: translateY(100px);
+    opacity: 0;
   }
 
-  &-invis {
-    display: none;
+  &-item-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: opacity transform 500ms ease-in;
+  }
+
+  &-item-exit {
+    opacity: 1;
+  }
+
+  &-item-exit-active {
+    opacity: 0;
+    transition: opacity 400ms ease-in;
   }
 }

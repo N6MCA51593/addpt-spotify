@@ -1,39 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AlertContext from '../../context/alert/alertContext';
 
 const Alerts = () => {
-  const { alerts } = useContext(AlertContext);
-  const [animate, setAnimate] = useState(null);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    setAnimate(false);
-    setVisible(true);
-
-    setTimeout(() => {
-      setAnimate(true);
-    }, 200);
-
-    return () => {
-      setAnimate(false);
-      setVisible(true);
-    };
-  }, [alerts, setAnimate, setVisible]);
+  const { alerts, removeAlert } = useContext(AlertContext);
 
   return (
-    alerts.length > 0 &&
-    alerts.map(alert => (
-      <div
-        key={alert.id}
-        className={`alert alert-${alert.type} ${
-          animate ? 'alert-animate' : ''
-        } ${visible ? '' : 'alert-invis'}`}
-        onClick={() => setVisible(false)}
-      >
-        {alert.msg}
-        <p>Click to dismiss...</p>
-      </div>
-    ))
+    <TransitionGroup className='alert'>
+      {alerts.map(alert => (
+        <CSSTransition key={alert.id} timeout={500} classNames='alert-item'>
+          <div
+            key={alert.id}
+            className={`alert alert-${alert.type}`}
+            onClick={() => removeAlert(alert.id)}
+          >
+            {alert.msg}
+            <p>Click to dismiss...</p>
+          </div>
+        </CSSTransition>
+      ))}
+    </TransitionGroup>
   );
 };
 

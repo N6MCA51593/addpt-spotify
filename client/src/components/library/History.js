@@ -24,7 +24,9 @@ const History = ({ updArtists }) => {
   if (isLoading) {
     return (
       <Fragment>
-        <LoadingSpinner />
+        <div className='spinner-history'>
+          <LoadingSpinner />
+        </div>
       </Fragment>
     );
   }
