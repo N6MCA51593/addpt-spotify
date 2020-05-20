@@ -22,7 +22,8 @@ import {
   faArrowUp,
   faArrowLeft,
   faLongArrowAltUp,
-  faLongArrowAltLeft
+  faLongArrowAltLeft,
+  faSearchPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 function useFA() {
@@ -49,7 +50,8 @@ function useFA() {
     faArrowLeft,
     faArrowUp,
     faLongArrowAltUp,
-    faLongArrowAltLeft
+    faLongArrowAltLeft,
+    faSearchPlus
   );
   return null;
 }

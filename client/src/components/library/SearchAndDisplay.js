@@ -35,7 +35,11 @@ const SearchAndDisplay = ({
   }, [isSubmitted]);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <div className='search-loading'>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (data.msg) {

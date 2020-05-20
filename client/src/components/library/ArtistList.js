@@ -60,7 +60,11 @@ const ArtistList = () => {
         tracks={trackStat.length}
       />
       <div className='accordion-wrapper'>
-        <Modal isShowing={isShowing} hide={toggle}>
+        <Modal
+          isShowing={isShowing}
+          hide={toggle}
+          type={type === 'delete' ? type : 'add'}
+        >
           {type === 'delete' ? (
             <DeleteArtist
               id={id}
@@ -74,7 +78,12 @@ const ArtistList = () => {
             <SearchModal />
           )}
         </Modal>
-        <Accordion openByDef={true} title={'Tracked'} toggle={toggle}>
+        <Accordion
+          openByDef={true}
+          title={'Tracked'}
+          toggle={toggle}
+          setType={setType}
+        >
           {sortArr(artists)
             .filter(artistsE => !artistsE.isArchived && artistsE.isTracked)
             .map(artistsE => {

@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Accordion = ({ title, children, openByDef, toggle }) => {
+const Accordion = ({ title, children, openByDef, toggle, setType }) => {
   const [isOpen, setOpen] = useState(openByDef ? true : false);
   const [count, setCount] = useState(children.length);
 
@@ -21,7 +21,13 @@ const Accordion = ({ title, children, openByDef, toggle }) => {
         {children}
         <Fragment>
           {title === 'Tracked' || title === 'Albums' ? (
-            <div className='card card-add' onClick={toggle}>
+            <div
+              className='card card-add'
+              onClick={() => {
+                setType(null);
+                toggle();
+              }}
+            >
               +
             </div>
           ) : null}

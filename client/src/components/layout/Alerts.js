@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AlertContext from '../../context/alert/alertContext';
 

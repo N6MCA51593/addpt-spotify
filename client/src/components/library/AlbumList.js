@@ -11,7 +11,7 @@ import Stats from '../layout/Stats';
 
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const libraryContext = useContext(LibraryContext);
-  const { isShowing, toggle, setIsShowing } = useModal();
+  const { isShowing, toggle, setIsShowing, setType } = useModal();
   const { assessArr, assessPresentational } = useSettings();
   const { sortArr } = useSorting();
   const { currentArtist, clearCurrent } = libraryContext;
@@ -49,16 +49,19 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
         classMod={classMod}
       />
 
-      {/* <input type='button' value='Back' onClick={clearCurrent} /> */}
-
       <div className='accordion-wrapper'>
-        <Modal isShowing={isShowing} hide={toggle}>
+        <Modal isShowing={isShowing} hide={toggle} type='addAlbum'>
           <SearchModal
             artistName={currentArtist.name}
             artistID={currentArtist._id}
           />
         </Modal>
-        <Accordion openByDef={true} title={'Albums'} toggle={toggle}>
+        <Accordion
+          openByDef={true}
+          title={'Albums'}
+          toggle={toggle}
+          setType={setType}
+        >
           {sortArr(albums)
             .filter(albumsE => albumsE.releaseType === 'album')
             .map(albumsE => {

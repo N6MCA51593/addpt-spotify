@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import SearchAndDisplay from '../library/SearchAndDisplay';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SearchModal = ({ artistName, artistID }) => {
   const [query, setQuery] = useState('');
@@ -24,17 +25,17 @@ const SearchModal = ({ artistName, artistID }) => {
           onChange={onChange}
           autoComplete='off'
         />
-        <button type='submit' className='search-button'>
-          Search
+        <button type='submit'>
+          <FontAwesomeIcon icon='search-plus' />
         </button>
-        <SearchAndDisplay
-          query={query}
-          isSubmitted={isSubmitted}
-          toggleSubmitted={toggleSubmitted}
-          artistName={artistName}
-          artistID={artistID}
-        />
       </form>
+      <SearchAndDisplay
+        query={query}
+        isSubmitted={isSubmitted}
+        toggleSubmitted={toggleSubmitted}
+        artistName={artistName}
+        artistID={artistID}
+      />
     </Fragment>
   );
 };
