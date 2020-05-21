@@ -35,6 +35,11 @@ $anim-delay-controls: 0.4s;
       height: 100%;
       object-fit: cover;
     }
+
+    &-loading {
+      min-width: 150px;
+      min-height: 150px;
+    }
   }
   .controls {
     visibility: hidden;

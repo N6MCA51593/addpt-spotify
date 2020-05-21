@@ -39,7 +39,9 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
       } `}
       onClick={() => album._id && setCurrentAlbum(album)}
     >
-      <div className='img-container'>
+      <div
+        className={`img-container${isLoading ? ' img-container-loading' : ''}`}
+      >
         {isLoading ? (
           <LoadingSpinner />
         ) : (

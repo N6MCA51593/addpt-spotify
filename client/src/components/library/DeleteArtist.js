@@ -16,7 +16,7 @@ const DeleteArtist = ({ id, name, deleteArtist, hide, setConfirmed }) => {
 
   return (
     <div className='modal-delete'>
-      <h3>{`Are you sure you want to delete ${artistName}? This action cannot be reversed.`}</h3>
+      <h3>{`Are you sure you want to delete ${artistName}? All associated data will de removed.`}</h3>
       <div>
         <button onClick={decline}> Cancel</button>
         <button onClick={() => del(id)}> Delete </button>
@@ -26,7 +26,7 @@ const DeleteArtist = ({ id, name, deleteArtist, hide, setConfirmed }) => {
 };
 
 DeleteArtist.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   deleteArtist: PropTypes.func.isRequired
 };
 

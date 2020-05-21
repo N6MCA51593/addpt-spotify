@@ -45,7 +45,7 @@ const SearchAndDisplay = ({
   if (data.msg) {
     return (
       <Fragment>
-        <p>{data.msg}</p>
+        <h3>{data.msg}</h3>
       </Fragment>
     );
   }

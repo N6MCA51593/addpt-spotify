@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Accordion = ({ title, children, openByDef, toggle, setType }) => {
+const Accordion = ({ title, openByDef, toggle, setType, children }) => {
   const [isOpen, setOpen] = useState(openByDef ? true : false);
   const [count, setCount] = useState(children.length);
 
@@ -38,10 +38,11 @@ const Accordion = ({ title, children, openByDef, toggle, setType }) => {
 };
 
 Accordion.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
+  children: PropTypes.node,
   isOpen: PropTypes.bool,
-  toggle: PropTypes.func
+  toggle: PropTypes.func,
+  setType: PropTypes.func
 };
 
 export default Accordion;
