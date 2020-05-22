@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import {
   GET_LIBRARY,
   CLEAR_ERRORS,
@@ -26,7 +26,6 @@ const LibraryState = props => {
 
   const [state, dispatch] = useReducer(libraryReducer, initialState);
 
-  // Load Library
   const loadLibrary = (isError, data) => {
     if (!isError) {
       dispatch({
@@ -37,6 +36,8 @@ const LibraryState = props => {
       dispatch({ type: LOAD_FAIL, payload: state });
     }
   };
+
+  const loadLibraryMemoized = useCallback(loadLibrary, []);
 
   const addArtist = artist => {
     dispatch({ type: ADD_ARTIST, payload: artist });
@@ -50,13 +51,19 @@ const LibraryState = props => {
     dispatch({ type: SET_CURRENT_ARTIST, payload: artist });
   };
 
+  const setCurrentArtistMemoized = useCallback(setCurrentArtist, []);
+
   const setCurrentAlbum = artist => {
     dispatch({ type: SET_CURRENT_ALBUM, payload: artist });
   };
 
+  const setCurrentAlbumMemoized = useCallback(setCurrentAlbum, []);
+
   const toggleArtist = artist => {
     dispatch({ type: TOGGLE_ARTIST, payload: artist });
   };
+
+  const toggleArtistMemoized = useCallback(toggleArtist, []);
 
   const deleteArtist = artistID => {
     dispatch({ type: DELETE_ARTIST, payload: artistID });
@@ -67,6 +74,8 @@ const LibraryState = props => {
   };
 
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
+  const clearErrorsMemoized = useCallback(clearErrors, []);
   return (
     <LibraryContext.Provider
       value={{
@@ -76,14 +85,14 @@ const LibraryState = props => {
         message: state.message,
         currentArtist: state.currentArtist,
         currentAlbum: state.currentAlbum,
-        loadLibrary,
-        clearErrors,
+        loadLibrary: loadLibraryMemoized,
+        clearErrors: clearErrorsMemoized,
         addArtist,
         addAlbum,
-        setCurrentArtist,
-        setCurrentAlbum,
+        setCurrentArtist: setCurrentArtistMemoized,
+        setCurrentAlbum: setCurrentAlbumMemoized,
         clearCurrent,
-        toggleArtist,
+        toggleArtist: toggleArtistMemoized,
         deleteArtist
       }}
     >

@@ -10,11 +10,10 @@ import useSorting from '../../utils/useSorting';
 import Stats from '../layout/Stats';
 
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
-  const libraryContext = useContext(LibraryContext);
+  const { currentArtist } = useContext(LibraryContext);
   const { isShowing, toggle, setIsShowing, setType } = useModal();
   const { assessArr, assessPresentational } = useSettings();
   const { sortArr } = useSorting();
-  const { currentArtist, clearCurrent } = libraryContext;
   const albums = currentArtist.albums;
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
     return () => {
       setChildUnmounted(currentArtist._id);
     };
-  }, [setChildUnmounted]);
+  }, [setChildUnmounted, currentArtist._id]);
 
   const albumStat = albums.length;
   const trackStat =

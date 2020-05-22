@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const DeleteArtist = ({ id, name, deleteArtist, hide, setConfirmed }) => {
-  const [artistName, setArtistName] = useState(name);
+  const [artistName] = useState(name);
 
   const del = id => {
     deleteArtist(id);
@@ -27,7 +27,10 @@ const DeleteArtist = ({ id, name, deleteArtist, hide, setConfirmed }) => {
 
 DeleteArtist.propTypes = {
   id: PropTypes.string,
-  deleteArtist: PropTypes.func.isRequired
+  name: PropTypes.string,
+  deleteArtist: PropTypes.func.isRequired,
+  hide: PropTypes.func,
+  setConfirmed: PropTypes.func.isRequired
 };
 
 export default DeleteArtist;

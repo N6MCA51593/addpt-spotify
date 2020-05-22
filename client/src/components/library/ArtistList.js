@@ -14,6 +14,7 @@ import useSorting from '../../utils/useSorting';
 
 const ArtistList = () => {
   const { artists, toggleArtist, deleteArtist } = useContext(LibraryContext);
+
   const { isShowing, type, toggle, setIsShowing, setType } = useModal();
   const [{ data, isError }, setConfig] = useAPIRequest({});
   const { id, name, setName, setID, setConfirmed } = useDeleteArtist();
@@ -28,7 +29,7 @@ const ArtistList = () => {
     if (data && !isError) {
       toggleArtist(data);
     }
-  }, [data, isError]);
+  }, [data, isError, toggleArtist]);
 
   const delArtist = (id, name, e) => {
     e.stopPropagation();

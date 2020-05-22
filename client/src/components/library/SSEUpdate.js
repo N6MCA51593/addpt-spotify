@@ -40,7 +40,9 @@ const SSEUpdate = ({ updArtists }) => {
     artists,
     artistArr,
     isLoading,
-    setArtistArr
+    setArtistArr,
+    loadLibrary,
+    setConfig
   ]);
 
   useEffect(() => {

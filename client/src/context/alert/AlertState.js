@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 import AlertContext from './alertContext';
 import alertReducer from './alertReducer';
@@ -22,11 +22,13 @@ const AlertState = props => {
     setTimeout(() => removeAlert(id), timeout);
   };
 
+  const setAlertMemoized = useCallback(setAlert, []);
+
   return (
     <AlertContext.Provider
       value={{
         alerts: state,
-        setAlert,
+        setAlert: setAlertMemoized,
         removeAlert
       }}
     >

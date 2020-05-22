@@ -59,23 +59,38 @@ export const Library = () => {
   };
 
   useEffect(() => {
-    if (artist) {
+    if (artist && currentArtist) {
       setCurrentArtist(artist);
     }
-    if (album && album._id === currentAlbum._id) {
+
+    if (album && currentAlbum && album._id === currentAlbum._id) {
       setCurrentAlbum(album);
     }
-  }, [artist, album]);
+  }, [
+    artist,
+    album,
+    setCurrentArtist,
+    setCurrentAlbum,
+    currentAlbum,
+    currentArtist
+  ]);
 
   useEffect(() => {
     if (!childUnmounted && data && Array.isArray(data)) {
+      // Initial load
       loadLibrary(isError, data);
     } else if (data && data._id === childUnmounted) {
       setChildUnmounted(null);
       toggleArtist(data);
     }
-    // eslint-disable-next-line
-  }, [data, childUnmounted]);
+  }, [
+    data,
+    childUnmounted,
+    toggleArtist,
+    isError,
+    loadLibrary,
+    setChildUnmounted
+  ]);
 
   useEffect(() => {
     if (error) {
@@ -97,8 +112,7 @@ export const Library = () => {
       setAlert('Artists updated', 'success');
       reset();
     }
-    // eslint-disable-next-line
-  }, [error, message, msg, reset, updArtists]);
+  }, [error, message, msg, reset, updArtists, setAlert, clearErrors]);
 
   if (loading) {
     return <LoadingSpinner />;

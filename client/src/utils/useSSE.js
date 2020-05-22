@@ -27,7 +27,7 @@ const useSSE = () => {
         }
       };
     }
-  }, []);
+  }, [doNotTrack, streamURI]);
 
   useEffect(() => {
     listenEvt();

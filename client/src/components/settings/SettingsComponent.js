@@ -32,7 +32,7 @@ const SettingsComponent = props => {
     } else if (isError && !isLoading) {
       setAlert('Error updating settings', 'danger');
     }
-  }, [data, isLoading, isError]);
+  }, [data, isLoading, isError, props.history, setAlert]);
 
   const onSubmit = () => {
     setConfig({

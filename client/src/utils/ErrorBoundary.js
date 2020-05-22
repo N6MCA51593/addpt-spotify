@@ -15,7 +15,12 @@ export default class ErrorBoundary extends Component {
       return (
         <div className='error'>
           <h1>Uh oh, I think you broke it</h1>
-          <h2>Quickly refresh the page before anyone noticed 🤐</h2>
+          <h2>
+            Quickly refresh the page before anyone noticed
+            <span role='img' aria-label='hush-hush'>
+              🤐
+            </span>
+          </h2>
         </div>
       );
     }

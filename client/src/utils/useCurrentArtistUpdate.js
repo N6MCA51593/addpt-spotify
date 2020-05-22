@@ -72,6 +72,11 @@ const useCurrentArtistUpdate = () => {
         })
       });
     }
+    return () => {
+      setTrack(null);
+      setAlbum(null);
+      setArtist(null);
+    };
   }, [track, params]);
 
   useEffect(() => {
@@ -104,6 +109,8 @@ const useCurrentArtistUpdate = () => {
     }
     return () => {
       setTrack(null);
+      setAlbum(null);
+      setArtist(null);
     };
   }, [album, params]);
 
