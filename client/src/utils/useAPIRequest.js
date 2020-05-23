@@ -2,12 +2,6 @@ import axios from 'axios';
 import { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
-const types = {
-  REQUEST_INIT: 'REQUEST_INIT',
-  REQUEST_SUCCESS: 'REQUEST_SUCCESS',
-  REQUEST_FAIL: 'REQUEST_FAILURE'
-};
-
 const hookStateReducer = (state, action) => {
   switch (action.type) {
     case 'REQUEST_INIT':
@@ -35,8 +29,6 @@ const hookStateReducer = (state, action) => {
 };
 
 const useAPIRequest = (initialConfig, initialData) => {
-  const { REQUEST_FAIL, REQUEST_INIT, REQUEST_SUCCESS } = types;
-
   const [config, setConfig] = useState(initialConfig);
 
   const [state, dispatch] = useReducer(hookStateReducer, {
@@ -52,19 +44,19 @@ const useAPIRequest = (initialConfig, initialData) => {
         return;
       }
 
-      dispatch({ type: REQUEST_INIT });
+      dispatch({ type: 'REQUEST_INIT' });
 
       try {
         const result = await axios(config);
         if (!didCancel) {
           dispatch({
-            type: REQUEST_SUCCESS,
+            type: 'REQUEST_SUCCESS',
             payload: result.data
           });
         }
       } catch (err) {
         if (!didCancel) {
-          dispatch({ type: REQUEST_FAIL });
+          dispatch({ type: 'REQUEST_FAIL' });
         }
       }
     };
@@ -74,7 +66,6 @@ const useAPIRequest = (initialConfig, initialData) => {
     return () => {
       didCancel = true;
     };
-    // eslint-disable-next-line
   }, [config]);
 
   return [state, setConfig];

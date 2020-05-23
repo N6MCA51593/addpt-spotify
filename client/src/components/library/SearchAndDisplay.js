@@ -31,8 +31,7 @@ const SearchAndDisplay = ({
     }
 
     toggleSubmitted(false);
-    // eslint-disable-next-line
-  }, [isSubmitted]);
+  }, [isSubmitted, query, artistID, artistName, toggleSubmitted, setConfig]);
 
   if (isLoading) {
     return (
@@ -66,7 +65,9 @@ const SearchAndDisplay = ({
 SearchAndDisplay.propTypes = {
   query: PropTypes.string.isRequired,
   isSubmitted: PropTypes.bool.isRequired,
-  toggleSubmitted: PropTypes.func.isRequired
+  toggleSubmitted: PropTypes.func.isRequired,
+  artistName: PropTypes.string,
+  artistID: PropTypes.string
 };
 
 export default SearchAndDisplay;

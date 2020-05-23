@@ -19,8 +19,7 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
     if (data && !isError) {
       addArtist(data);
     }
-    // eslint-disable-next-line
-  }, [data, isError]);
+  }, [data, isError, addArtist]);
 
   const add = id => {
     setConfig({
@@ -124,7 +123,9 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
 };
 
 ArtistItem.propTypes = {
-  artist: PropTypes.object.isRequired
+  artist: PropTypes.object.isRequired,
+  toggleArtistSetConfig: PropTypes.func,
+  delArtist: PropTypes.func
 };
 
 export default ArtistItem;

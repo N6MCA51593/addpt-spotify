@@ -18,8 +18,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
     if (data && !isError) {
       addAlbum(data);
     }
-    // eslint-disable-next-line
-  }, [data, isError]);
+  }, [data, isError, addAlbum]);
 
   const add = (artistid, albumid) => {
     setConfig({
@@ -89,7 +88,9 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
 };
 
 AlbumItem.propTypes = {
-  album: PropTypes.object.isRequired
+  album: PropTypes.object.isRequired,
+  artistID: PropTypes.string,
+  toggleTracking: PropTypes.func
 };
 
 export default AlbumItem;

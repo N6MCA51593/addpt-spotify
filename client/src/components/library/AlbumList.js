@@ -8,6 +8,7 @@ import Modal from '../layout/Modal';
 import useSettings from '../../utils/useSettings';
 import useSorting from '../../utils/useSorting';
 import Stats from '../layout/Stats';
+import PropTypes from 'prop-types';
 
 const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
   const { currentArtist } = useContext(LibraryContext);
@@ -26,10 +27,10 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
     };
   }, [setChildUnmounted, currentArtist._id]);
 
-  const albumStat = albums.length;
+  const albumStat = albums.filter(albumE => albumE.isTracked);
   const trackStat =
-    albumStat > 0 &&
-    albums
+    albumStat.length > 0 &&
+    albumStat
       .map(albumE => albumE.tracks)
       .flat()
       .filter(trackE => trackE.isTracked).length;
@@ -42,7 +43,7 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
       <Stats
         type={currentArtist.name}
         progress={progress}
-        albums={albumStat}
+        albums={albumStat.length}
         tracks={trackStat}
         status={status}
         classMod={classMod}
@@ -106,6 +107,11 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
       </div>
     </Fragment>
   );
+};
+
+AlbumList.propTypes = {
+  setChildUnmounted: PropTypes.func.isRequired,
+  toggleTracking: PropTypes.func.isRequired
 };
 
 export default AlbumList;

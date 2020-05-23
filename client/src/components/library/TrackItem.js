@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import useSettings from '../../utils/useSettings';
 import Button from '../layout/Button';
 import Controls from '../layout/Controls';
@@ -16,7 +17,14 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
       toggleTracking(albumID, trackID, listens);
       setTrackingToggleBool(true);
     }
-  }, [listens, trackingToggleBool, listensChanged]);
+  }, [
+    listens,
+    trackingToggleBool,
+    listensChanged,
+    albumID,
+    trackID,
+    toggleTracking
+  ]);
 
   useEffect(() => {
     setListens(track.listens);
@@ -74,6 +82,12 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
       )}
     </div>
   );
+};
+
+TrackItem.propTypes = {
+  track: PropTypes.object.isRequired,
+  toggleTracking: PropTypes.func,
+  albumID: PropTypes.string
 };
 
 export default TrackItem;

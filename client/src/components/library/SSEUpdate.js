@@ -63,7 +63,7 @@ const SSEUpdate = ({ updArtists }) => {
 };
 
 SSEUpdate.propTypes = {
-  updArtists: PropTypes.any
+  updArtists: PropTypes.array
 };
 
 export default SSEUpdate;

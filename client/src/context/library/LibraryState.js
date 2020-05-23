@@ -43,9 +43,13 @@ const LibraryState = props => {
     dispatch({ type: ADD_ARTIST, payload: artist });
   };
 
+  const addArtistMemoized = useCallback(addArtist, []);
+
   const addAlbum = album => {
     dispatch({ type: ADD_ALBUM, payload: album });
   };
+
+  const addAlbumMemoized = useCallback(addAlbum, []);
 
   const setCurrentArtist = artist => {
     dispatch({ type: SET_CURRENT_ARTIST, payload: artist });
@@ -87,8 +91,8 @@ const LibraryState = props => {
         currentAlbum: state.currentAlbum,
         loadLibrary: loadLibraryMemoized,
         clearErrors: clearErrorsMemoized,
-        addArtist,
-        addAlbum,
+        addArtist: addArtistMemoized,
+        addAlbum: addAlbumMemoized,
         setCurrentArtist: setCurrentArtistMemoized,
         setCurrentAlbum: setCurrentAlbumMemoized,
         clearCurrent,

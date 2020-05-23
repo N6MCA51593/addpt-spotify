@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useCallback } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import AuthContext from './authContext';
@@ -49,7 +49,11 @@ const AuthState = props => {
     }
   };
 
+  const loadUserMemoized = useCallback(loadUser, []);
+
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
+
+  const clearErrorsMemoized = useCallback(clearErrors, []);
 
   return (
     <AuthContext.Provider
@@ -58,8 +62,8 @@ const AuthState = props => {
         loading: state.loading,
         user: state.user,
         error: state.error,
-        loadUser,
-        clearErrors,
+        loadUser: loadUserMemoized,
+        clearErrors: clearErrorsMemoized,
         logout
       }}
     >

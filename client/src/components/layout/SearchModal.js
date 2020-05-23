@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import SearchAndDisplay from '../library/SearchAndDisplay';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 const SearchModal = ({ artistName, artistID }) => {
   const [query, setQuery] = useState('');
@@ -38,6 +39,11 @@ const SearchModal = ({ artistName, artistID }) => {
       />
     </Fragment>
   );
+};
+
+SearchModal.propTypes = {
+  artistName: PropTypes.string,
+  artistID: PropTypes.string
 };
 
 export default SearchModal;

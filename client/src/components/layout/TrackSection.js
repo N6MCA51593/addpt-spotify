@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import History from '../library/History';
 import TrackItem from '../library/TrackItem';
+import PropTypes from 'prop-types';
 
 const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
   return (
@@ -38,6 +39,12 @@ const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
       </div>
     </div>
   );
+};
+
+TrackSection.propTypes = {
+  currentAlbum: PropTypes.object,
+  toggleTracking: PropTypes.func,
+  updArtists: PropTypes.array
 };
 
 export default TrackSection;
