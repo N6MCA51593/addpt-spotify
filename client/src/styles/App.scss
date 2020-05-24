@@ -11,6 +11,7 @@
 @import 'alerts';
 @import 'spinner';
 @import 'modal';
+@import 'settings';
 
 * {
   box-sizing: border-box;
@@ -63,49 +64,4 @@ h3 {
     color: $dark-500;
     font-size: 2rem;
   }
-}
-
-.horizontal-slider {
-  width: 100%;
-  max-width: 500px;
-  height: 50px;
-  border: 1px solid grey;
-}
-
-.example-thumb {
-  font-size: 0.5em;
-  text-align: center;
-  background-color: black;
-  color: white;
-  cursor: pointer;
-  border: 2px solid gray;
-  border-radius: 50%;
-}
-
-.example-thumb.active {
-  background-color: grey;
-}
-
-.example-track {
-  position: relative;
-  background: #ddd;
-}
-
-.example-track.example-track-1 {
-  background: #f00;
-}
-
-.example-track.example-track-2 {
-  background: #0f0;
-}
-
-.horizontal-slider .example-track {
-  top: 20px;
-  height: 10px;
-}
-
-.horizontal-slider .example-thumb {
-  top: 20px;
-  width: 25px;
-  height: 25px;
 }

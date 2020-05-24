@@ -110,6 +110,19 @@ export const Library = () => {
 
     if (updArtists) {
       setAlert('Artists updated', 'success');
+      if (document.visibilityState === 'hidden') {
+        const title = document.title;
+        const flashUpdate = () => {
+          document.title =
+            document.title === title ? document.title + ' (!!!)' : title;
+        };
+        const interval = setInterval(flashUpdate, 500);
+        setTimeout(() => {
+          clearInterval(interval);
+          document.title = title;
+        }, 5000);
+      }
+
       reset();
     }
   }, [error, message, msg, reset, updArtists, setAlert, clearErrors]);

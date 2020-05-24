@@ -16,10 +16,12 @@
   padding: 0rem 1rem;
   overflow: visible;
   height: auto;
+  border: 1px solid $dark-700;
 
   &.collapsed {
     max-height: 0;
     overflow: hidden;
+    border: none;
   }
 }
 

@@ -53,18 +53,31 @@ const SettingsComponent = props => {
 
   if (albumThresholds && artistThresholds && trackThresholds) {
     return (
-      <div>
-        <ReactSlider {...sliderProps} value={trackThresholds} />
-        <ReactSlider {...sliderProps} value={albumThresholds} />
-        <ReactSlider {...sliderProps} value={artistThresholds} />
-        <label htmlFor='tracking'>Disable automatic tracking</label>
-        <input
-          type='checkbox'
-          name='tracking'
-          id='tracking'
-          checked={doNotTrack}
-          onChange={() => setDoNotTrack(!doNotTrack)}
-        />
+      <div className='settings'>
+        <div className='settings-item'>
+          <p>Track progress thresholds, listens (used for calculations)</p>
+          <ReactSlider {...sliderProps} value={trackThresholds} />
+        </div>
+        <div className='settings-item'>
+          <p>Album progress thresholds, %</p>
+          <ReactSlider {...sliderProps} value={albumThresholds} />
+        </div>
+        <div className='settings-item'>
+          <p>Artist progress thresholds, %</p>
+          <ReactSlider {...sliderProps} value={artistThresholds} />
+        </div>
+        <div className='settings-item'>
+          <label htmlFor='tracking'>
+            <p>Automatic tracking of listening history</p>
+          </label>
+          <input
+            type='checkbox'
+            name='tracking'
+            id='tracking'
+            checked={!doNotTrack}
+            onChange={() => setDoNotTrack(!doNotTrack)}
+          />
+        </div>
         <input type='button' value='Submit' onClick={onSubmit} />
       </div>
     );
