@@ -75,7 +75,6 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       axios(albumOptions('single')),
       axios(albumOptions('compilation'))
     ]);
-    const isFullyCached = albumsResponse.some(e => e.data.next);
     const albums = albumsResponse
       .map(e => {
         return e.data.items.map(e => {
@@ -98,7 +97,6 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
     const artist = {
       spID: artistResponse.data.id,
       name: artistResponse.data.name,
-      isFullyCached: !isFullyCached,
       img: artistResponse.data.images,
       albums: albums
     };
