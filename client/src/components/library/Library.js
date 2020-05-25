@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+  useCallback
+} from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import AlertContext from '../../context/alert/alertContext';
 import useAPIRequest from '../../utils/useAPIRequest';
@@ -38,25 +44,28 @@ export const Library = () => {
     method: 'get'
   });
 
-  const toggleTracking = (albumID, trackID, listens) => {
-    setParams({
-      artistInit: currentArtist,
-      albumID: albumID,
-      ...(trackID ? { trackID: trackID } : {}),
-      ...(listens !== undefined ? { listens: listens } : {})
-    });
-
-    setConfig({
-      url: '/api/library',
-      method: 'put',
-      params: {
-        artistid: currentArtist._id,
-        albumid: albumID,
-        ...(trackID ? { trackid: trackID } : {}),
+  const toggleTracking = useCallback(
+    (albumID, trackID, listens) => {
+      setParams({
+        artistInit: currentArtist,
+        albumID: albumID,
+        ...(trackID ? { trackID: trackID } : {}),
         ...(listens !== undefined ? { listens: listens } : {})
-      }
-    });
-  };
+      });
+
+      setConfig({
+        url: '/api/library',
+        method: 'put',
+        params: {
+          artistid: currentArtist._id,
+          albumid: albumID,
+          ...(trackID ? { trackid: trackID } : {}),
+          ...(listens !== undefined ? { listens: listens } : {})
+        }
+      });
+    },
+    [currentArtist, setConfig, setParams]
+  );
 
   useEffect(() => {
     if (artist && currentArtist) {

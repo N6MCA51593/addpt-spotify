@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, memo } from 'react';
 import LibraryContext from '../../context/library/libraryContext';
 import AlbumItem from './AlbumItem';
 import Accordion from '../layout/Accordion';
@@ -114,4 +114,4 @@ AlbumList.propTypes = {
   toggleTracking: PropTypes.func.isRequired
 };
 
-export default AlbumList;
+export default memo(AlbumList);

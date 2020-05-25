@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import ReactSlider from 'react-slider';
 import useSettings from '../../utils/useSettings';
 import useAPIRequest from '../../utils/useAPIRequest';
@@ -9,8 +9,7 @@ const SettingsComponent = props => {
     albumThresholds,
     trackThresholds,
     artistThresholds,
-    doNotTrack,
-    setDoNotTrack
+    doNotTrack = false
   } = useSettings();
   const [{ data, isLoading, isError }, setConfig] = useAPIRequest({});
   const { setAlert } = useContext(AlertContext);
@@ -24,6 +23,20 @@ const SettingsComponent = props => {
     pearling: true,
     minDistance: 1
   };
+
+  const [trackState, setTrackState] = useState(null);
+  const [albumState, setAlbumState] = useState(null);
+  const [artistState, setArtistState] = useState(null);
+  const [trackingState, setTrackingState] = useState(null);
+
+  useEffect(() => {
+    if (trackThresholds && albumThresholds && trackThresholds) {
+      setTrackState(trackThresholds);
+      setAlbumState(albumThresholds);
+      setArtistState(artistThresholds);
+      setTrackingState(doNotTrack);
+    }
+  }, [albumThresholds, trackThresholds, artistThresholds, doNotTrack]);
 
   useEffect(() => {
     if (data && data.msg === 'Updated' && !isError && !isLoading) {
@@ -39,32 +52,44 @@ const SettingsComponent = props => {
       url: 'api/settings',
       method: 'put',
       data: {
-        trackThresholds: trackThresholds,
-        albumThresholds: albumThresholds,
-        artistThresholds: artistThresholds,
-        doNotTrack: doNotTrack
+        trackThresholds: trackState,
+        albumThresholds: albumState,
+        artistThresholds: artistState,
+        doNotTrack: trackingState
       }
     });
-    localStorage.setItem('artistThresholds', JSON.stringify(artistThresholds));
-    localStorage.setItem('albumThresholds', JSON.stringify(albumThresholds));
-    localStorage.setItem('trackThresholds', JSON.stringify(trackThresholds));
-    localStorage.setItem('doNotTrack', doNotTrack);
+    localStorage.setItem('trackThresholds', JSON.stringify(trackState));
+    localStorage.setItem('albumThresholds', JSON.stringify(albumState));
+    localStorage.setItem('artistThresholds', JSON.stringify(artistState));
+    localStorage.setItem('doNotTrack', trackingState);
   };
 
-  if (albumThresholds && artistThresholds && trackThresholds) {
+  if (albumState && artistState && trackState) {
     return (
       <div className='settings'>
         <div className='settings-item'>
           <p>Track progress thresholds, listens (used for calculations)</p>
-          <ReactSlider {...sliderProps} value={trackThresholds} />
+          <ReactSlider
+            {...sliderProps}
+            value={trackState}
+            onChange={value => setTrackState(value)}
+          />
         </div>
         <div className='settings-item'>
           <p>Album progress thresholds, %</p>
-          <ReactSlider {...sliderProps} value={albumThresholds} />
+          <ReactSlider
+            {...sliderProps}
+            value={albumState}
+            onChange={value => setAlbumState(value)}
+          />
         </div>
         <div className='settings-item'>
           <p>Artist progress thresholds, %</p>
-          <ReactSlider {...sliderProps} value={artistThresholds} />
+          <ReactSlider
+            {...sliderProps}
+            value={artistState}
+            onChange={value => setArtistState(value)}
+          />
         </div>
         <div className='settings-item'>
           <label htmlFor='tracking'>
@@ -74,8 +99,8 @@ const SettingsComponent = props => {
             type='checkbox'
             name='tracking'
             id='tracking'
-            checked={!doNotTrack}
-            onChange={() => setDoNotTrack(!doNotTrack)}
+            checked={!trackingState}
+            onChange={() => setTrackingState(!trackingState)}
           />
         </div>
         <input type='button' value='Submit' onClick={onSubmit} />

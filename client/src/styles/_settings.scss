@@ -96,6 +96,7 @@
 
     &:nth-child(even) {
       bottom: 100px;
+
       &::before {
         top: 30px;
       }

@@ -33,6 +33,10 @@ h3 {
   font-family: 'Raleway', sans-serif;
 }
 
+button:focus {
+  outline: none;
+}
+
 .main-grid {
   display: grid;
   grid-template-columns: 1fr 19fr 6fr;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import useSettings from '../../utils/useSettings';
 import Button from '../layout/Button';
@@ -90,4 +90,4 @@ TrackItem.propTypes = {
   albumID: PropTypes.string
 };
 
-export default TrackItem;
+export default memo(TrackItem);

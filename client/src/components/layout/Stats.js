@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -65,4 +65,4 @@ Stats.propTypes = {
   classMod: PropTypes.number
 };
 
-export default Stats;
+export default memo(Stats);

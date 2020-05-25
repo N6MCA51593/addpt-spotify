@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, { useContext, useEffect, Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
 import placeholder from '../../assets/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
@@ -93,4 +93,4 @@ AlbumItem.propTypes = {
   toggleTracking: PropTypes.func
 };
 
-export default AlbumItem;
+export default memo(AlbumItem);
