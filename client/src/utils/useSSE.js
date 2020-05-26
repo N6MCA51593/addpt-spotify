@@ -4,8 +4,6 @@ const useSSE = () => {
   const [msg, setMsg] = useState(null);
   const [updArtists, setUpdArtists] = useState(null);
 
-  const doNotTrack = JSON.parse(localStorage.getItem('doNotTrack'));
-
   const reset = useCallback(() => {
     setMsg(null);
     setUpdArtists(null);
@@ -15,7 +13,7 @@ const useSSE = () => {
   const streamURI = process.env.REACT_APP_SSE_URI;
 
   const listenEvt = useCallback(() => {
-    if (!evtSrc.current && !doNotTrack) {
+    if (!evtSrc.current) {
       evtSrc.current = new EventSource(streamURI, { withCredentials: true });
       evtSrc.current.onmessage = e => {
         const streamData = JSON.parse(e.data);
@@ -27,7 +25,7 @@ const useSSE = () => {
         }
       };
     }
-  }, [doNotTrack, streamURI]);
+  }, [streamURI]);
 
   useEffect(() => {
     listenEvt();
