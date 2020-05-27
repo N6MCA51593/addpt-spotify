@@ -94,7 +94,9 @@ router.get('/redirect', async (req, res) => {
         setDefaultsOnInsert: true
       });
       const token = createToken(spID, access_token);
-      res.cookie('token', token, { httpOnly: true }).cookie('login', 'success');
+      res
+        .cookie('token', token, { httpOnly: true, sameSite: 'strict' })
+        .cookie('login', 'success');
       res.redirect(frontEndURI);
     } catch (err) {
       console.error(err);
