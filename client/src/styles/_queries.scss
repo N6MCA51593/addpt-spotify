@@ -16,8 +16,10 @@
   .bottom-nav {
     right: -20px;
   }
+
   .track-section {
     min-width: 310px;
+
     .tracks {
       width: 95%;
     }
@@ -37,6 +39,7 @@
   .main-grid {
     grid-template-columns: 1fr;
   }
+
   .track-section {
     display: none;
   }
@@ -47,6 +50,36 @@
 }
 
 @media (max-width: 590px) {
+  .accordion-wrapper {
+    padding: 0.3rem;
+  }
+
+  .accordion-item {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 3px;
+    padding: 0.1rem;
+  }
+
+  .card {
+    margin: 0.3rem;
+    width: 120px;
+    .text {
+      font-size: 0.8rem;
+
+      p:first-child {
+        margin: 0 0 0.2rem;
+        width: 6rem;
+        line-height: 1.3;
+        height: 2rem;
+      }
+    }
+
+    &-add {
+      height: 120px;
+      width: 100px;
+    }
+  }
+
   .card,
   .card-artist {
     .img-container {
