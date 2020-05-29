@@ -53,7 +53,7 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
   return (
     <div
       className={`card card-artist card-${artist.isTracked ? classMod : '5'} ${
-        !artist._id && ' card-search-item'
+        !artist._id ? ' card-search-item' : ''
       } `}
       onClick={() =>
         artist._id && !artist.isArchived && setCurrentArtist(artist)

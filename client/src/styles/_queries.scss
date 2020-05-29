@@ -29,7 +29,22 @@
 @media (max-width: 999px) {
   .navbar {
     display: none;
+    position: fixed;
+
+    ul {
+      position: relative;
+      top: 15vh;
+    }
+
+    &-showing {
+      display: initial;
+    }
   }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
   .main-grid {
     grid-template-columns: 20fr 6fr;
   }
@@ -46,6 +61,36 @@
 
   .bottom-nav {
     right: 20px;
+
+    .button-container {
+      top: 80vh;
+    }
+  }
+}
+
+@media (max-width: 770px) {
+  .footer {
+    margin: 2rem 0 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 140px;
+
+    h3 {
+      border-left: none;
+      border-bottom: 1px solid $dark-500;
+      padding: 0.2rem 3rem 0.3rem;
+      margin: 0 0 0.7rem;
+    }
+
+    .links {
+      margin: 0;
+      padding: 0;
+      border: none;
+      div {
+        justify-content: center;
+      }
+    }
   }
 }
 
@@ -63,6 +108,7 @@
   .card {
     margin: 0.3rem;
     width: 120px;
+
     .text {
       font-size: 0.8rem;
 
@@ -92,6 +138,16 @@
         width: 100px;
         height: 100px;
       }
+    }
+  }
+}
+
+@media (pointer: coarse), (max-width: 1024px) {
+  .card .controls {
+    height: 100%;
+
+    &-toggle {
+      display: flex;
     }
   }
 }

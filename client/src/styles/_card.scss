@@ -51,9 +51,36 @@ $anim-delay-controls: 0.4s;
     height: 20%;
     width: 100%;
     z-index: 1;
+
+    &-toggle {
+      position: absolute;
+      visibility: visible;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      top: 0;
+      right: 2px;
+      height: 30px;
+      width: 30px;
+      color: #fff;
+
+      .fa-ellipsis-v {
+        stroke: $dark-900;
+        stroke-width: 30;
+      }
+    }
+
+    &-showing {
+      visibility: visible;
+
+      .button {
+        opacity: 1;
+      }
+    }
   }
 
-  &:hover {
+  &:not(.nohover):hover {
     transform: translate3d(0, -3px, 0);
     box-shadow: inset 0 0 0 2px transparentize($dark-100, 0.2),
       0px 25px 25px -15px $dark-900;

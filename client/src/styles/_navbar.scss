@@ -37,4 +37,25 @@
     padding: 1rem;
     margin: 2rem 0rem;
   }
+
+  &-showing {
+    display: initial;
+  }
+}
+
+.navbar-toggle {
+  display: none;
+  cursor: pointer;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 2vh;
+  margin: 0.5rem;
+  left: 0.5vw;
+  opacity: 0.6;
+  width: 40px;
+  height: 40px;
+  background-color: $bg-main;
+  border: 1px solid $dark-600;
+  z-index: 5;
 }
