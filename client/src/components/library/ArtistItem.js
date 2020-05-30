@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment, memo } from 'react';
+import React, { useContext, useEffect, useState, Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
 import placeholder from '../../assets/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
@@ -12,8 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
   const { addArtist, setCurrentArtist } = useContext(LibraryContext);
   const { assessArr, assessPresentational } = useSettings(artist);
-
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
+  const [areControlsShowing, setAreControlsShowing] = useState(false);
+  const [areControlsToggled, setAreControlsToggled] = useState(false);
 
   useEffect(() => {
     if (data && !isError) {
@@ -54,7 +55,7 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
     <div
       className={`card card-artist card-${artist.isTracked ? classMod : '5'} ${
         !artist._id ? ' card-search-item' : ''
-      } `}
+      }${areControlsToggled ? ' nohover' : ''} `}
       onClick={() =>
         artist._id && !artist.isArchived && setCurrentArtist(artist)
       }
@@ -64,7 +65,11 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
           <LoadingSpinner />
         ) : (
           <Fragment>
-            <Controls>
+            <Controls
+              isShowing={areControlsShowing}
+              setIsShowing={setAreControlsShowing}
+              setIsToggled={setAreControlsToggled}
+            >
               {!artist._id ? (
                 <Button
                   onClick={() => add(artist.spID)}

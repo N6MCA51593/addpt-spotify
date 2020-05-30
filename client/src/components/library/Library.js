@@ -12,6 +12,7 @@ import useCurrentArtistUpdate from '../../utils/useCurrentArtistUpdate';
 import ArtistList from './ArtistList';
 import AlbumList from './AlbumList';
 import TrackSection from '../layout/TrackSection';
+import LibraryNav from '../layout/LibraryNav';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import BottomNav from '../layout/BottomNav';
 import useSSE from '../../utils/useSSE';
@@ -37,8 +38,8 @@ export const Library = () => {
   const { msg, updArtists, reset } = useSSE();
   useSettings();
   const [childUnmounted, setChildUnmounted] = useState(null);
+  const [areTracksShowing, setAreTracksShowing] = useState(false);
   const [artist, album, setParams] = useCurrentArtistUpdate();
-
   const [{ isError, data }, setConfig] = useAPIRequest({
     url: '/api/library',
     method: 'get'
@@ -142,7 +143,12 @@ export const Library = () => {
 
   return (
     <Fragment>
-      <div className='main-content'>
+      <LibraryNav
+        areTracksShowing={areTracksShowing}
+        setAreTracksShowing={setAreTracksShowing}
+        currentAlbum={currentAlbum}
+      />
+      <div className={`main-content${areTracksShowing ? ' hidden' : ''}`}>
         <BottomNav clearCurrent={currentArtist && clearCurrent} />
         <SSEUpdate updArtists={updArtists} />
         {currentArtist ? (
@@ -154,11 +160,13 @@ export const Library = () => {
           <ArtistList />
         )}
       </div>
-      <TrackSection
-        currentAlbum={currentAlbum}
-        toggleTracking={toggleTracking}
-        updArtists={updArtists}
-      />
+      <div className={`track-section${!areTracksShowing ? ' hidden' : ''}`}>
+        <TrackSection
+          currentAlbum={currentAlbum}
+          toggleTracking={toggleTracking}
+          updArtists={updArtists}
+        />
+      </div>
     </Fragment>
   );
 };

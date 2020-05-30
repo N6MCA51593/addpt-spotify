@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, Fragment, memo } from 'react';
+import React, { useContext, useEffect, useState, Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
 import placeholder from '../../assets/placeholder.png';
 import LibraryContext from '../../context/library/libraryContext';
@@ -13,6 +13,8 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
   const { addAlbum, setCurrentAlbum } = useContext(LibraryContext);
   const { assessArr, assessPresentational } = useSettings();
   const [{ data, isError, isLoading }, setConfig] = useAPIRequest({});
+  const [areControlsShowing, setAreControlsShowing] = useState(false);
+  const [areControlsToggled, setAreControlsToggled] = useState(false);
 
   useEffect(() => {
     if (data && !isError) {
@@ -35,7 +37,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
     <div
       className={`card card-${album.isTracked ? classMod : '5'} ${
         !album._id && ' card-search-item'
-      } `}
+      }${areControlsToggled ? ' nohover' : ''} `}
       onClick={() => album._id && setCurrentAlbum(album)}
     >
       <div
@@ -45,7 +47,11 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
           <LoadingSpinner />
         ) : (
           <Fragment>
-            <Controls>
+            <Controls
+              isShowing={areControlsShowing}
+              setIsShowing={setAreControlsShowing}
+              setIsToggled={setAreControlsToggled}
+            >
               {!album._id ? (
                 <Button
                   onClick={() => add(artistID, album.spID)}
@@ -56,7 +62,10 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
                 <Button
                   type={album.isTracked ? 'track-on' : 'track-off'}
                   icon={album.isTracked ? 'eye' : 'eye-slash'}
-                  onClick={() => toggleTracking(album._id)}
+                  onClick={e => {
+                    e.stopPropagation();
+                    toggleTracking(album._id);
+                  }}
                 />
               )}
             </Controls>

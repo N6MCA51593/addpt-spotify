@@ -18,7 +18,7 @@ const Accordion = ({ title, openByDef, toggle, setType, children }) => {
         {title} ({count})
       </div>
       <div className={`accordion-item ${!isOpen ? 'collapsed' : ''}`}>
-        {children}
+        {isOpen && children}
         <Fragment>
           {title === 'Tracked' || title === 'Albums' ? (
             <div

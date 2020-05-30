@@ -2,7 +2,6 @@ import React, { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import useSettings from '../../utils/useSettings';
 import Button from '../layout/Button';
-import Controls from '../layout/Controls';
 
 const TrackItem = ({ track, toggleTracking, albumID }) => {
   const [listens, setListens] = useState(track.listens);
@@ -67,7 +66,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
       </div>
 
       {albumID && (
-        <Controls>
+        <div className='controls'>
           <Button type='inc' icon='caret-up' onClick={incListens} />
           <Button
             type={tracking ? 'track-on' : 'track-off'}
@@ -78,7 +77,7 @@ const TrackItem = ({ track, toggleTracking, albumID }) => {
             }}
           />
           <Button type='dec' icon='caret-down' onClick={decListens} />
-        </Controls>
+        </div>
       )}
     </div>
   );
