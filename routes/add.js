@@ -9,7 +9,6 @@ const Artist = require('../models/Artist');
 // @route     GET api/library/add/search
 // @desc      Search for an artist
 // @access    Private
-// TODO: Placeholder images
 router.get('/search', [auth, authSpotify], async (req, res) => {
   const uSpID = req.user.id;
   const { accessToken } = req.user;
