@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 
 const LibraryNav = ({
@@ -6,32 +6,39 @@ const LibraryNav = ({
   setAreTracksShowing,
   currentAlbum
 }) => {
-  const [albumID, setAlbumID] = useState(null);
+  const prevAlbumPropRef = useRef();
 
   useEffect(() => {
-    if (currentAlbum) {
-      if (!albumID) {
-        setAreTracksShowing(true);
-      }
-      setAlbumID(currentAlbum._id);
-    } else {
-      setAlbumID(null);
-      setAreTracksShowing(false);
+    prevAlbumPropRef.current = currentAlbum;
+  });
+
+  const prevAlbum = prevAlbumPropRef.current;
+
+  useEffect(() => {
+    if (
+      currentAlbum &&
+      ((prevAlbum && !(currentAlbum._id === prevAlbum._id)) || !prevAlbum)
+    ) {
+      window.scrollTo(0, 50);
+      setAreTracksShowing(true);
     }
-  }, [
-    currentAlbum,
-    setAlbumID,
-    areTracksShowing,
-    setAreTracksShowing,
-    albumID
-  ]);
+  }, [currentAlbum, setAreTracksShowing, prevAlbum]);
 
   return (
     <div className='library-nav'>
-      <button onClick={() => setAreTracksShowing(false)}>
+      <button
+        className={!areTracksShowing ? 'active' : ''}
+        onClick={() => setAreTracksShowing(false)}
+      >
         Artists / Albums
       </button>
-      <button onClick={() => setAreTracksShowing(true)}>
+      <button
+        className={areTracksShowing ? 'active' : ''}
+        onClick={() => {
+          window.scrollTo(0, 50);
+          setAreTracksShowing(true);
+        }}
+      >
         Tracks / History
       </button>
     </div>

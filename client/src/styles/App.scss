@@ -12,6 +12,7 @@
 @import 'spinner';
 @import 'modal';
 @import 'settings';
+@import 'library-nav';
 
 * {
   box-sizing: border-box;
@@ -68,16 +69,6 @@ button:focus {
     color: $dark-500;
     font-size: 2rem;
   }
-}
-
-.library-nav {
-  display: flex;
-  position: fixed;
-  width: 80vw;
-  margin: 0 10vw;
-  z-index: 2;
-  justify-content: center;
-  align-items: center;
 }
 
 @import 'queries';

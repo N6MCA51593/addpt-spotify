@@ -1,0 +1,29 @@
+// Library Nav
+.library-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  padding: 0 2rem;
+  min-width: 350px;
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg-main;
+  opacity: 0.8;
+  left: 50%;
+  transform: translateX(-50%);
+
+  button {
+    background-color: $bg-main;
+    color: $dark-300;
+    padding: 0.5rem 1rem 0.3rem;
+    margin: 0.5rem;
+    border: none;
+    border-bottom: 1px solid $dark-500;
+  }
+
+  .active {
+    color: $text;
+    border-bottom: 1px solid $dark-100;
+  }
+}

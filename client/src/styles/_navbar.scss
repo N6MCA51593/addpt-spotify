@@ -19,23 +19,23 @@
       color: $bg-main;
       background-color: $text;
     }
-  }
 
-  .nav-link {
-    text-decoration: none;
-    display: block;
-
-    &:visited {
+    .nav-link,
+    div {
+      cursor: pointer;
       color: inherit;
+      padding: 1rem;
+      margin: 2rem 0rem;
     }
-  }
 
-  .nav-link,
-  p {
-    cursor: pointer;
-    color: inherit;
-    padding: 1rem;
-    margin: 2rem 0rem;
+    .nav-link {
+      text-decoration: none;
+      display: block;
+
+      &:visited {
+        color: inherit;
+      }
+    }
   }
 
   &-showing {

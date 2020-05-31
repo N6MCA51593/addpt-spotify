@@ -40,7 +40,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <p
+            <div
               onClick={() =>
                 setConfig({
                   url: '/api/sync',
@@ -49,12 +49,12 @@ const Navbar = () => {
               }
             >
               <FontAwesomeIcon icon='sync-alt' size='lg' />
-            </p>
+            </div>
           </li>
           <li>
-            <p onClick={logout}>
+            <div onClick={logout}>
               <FontAwesomeIcon icon='door-open' size='lg' />
-            </p>
+            </div>
           </li>
         </ul>
       </div>
