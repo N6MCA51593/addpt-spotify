@@ -96,11 +96,11 @@ router.get('/redirect', async (req, res) => {
       const token = createToken(spID, access_token);
       res
         .cookie('token', token, { httpOnly: true, sameSite: 'strict' })
-        .cookie('login', 'success');
+        .cookie('login', 'success', { sameSite: 'strict' });
       res.redirect(frontEndURI);
     } catch (err) {
       console.error(err);
-      res.cookie('login', 'error');
+      res.cookie('login', 'error', { sameSite: 'strict' });
       return res.redirect(frontEndURI);
     }
   } catch (err) {
