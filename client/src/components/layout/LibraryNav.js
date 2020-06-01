@@ -19,7 +19,6 @@ const LibraryNav = ({
       currentAlbum &&
       ((prevAlbum && !(currentAlbum._id === prevAlbum._id)) || !prevAlbum)
     ) {
-      window.scrollTo(0, 50);
       setAreTracksShowing(true);
     }
   }, [currentAlbum, setAreTracksShowing, prevAlbum]);
