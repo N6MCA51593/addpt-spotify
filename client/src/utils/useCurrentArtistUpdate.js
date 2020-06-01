@@ -16,8 +16,9 @@ const useCurrentArtistUpdate = () => {
     return { artistInit, albumInit, trackInit, listens };
   };
 
-  const trackSorting = (a, b) => {
-    return a.discNumber >= b.discNumber && a.number >= b.number ? 1 : -1;
+  const replaceTrack = (arr, newTrack) => {
+    const index = arr.findIndex(trackE => trackE._id === newTrack._id);
+    return [...arr.slice(0, index), newTrack, ...arr.slice(index + 1)];
   };
 
   useEffect(() => {
@@ -48,18 +49,12 @@ const useCurrentArtistUpdate = () => {
         setAlbum({
           ...albumInit,
           isTracked: track.isTracked,
-          tracks: [
-            ...albumInit.tracks.filter(trackE => trackE._id !== track._id),
-            track
-          ].sort(trackSorting)
+          tracks: replaceTrack(albumInit.tracks, track)
         });
       } else {
         setAlbum({
           ...albumInit,
-          tracks: [
-            ...albumInit.tracks.filter(trackE => trackE._id !== track._id),
-            track
-          ].sort(trackSorting)
+          tracks: replaceTrack(albumInit.tracks, track)
         });
       }
     } else if (params && !params.trackID) {

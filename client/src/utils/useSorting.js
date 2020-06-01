@@ -17,7 +17,7 @@ const useSorting = () => {
         }
       }
     };
-    return arr.sort(sortingFunc);
+    return arr.concat().sort(sortingFunc);
   };
 
   return { sortArr };
