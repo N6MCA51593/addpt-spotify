@@ -87,7 +87,10 @@ const ArtistItem = ({ artist, toggleArtistSetConfig, delArtist }) => {
                     <Button
                       type={artist.isTracked ? 'track-on' : 'track-off'}
                       icon={artist.isTracked ? 'eye' : 'eye-slash'}
-                      onClick={e => toggleTracking(artist._id, e)}
+                      onClick={e => {
+                        areControlsShowing && setAreControlsShowing(false);
+                        toggleTracking(artist._id, e);
+                      }}
                     />
                   )}
                   <Button

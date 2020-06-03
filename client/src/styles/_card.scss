@@ -217,7 +217,7 @@ $anim-delay-controls: 0.4s;
       }
     }
 
-    &:hover {
+    &:not(.nohover):hover {
       .img-container {
         img {
           filter: grayscale(0%);

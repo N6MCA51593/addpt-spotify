@@ -43,7 +43,6 @@ button:focus {
   grid-template-columns: 1fr 19fr 6fr;
   column-gap: 1rem;
   min-height: calc(100vh - 120px);
-  overflow-x: hidden;
 
   .main-content {
     position: relative;

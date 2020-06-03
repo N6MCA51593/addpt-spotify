@@ -64,6 +64,7 @@ const AlbumItem = ({ album, artistID, toggleTracking }) => {
                   icon={album.isTracked ? 'eye' : 'eye-slash'}
                   onClick={e => {
                     e.stopPropagation();
+                    areControlsShowing && setAreControlsShowing(false);
                     toggleTracking(album._id);
                   }}
                 />
