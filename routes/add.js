@@ -75,7 +75,7 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       axios(albumOptions('compilation'))
     ]);
 
-    const isNoAlbums = albumsResponse[0].data.items.length === 0 ? true : false;
+    const isNoAlbums = albumsResponse[0].data.items.length === 0;
 
     const albums = albumsResponse
       .map(e => {
