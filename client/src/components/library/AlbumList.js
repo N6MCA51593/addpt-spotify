@@ -29,11 +29,12 @@ const AlbumList = ({ toggleTracking, setChildUnmounted }) => {
 
   const albumStat = albums.filter(albumE => albumE.isTracked);
   const trackStat =
-    albumStat.length > 0 &&
-    albumStat
-      .map(albumE => albumE.tracks)
-      .flat()
-      .filter(trackE => trackE.isTracked).length;
+    albumStat.length > 0
+      ? albumStat
+          .map(albumE => albumE.tracks)
+          .flat()
+          .filter(trackE => trackE.isTracked).length
+      : 0;
 
   const progress = assessArr(albums);
   const { status, classMod } = assessPresentational(progress, 'artist');
