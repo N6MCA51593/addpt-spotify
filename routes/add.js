@@ -74,6 +74,9 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       axios(albumOptions('single')),
       axios(albumOptions('compilation'))
     ]);
+
+    const isNoAlbums = albumsResponse[0].data.items.length === 0 ? true : false;
+
     const albums = albumsResponse
       .map(e => {
         return e.data.items.map(e => {
@@ -85,7 +88,7 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
               e.release_date.length == 4
                 ? e.release_date
                 : e.release_date.slice(0, 4),
-            isTracked: e.album_type === 'album' ? true : false,
+            isTracked: e.album_type === 'album' || isNoAlbums ? true : false,
             img: e.images
           };
         });
@@ -133,7 +136,8 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
                 return {
                   ...item,
                   albumSpID: e.id,
-                  isTracked: e.album_type === 'album' ? true : false
+                  isTracked:
+                    e.album_type === 'album' || isNoAlbums ? true : false
                 };
               })
           )
