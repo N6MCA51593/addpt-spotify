@@ -24,6 +24,9 @@ router.post('/', [auth, authSpotify], async (req, res) => {
   }
 });
 
+// @route     GET api/sync
+// @desc      Subscribe to the update stream
+// @access    Private
 router.get('/stream', [auth], (req, res) => {
   emitterObj.addCon(res);
   res.writeHead(200, {

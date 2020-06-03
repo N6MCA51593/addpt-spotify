@@ -42,7 +42,11 @@ module.exports = async (req, res, next) => {
           .then(response => {
             req.user.accessToken = response.data.access_token;
             const newToken = createToken(id, response.data.access_token);
-            res.cookie('token', newToken, { httpOnly: true });
+            res.cookie('token', newToken, {
+              httpOnly: true,
+              sameSite: 'strict',
+              maxAge: 6.04e8 * 2
+            });
             next();
           })
           .catch(async error => {
