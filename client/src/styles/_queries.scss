@@ -170,6 +170,7 @@
       }
     }
   }
+
   .settings {
     &-item {
       flex-direction: column;
@@ -279,7 +280,7 @@
   }
 }
 
-@media (pointer: coarse), (max-width: 1024px) {
+@media (pointer: coarse), (max-width: 590px) {
   .card .controls {
     height: 100%;
 
