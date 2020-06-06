@@ -1,0 +1,94 @@
+// Landing Page
+
+@import 'svg-bg';
+
+.landing {
+  grid-column: 1 / last-line;
+  background-color: $bg-main;
+
+  .main {
+    max-width: 1500px;
+    min-height: 80vh;
+    margin: auto;
+    padding: 5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h3 {
+    color: $dark-300;
+    margin: 1.5rem 0;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 50%;
+    justify-content: left;
+
+    span {
+      font-weight: 700;
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+    padding: 1rem 1.2rem;
+    margin: 2rem 0;
+    font-size: 1.3rem;
+    color: $text;
+    background-color: #1db954;
+    border: 1px solid $green-700;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #1ed760;
+    }
+  }
+
+  .image-container {
+    position: relative;
+    max-width: 500px;
+    object-fit: cover;
+    transform: skewY(10deg);
+    border-left: 2px solid $dark-400;
+    border-bottom: 2px solid $dark-400;
+    margin: 0 0 0 2rem;
+
+    img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      padding: 0rem 2rem;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      background: linear-gradient(
+          to bottom,
+          $dark-900 2%,
+          #00000000 40%,
+          #00000000 100%
+        ),
+        linear-gradient(to top, $dark-900 2%, #00000000 40%, #00000000 100%);
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .secondary {
+    min-height: 50vh;
+    border-top: 1px solid #fff;
+    @include svg-bg($dark-900);
+  }
+}
