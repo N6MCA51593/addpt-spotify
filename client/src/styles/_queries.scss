@@ -13,6 +13,16 @@
       font-size: 1.5rem;
     }
   }
+
+  .landing {
+    .info {
+      &-item {
+        max-width: initial;
+        flex-basis: 40%;
+        margin: 2rem;
+      }
+    }
+  }
 }
 
 @media (max-width: 1184px) {
@@ -147,12 +157,29 @@
 }
 
 @media (max-width: 770px) {
+  .landing {
+    .image-container {
+      display: none;
+    }
+
+    .secondary {
+      margin-bottom: -2rem;
+    }
+
+    .text {
+      flex-basis: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
   .footer {
     margin: 2rem 0 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 140px;
+    height: 160px;
+    padding: 0 0 1.2rem;
 
     h3 {
       border-left: none;
@@ -277,6 +304,18 @@
 
   .alert {
     width: 85%;
+  }
+
+  .landing {
+    .main {
+      padding: 1.5rem;
+    }
+    .info {
+      &-item {
+        flex-basis: 100%;
+        margin: 0.5rem 1rem;
+      }
+    }
   }
 }
 

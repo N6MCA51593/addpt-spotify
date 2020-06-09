@@ -30,7 +30,6 @@
     span {
       font-weight: 700;
       color: #fff;
-      text-decoration: underline;
     }
   }
 
@@ -43,7 +42,7 @@
     color: $text;
     background-color: #1db954;
     border: 1px solid $green-700;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.35s ease;
 
     &:hover {
       background-color: #1ed760;
@@ -90,5 +89,69 @@
     min-height: 50vh;
     border-top: 1px solid #fff;
     @include svg-bg($dark-900);
+    margin: auto;
+    padding: 0 0 25vh;
+
+    h1 {
+      text-align: center;
+      margin: 4rem 0 6rem;
+    }
+  }
+  .info {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    max-width: 1700px;
+    margin: auto;
+    flex-wrap: wrap;
+
+    h3 {
+      color: $text;
+      border-bottom: 1px solid $dark-500;
+      text-align: center;
+      margin: 0 0.8rem 1rem;
+    }
+
+    &-item {
+      line-height: 1.8;
+      margin: 0.3rem;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      max-width: 350px;
+      background-color: transparentize($color: $bg-secondary, $amount: 0.5);
+    }
+  }
+
+  .icon {
+    &-container {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      margin: 0 0 1.2rem;
+
+      &-steps {
+        background-color: transparentize($color: $blue-200, $amount: 0.8);
+        color: $blue-600;
+      }
+
+      &-track {
+        background-color: transparentize($color: $green-200, $amount: 0.8);
+        color: $green-600;
+      }
+
+      &-customize {
+        background-color: transparentize($color: $orange-200, $amount: 0.8);
+        color: $orange-600;
+      }
+
+      &-finish {
+        background-color: transparentize($color: $red-200, $amount: 0.8);
+        color: $red-600;
+      }
+    }
   }
 }

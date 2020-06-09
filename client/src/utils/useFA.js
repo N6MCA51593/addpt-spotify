@@ -25,7 +25,10 @@ import {
   faLongArrowAltLeft,
   faSearchPlus,
   faBars,
-  faEllipsisV
+  faEllipsisV,
+  faCogs,
+  faShoePrints,
+  faFlagCheckered
 } from '@fortawesome/free-solid-svg-icons';
 
 function useFA() {
@@ -55,7 +58,10 @@ function useFA() {
     faLongArrowAltLeft,
     faSearchPlus,
     faBars,
-    faEllipsisV
+    faEllipsisV,
+    faCogs,
+    faShoePrints,
+    faFlagCheckered
   );
   return null;
 }
