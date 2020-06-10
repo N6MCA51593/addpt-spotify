@@ -7,6 +7,7 @@ const rateLimiter = require('./middleware/rateLimiter');
 const poll = require('./poll');
 const emitterObj = require('./emitter');
 const frontEndURI = process.env.FRONT_END_URI;
+const path = require('path');
 
 connectDB();
 
@@ -27,12 +28,19 @@ app.use('/api/sync', require('./routes/sync'));
 app.use('/api/history', require('./routes/history'));
 
 //Poll Spotify API for users' played tracks history changes
-const interval = 60 * 60 * 1000;
+const interval = 25 * 60 * 1000;
 setInterval(async () => {
   const toStream = await poll();
   emitterObj.emitFunc('update', toStream);
 }, interval);
-app.get('/', (req, res) => res.json({ msg: 'Welcome to API' }));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  );
+}
 
 const PORT = process.env.PORT || 5000;
 
