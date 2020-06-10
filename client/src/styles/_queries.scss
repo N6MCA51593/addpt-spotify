@@ -154,6 +154,12 @@
   .alert {
     width: 50%;
   }
+
+  .landing {
+    .image-container {
+      bottom: 75px;
+    }
+  }
 }
 
 @media (max-width: 770px) {
