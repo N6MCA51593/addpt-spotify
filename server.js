@@ -31,7 +31,7 @@ app.use('/api/history', require('./routes/history'));
 setInterval(async () => {
   const toStream = await poll();
   emitterObj.emitFunc('update', toStream);
-}, 25 * 60 * 1000);
+}, 45 * 60 * 1000);
 
 // Cleanup streaming connections in case of close event not triggering
 setInterval(() => {
