@@ -28,8 +28,8 @@ router.post('/', [auth, authSpotify], async (req, res) => {
 // @desc      Subscribe to the update stream
 // @access    Private
 router.get('/stream', [auth], (req, res) => {
-  emitterObj.addCon(res.user);
-  console.log(res);
+  emitterObj.addCon(res);
+  console.log(res.user);
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
