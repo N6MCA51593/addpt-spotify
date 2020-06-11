@@ -27,12 +27,16 @@ app.use('/api/settings', require('./routes/settings'));
 app.use('/api/sync', require('./routes/sync'));
 app.use('/api/history', require('./routes/history'));
 
-//Poll Spotify API for users' played tracks history changes
-const interval = 60 * 60 * 1000;
+// Poll Spotify API for users' played tracks history changes
 setInterval(async () => {
   const toStream = await poll();
   emitterObj.emitFunc('update', toStream);
-}, interval);
+}, 1 * 60 * 60 * 1000);
+
+// Cleanup streaming connections in case of close event not triggering
+setInterval(() => {
+  emitterObj.cleanup();
+}, 25 * 60 * 60 * 1000);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

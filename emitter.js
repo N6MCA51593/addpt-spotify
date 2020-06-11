@@ -7,34 +7,25 @@ const emitterObj = {
     this.emitter.emit(ev, data);
   },
   addCon: function (res) {
-    if (this.connections.some(resE => resE.req.user.id === res.req.user.id)) {
-      this.connections.splice(
-        this.connections.findIndex(
-          resE => resE.req.user.id === res.req.user.id
-        ),
-        1,
-        res
-      );
-    } else {
-      this.connections.push(res);
-    }
-    const conTimeout = 12 * 60 * 60 * 1000;
-    setTimeout(() => {
-      if (this.connections.some(resE => resE.req.user.id === res.req.user.id)) {
-        this.connections.splice(
-          this.connections.findIndex(
-            resE => resE.req.user.id === res.req.user.id
-          ),
-          1
-        );
-      }
-    }, conTimeout);
+    res.req.ts = Date.now();
+    this.connections.push(res);
   },
-  deleteCon: function (req) {
-    if (this.connections.some(resE => resE.req.user.id === req.user.id)) {
+  deleteCon: function (conID) {
+    if (this.connections.some(resE => resE.req.conID === conID)) {
       this.connections.splice(
-        this.connections.findIndex(resE => resE.req.user.id === req.user.id),
+        this.connections.findIndex(resE => resE.req.conID === conID),
         1
+      );
+    }
+  },
+  cleanup: function () {
+    if (
+      this.connections.some(
+        resE => Date.now() - resE.req.ts > 24 * 60 * 60 * 1000
+      )
+    ) {
+      this.connections = this.connections.filter(
+        resE => Date.now() - resE.req.ts < 24 * 60 * 60 * 1000
       );
     }
   }

@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 const authSpotify = require('../middleware/authSpotify');
 const updateHistory = require('../functions/updateHistory');
 const emitterObj = require('../emitter');
+const uuid = require('uuid');
 
 // @route     POST api/sync
 // @desc      Update listens and history
@@ -28,8 +29,10 @@ router.post('/', [auth, authSpotify], async (req, res) => {
 // @desc      Subscribe to the update stream
 // @access    Private
 router.get('/stream', [auth], (req, res) => {
+  const conID = uuid.v4();
+  req.conID = conID;
+  res.req.conID = conID;
   emitterObj.addCon(res);
-  console.log(res.user);
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
@@ -47,7 +50,7 @@ router.get('/stream', [auth], (req, res) => {
   req.on('close', () => {
     console.log('closed');
     clearInterval(intervalID);
-    emitterObj.deleteCon(req);
+    emitterObj.deleteCon(req.conID);
   });
   emitterObj.listenFunc;
 });
