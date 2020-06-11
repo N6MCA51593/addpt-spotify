@@ -39,7 +39,7 @@ router.get('/stream', [auth], (req, res) => {
   const intervalID = setInterval(() => {
     res.write(`event: ping\n`);
     res.write(`data: keep connection alive\n\n`);
-  }, 120 * 1000);
+  }, 50 * 1000);
   req.on('close', () => {
     console.log('closed');
     clearInterval(intervalID);
