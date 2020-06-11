@@ -27,6 +27,7 @@
 }
 
 .accordion-title {
+  position: relative;
   font-weight: 300;
   cursor: pointer;
   color: $text;
@@ -36,6 +37,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 2;
 
   &::after {
     content: '';
