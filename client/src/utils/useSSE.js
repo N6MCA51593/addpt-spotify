@@ -29,7 +29,10 @@ const useSSE = () => {
 
   useEffect(() => {
     listenEvt();
-    return () => evtSrc.current && evtSrc.current.close();
+    return () => {
+      console.log('client terminated connection');
+      evtSrc.current && evtSrc.current.close();
+    };
   }, [listenEvt]);
 
   return { msg, updArtists, reset };
