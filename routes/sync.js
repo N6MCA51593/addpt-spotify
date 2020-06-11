@@ -28,7 +28,7 @@ router.post('/', [auth, authSpotify], async (req, res) => {
 // @desc      Subscribe to the update stream
 // @access    Private
 router.get('/stream', [auth], (req, res) => {
-  emitterObj.addCon(res);
+  emitterObj.addCon(res.user);
   console.log(res);
   res.writeHead(200, {
     'Content-Type': 'text/event-stream',
@@ -36,6 +36,9 @@ router.get('/stream', [auth], (req, res) => {
     'Content-Encoding': 'none',
     Connection: 'keep-alive'
   });
+  res.write('\n');
+  res.write(`event: ping\n`);
+  res.write(`data: keep connection alive\n\n`);
   res.write('\n');
   const intervalID = setInterval(() => {
     res.write(`event: ping\n`);
