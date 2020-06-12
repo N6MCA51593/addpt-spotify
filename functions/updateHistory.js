@@ -68,7 +68,6 @@ module.exports = async (accessToken, id) => {
         {
           $project: {
             name: 1,
-            albums: 1,
             albums: {
               $filter: {
                 input: '$albums',
@@ -84,7 +83,6 @@ module.exports = async (accessToken, id) => {
         {
           $project: {
             name: 1,
-            tracks: 1,
             'albums.name': 1,
             'albums._id': 1,
             tracks: {

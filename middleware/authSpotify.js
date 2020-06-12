@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
   };
 
   axios(options)
-    .then(response => {
+    .then(() => {
       next();
     })
     .catch(async error => {
