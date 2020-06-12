@@ -48,7 +48,6 @@ router.get('/stream', [auth], (req, res) => {
     res.write(`data: keep connection alive\n\n`);
   }, 50 * 1000);
   req.on('close', () => {
-    console.log('closed');
     clearInterval(intervalID);
     emitterObj.deleteCon(req.conID);
   });
