@@ -21,7 +21,7 @@ const SettingsComponent = props => {
     trackClassName: 'example-track',
     renderThumb: (props, state) => <div {...props}>{state.valueNow}</div>,
     pearling: true,
-    minDistance: 1
+    minDistance: 0
   };
 
   const [trackState, setTrackState] = useState(null);
