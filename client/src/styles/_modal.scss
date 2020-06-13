@@ -41,7 +41,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   transform: translateY(-20vh);
-  box-shadow: 2px 5px 9px 0px transparentize($dark-900, 0.3);
+  box-shadow: 2px 5px 9px 0 transparentize($dark-900, 0.3);
 
   &-header {
     display: flex;
@@ -88,7 +88,7 @@
 
       &:focus {
         box-shadow: 4px 6px 12px -1px transparentize($dark-900, 0.3),
-          inset 1px 1px 0px 0px #fff, inset -1px -1px 0px 0px #fff;
+          inset 1px 1px 0 0 #fff, inset -1px -1px 0 0 #fff;
       }
     }
 

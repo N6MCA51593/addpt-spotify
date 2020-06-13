@@ -1,7 +1,7 @@
 import React from 'react';
-import logo_sp from '../../assets/logo_sp.png';
-import logo_gh from '../../assets/logo_gh.png';
-import icon_gh from '../../assets/icon_gh.png';
+import logoSp from '../../assets/logo_sp.png';
+import logoGh from '../../assets/logo_gh.png';
+import iconGh from '../../assets/icon_gh.png';
 
 const Footer = () => {
   return (
@@ -16,7 +16,7 @@ const Footer = () => {
             target='_blank'
             rel='noopener noreferrer'
           >
-            <img src={logo_sp} alt='Spotify' />
+            <img src={logoSp} alt='Spotify' />
           </a>
         </div>
         <div>
@@ -26,8 +26,8 @@ const Footer = () => {
             target='_blank'
             rel='noopener noreferrer'
           >
-            <img src={icon_gh} alt='Icon' className='icon' />
-            <img src={logo_gh} alt='Github' />
+            <img src={iconGh} alt='Icon' className='icon' />
+            <img src={logoGh} alt='Github' />
           </a>
         </div>
       </div>

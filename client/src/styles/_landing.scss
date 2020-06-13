@@ -34,7 +34,6 @@
   }
 
   button {
-    border: none;
     cursor: pointer;
     padding: 1rem 1.2rem;
     margin: 2rem 0;
@@ -66,7 +65,7 @@
       padding: 0rem 2rem;
     }
 
-    &:after {
+    &::after {
       content: '';
       position: absolute;
       z-index: 1;
@@ -97,6 +96,7 @@
       margin: 4rem 0 6rem;
     }
   }
+
   .info {
     display: flex;
     align-items: stretch;

@@ -6,7 +6,7 @@ $anim-delay-controls: 0.4s;
   cursor: pointer;
   background-color: $bg-main;
   box-shadow: inset 0 0 0 1px rgba(221, 238, 255, 0.35),
-    2px 5px 13px 0px $dark-900;
+    2px 5px 13px 0 $dark-900;
   border-radius: 3px;
   position: relative;
   display: flex;
@@ -41,6 +41,7 @@ $anim-delay-controls: 0.4s;
       min-height: 150px;
     }
   }
+
   .controls {
     visibility: hidden;
     position: absolute;
@@ -83,7 +84,7 @@ $anim-delay-controls: 0.4s;
   &:not(.nohover):hover {
     transform: translate3d(0, -3px, 0);
     box-shadow: inset 0 0 0 2px transparentize($dark-100, 0.2),
-      0px 25px 25px -15px $dark-900;
+      0 25px 25px -15px $dark-900;
     transition: $anim-delay-card ease;
 
     .img-container {
@@ -183,6 +184,7 @@ $anim-delay-controls: 0.4s;
 @mixin button-variations($col, $bg-col) {
   background-color: transparentize($bg-col, 0.6);
   color: $col;
+
   &:hover {
     color: #fff;
     background-color: transparentize($bg-col, 0.2);
@@ -205,6 +207,7 @@ $anim-delay-controls: 0.4s;
   &-3 {
     @include variations($blue-500, $blue-300, $blue-600);
   }
+
   &-4 {
     @include variations($green-500, $green-300, $green-600);
   }

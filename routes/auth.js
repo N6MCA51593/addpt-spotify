@@ -62,7 +62,7 @@ router.get('/redirect', async (req, res) => {
     };
     const options = {
       method: 'post',
-      headers: headers,
+      headers,
       data: querystring.stringify({
         grant_type: grantType,
         code: authCode,
@@ -82,7 +82,7 @@ router.get('/redirect', async (req, res) => {
       const spRes = await axios(options);
 
       const spID = spRes.data.id;
-      const filter = { spID: spID };
+      const filter = { spID };
       // sets the date of inactivity in 12 weeks
       const update = {
         refreshToken: refresh_token,
