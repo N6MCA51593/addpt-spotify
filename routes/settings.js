@@ -22,7 +22,7 @@ router.get('/', [auth], async (req, res) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    return res.status(status).json({ msg });
   }
 });
 
@@ -47,7 +47,7 @@ router.put('/', [auth], async (req, res) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    return res.status(status).json({ msg });
   }
 });
 

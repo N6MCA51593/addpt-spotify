@@ -3,14 +3,14 @@ const EventEmitter = require('events').EventEmitter;
 const emitterObj = {
   emitter: new EventEmitter(),
   connections: [],
-  emitFunc: function (ev, data) {
+  emitFunc(ev, data) {
     this.emitter.emit(ev, data);
   },
-  addCon: function (res) {
+  addCon(res) {
     res.req.ts = Date.now();
     this.connections.push(res);
   },
-  deleteCon: function (conID) {
+  deleteCon(conID) {
     if (this.connections.some(resE => resE.req.conID === conID)) {
       this.connections.splice(
         this.connections.findIndex(resE => resE.req.conID === conID),
@@ -18,7 +18,7 @@ const emitterObj = {
       );
     }
   },
-  cleanup: function () {
+  cleanup() {
     if (
       this.connections.some(
         resE => Date.now() - resE.req.ts > 24 * 60 * 60 * 1000

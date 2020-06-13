@@ -49,9 +49,9 @@ export const Library = () => {
     (albumID, trackID, listens) => {
       setParams({
         artistInit: currentArtist,
-        albumID: albumID,
-        ...(trackID ? { trackID: trackID } : {}),
-        ...(listens !== undefined ? { listens: listens } : {})
+        albumID,
+        ...(trackID ? { trackID } : {}),
+        ...(listens !== undefined ? { listens } : {})
       });
 
       setConfig({
@@ -61,7 +61,7 @@ export const Library = () => {
           artistid: currentArtist._id,
           albumid: albumID,
           ...(trackID ? { trackid: trackID } : {}),
-          ...(listens !== undefined ? { listens: listens } : {})
+          ...(listens !== undefined ? { listens } : {})
         }
       });
     },

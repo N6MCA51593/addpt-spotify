@@ -18,7 +18,7 @@ module.exports = async (accessToken, id) => {
       };
       const options = {
         method: 'post',
-        headers: headers,
+        headers,
         data: querystring.stringify({
           grant_type: 'refresh_token',
           refresh_token: user.refreshToken
@@ -169,6 +169,6 @@ module.exports = async (accessToken, id) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return { msg: msg };
+    return { msg };
   }
 };

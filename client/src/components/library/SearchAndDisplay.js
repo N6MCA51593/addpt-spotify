@@ -19,14 +19,14 @@ const SearchAndDisplay = ({
       setConfig({
         url: '/api/library/add/search',
         method: 'get',
-        params: { query: query }
+        params: { query }
       });
     }
     if (artistID && isSubmitted === true) {
       setConfig({
         url: '/api/library/append/search',
         method: 'get',
-        params: { query: query, artistname: artistName, id: artistID }
+        params: { query, artistname: artistName, id: artistID }
       });
     }
 

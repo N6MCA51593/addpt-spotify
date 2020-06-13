@@ -4,7 +4,7 @@ module.exports = (spID, accessToken) => {
   const payload = {
     user: {
       id: spID,
-      accessToken: accessToken
+      accessToken
     }
   };
   return jwt.sign(payload, jwtSecret, {

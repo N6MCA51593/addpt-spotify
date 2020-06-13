@@ -31,7 +31,7 @@ module.exports = async (req, res, next) => {
         };
         const options = {
           method: 'post',
-          headers: headers,
+          headers,
           data: querystring.stringify({
             grant_type: 'refresh_token',
             refresh_token: refreshToken.refreshToken

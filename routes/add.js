@@ -45,7 +45,7 @@ router.get('/search', [auth, authSpotify], async (req, res) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    return res.status(status).json({ msg });
   }
 });
 
@@ -85,7 +85,7 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
             name: e.name,
             releaseType: e.album_type,
             releaseDate:
-              e.release_date.length == 4
+              e.release_date.length === 4
                 ? e.release_date
                 : e.release_date.slice(0, 4),
             isTracked: e.album_type === 'album' || isNoAlbums ? true : false,
@@ -100,7 +100,7 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       spID: artistResponse.data.id,
       name: artistResponse.data.name,
       img: artistResponse.data.images,
-      albums: albums
+      albums
     };
 
     // Breaking up the request as per Spotify API limitation of 20 albums per call
@@ -167,7 +167,7 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    return res.status(status).json({ msg });
   }
 });
 

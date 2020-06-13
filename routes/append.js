@@ -38,7 +38,7 @@ router.get('/search', [auth, authSpotify], async (req, res) => {
             img: e.images,
             releaseType: e.album_type,
             releaseDate:
-              e.release_date.length == 4
+              e.release_date.length === 4
                 ? e.release_date
                 : e.release_date.slice(0, 4),
             artists: e.artists,
@@ -62,7 +62,7 @@ router.get('/search', [auth, authSpotify], async (req, res) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    return res.status(status).json({ msg });
   }
 });
 
@@ -95,12 +95,12 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       name: spRes.data.name,
       releaseType: spRes.data.album_type,
       releaseDate:
-        spRes.data.release_date.length == 4
+        spRes.data.release_date.length === 4
           ? spRes.data.release_date
           : spRes.data.release_date.slice(0, 4),
       isTracked: true,
       img: spRes.data.images,
-      tracks: tracks
+      tracks
     };
     const artist = await Artist.findOne({ _id: artistID });
     artist.albums.push(album);
@@ -115,7 +115,7 @@ router.post('/new', [auth, authSpotify], async (req, res) => {
       ? err.response.status + ' ' + err.response.text
       : err.message;
     console.error(err);
-    return res.status(status).json({ msg: msg });
+    return res.status(status).json({ msg });
   }
 });
 module.exports = router;
