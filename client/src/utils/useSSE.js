@@ -10,7 +10,10 @@ const useSSE = () => {
   }, []);
 
   const evtSrc = useRef(null);
-  const streamURI = process.env.REACT_APP_SSE_URI;
+  const streamURI =
+    window.location.protocol === 'https:'
+      ? process.env.REACT_APP_SSE_URI
+      : process.env.REACT_APP_SSE_URI.replace('https', 'http');
 
   const listenEvt = useCallback(() => {
     if (!evtSrc.current) {
