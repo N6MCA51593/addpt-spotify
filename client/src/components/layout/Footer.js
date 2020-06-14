@@ -6,7 +6,7 @@ import iconGh from '../../assets/icon_gh.png';
 const Footer = () => {
   return (
     <div className='footer'>
-      <h3>Konstantin Chesnokov &copy; 2020</h3>
+      <h3>K. C. &copy; 2020</h3>
       <div className='links'>
         <div>
           {' '}
