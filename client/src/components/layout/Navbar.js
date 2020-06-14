@@ -39,9 +39,10 @@ const Navbar = () => {
               <FontAwesomeIcon icon='cog' size='lg' />
             </Link>
           </li>
-          <li>
+          <li className={loc.pathname === '/settings' ? 'disabled' : ''}>
             <div
               onClick={() =>
+                loc.pathname !== '/settings' &&
                 setConfig({
                   url: '/api/sync',
                   method: 'post'

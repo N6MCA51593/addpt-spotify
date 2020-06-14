@@ -38,6 +38,20 @@
         color: inherit;
       }
     }
+
+    &.disabled {
+      cursor: initial;
+      color: $dark-500;
+
+      &:hover {
+        color: $dark-500;
+        background-color: inherit;
+      }
+
+      div {
+        cursor: initial;
+      }
+    }
   }
 
   &-showing {
