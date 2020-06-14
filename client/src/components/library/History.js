@@ -1,26 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
-import useAPIRequest from '../../utils/useAPIRequest';
+import React, { Fragment } from 'react';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import TrackItem from './TrackItem';
 
-const History = ({ updArtists }) => {
-  const [{ data, isLoading }, setConfig] = useAPIRequest(
-    {
-      url: '/api/history',
-      method: 'get'
-    },
-    []
-  );
-
-  useEffect(() => {
-    if (updArtists) {
-      setConfig({
-        url: '/api/history',
-        method: 'get'
-      });
-    }
-  }, [updArtists, setConfig]);
-
+const History = ({ data, isLoading }) => {
   if (isLoading) {
     return (
       <Fragment>

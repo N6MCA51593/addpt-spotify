@@ -1,9 +1,27 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import History from '../library/History';
 import TrackItem from '../library/TrackItem';
+import useAPIRequest from '../../utils/useAPIRequest';
 import PropTypes from 'prop-types';
 
 const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
+  const [{ data, isLoading }, setConfig] = useAPIRequest(
+    {
+      url: '/api/history',
+      method: 'get'
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (updArtists) {
+      setConfig({
+        url: '/api/history',
+        method: 'get'
+      });
+    }
+  }, [updArtists, setConfig]);
+
   return (
     <div className='tracks'>
       {currentAlbum ? (
@@ -33,7 +51,7 @@ const TrackSection = ({ currentAlbum, toggleTracking, updArtists }) => {
           </Fragment>
         ))
       ) : (
-        <History updArtists={updArtists} />
+        <History data={data} isLoading={isLoading} />
       )}
     </div>
   );
