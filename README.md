@@ -5,7 +5,7 @@ Artist discography discovery progress tracker for Spotify
 <h4 align="center">A customizable app that tracks your listening progress of newly discovered artists</h4>
 
 <p align="center">
-  <a href="#demo">Demo</a> •
+  <a href="#intro">Intro</a> •
   <a href="#core-features">Core Features</a> •
   <a href="#getting-started">Getting Started </a> •
   <a href="#usage-and-limitations">Usage and limitations</a> •
@@ -13,11 +13,9 @@ Artist discography discovery progress tracker for Spotify
   <a href="#license">License</a>
 </p>
 
-## Demo
-[Demo](https://addpt-spotify.herokuapp.com/)
+## Intro
 
 ## Core features
-
 
 ## Getting started
 
@@ -99,6 +97,7 @@ npm run client
 which is indistinguishable from when the user hasn't listened to anything at all. As a result, it can cause some listens not to show up in the app listening history and count towards the stats
 * When adding an artist, the app automatically fetches up to 20 albums, singles, and compilations (up to 60 total). Whatever isn't fetched, as well as all artist's future releases, can be added manually
 * Since the app relies on Spotify IDs, changing the market country will make tracking unreliable, since the same albums and tracks may have different IDs in different markets. To work in a different market, artists have to be deleted and added again 
+* Maximum number of tracks per album - 50 (sincere apologies to all the Frank Zappa fans out there)
 * No support for local files
 * No support for secondary artists in collaborations ("appears on" albums)
 * No support for IE and Edge Legacy
