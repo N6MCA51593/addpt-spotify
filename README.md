@@ -94,7 +94,7 @@ npm run client
 ```
 
 ## Usage and limitations
-* Spotify adds a track to the history when it's played for at least 30 seconds, and listened to completion. Using the next/previous player buttons prevents it from showing up in the history. Listening on repeat will create a history record for very repeat
+* Spotify adds a track to the history when it's played for at least 30 seconds, and listened to completion. Using the next/previous player buttons prevents it from showing up in the history. Listening on repeat will create a history record for every repeat
 * The Spotify history API endpoint [can sometimes return stale results](https://github.com/spotify/web-api/issues/1441), 
 which is indistinguishable from when the user hasn't listened to anything at all. As a result, it can cause some listens not to show up in the app listening history and count towards the stats
 * When adding an artist, the app automatically fetches up to 20 albums, singles, and compilations (up to 60 total). Whatever isn't fetched, as well as all artist's future releases, can be added manually
