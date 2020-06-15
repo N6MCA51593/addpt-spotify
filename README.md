@@ -14,7 +14,7 @@ Artist discography discovery progress tracker for Spotify
 </p>
 
 ## Demo
-https://addpt-spotify.herokuapp.com/
+[Demo](https://addpt-spotify.herokuapp.com/)
 
 ## Core features
 
@@ -94,11 +94,11 @@ npm run client
 ```
 
 ## Usage and limitations
-* Spotify counts adds a track to the history when it's played for at least 30 seconds, and listened to completion. Using the next/previous player buttons prevents it from showing up in the history. Listening on repeat will create a history record for very repeat. 
+* Spotify counts adds a track to the history when it's played for at least 30 seconds, and listened to completion. Using the next/previous player buttons prevents it from showing up in the history. Listening on repeat will create a history record for very repeat
 * The Spotify history API endpoint [can sometimes return stale results](https://github.com/spotify/web-api/issues/1441), 
-which is indistinguishable from when the user hasn't listened to anything at all. As a result, it can cause some listens not to show up in the app listening history and count towards the stats.
-* When adding an artist, the app automatically fetches up to 20 albums, singles, and compilations (up to 60 total). Whatever isn't fetched, as well as all artist's future releases, can be added manually.
-* Since the app relies on Spotify IDs, changing the market country will make tracking unreliable, since the same albums and tracks may have different IDs in different markets. To work in a different market, artists have to be deleted and added again. 
-* No support for local files.
-* No support for secondary artists in collaborations ("appears on albums").
-* No support for IE and Edge Legacy.
+which is indistinguishable from when the user hasn't listened to anything at all. As a result, it can cause some listens not to show up in the app listening history and count towards the stats
+* When adding an artist, the app automatically fetches up to 20 albums, singles, and compilations (up to 60 total). Whatever isn't fetched, as well as all artist's future releases, can be added manually
+* Since the app relies on Spotify IDs, changing the market country will make tracking unreliable, since the same albums and tracks may have different IDs in different markets. To work in a different market, artists have to be deleted and added again 
+* No support for local files
+* No support for secondary artists in collaborations ("appears on" albums)
+* No support for IE and Edge Legacy
