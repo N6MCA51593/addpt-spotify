@@ -101,4 +101,4 @@ which is indistinguishable from when the user hasn't listened to anything at all
 * Since the app relies on Spotify IDs, changing the market country will make tracking unreliable, since the same albums and tracks may have different IDs in different markets. To work in a different market, artists have to be deleted and added again. 
 * No support for local files.
 * No support for secondary artists in collaborations ("appears on albums").
-* No support for IE and Edge Legacy
+* No support for IE and Edge Legacy.
