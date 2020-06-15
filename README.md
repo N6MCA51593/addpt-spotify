@@ -82,13 +82,13 @@ REACT_APP_SSE_URI=http://localhost:5000/api/sync/stream
 From the repo root directory:
 ```bash
 # Express & React :3000 & :5000
-npm run dev   
+$ npm run dev   
 
 # Express API Only :5000
-npm run server  
+$ npm run server  
 
 # React Client Only :3000
-npm run client  
+$ npm run client  
 ```
 
 ## Usage and limitations
