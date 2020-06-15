@@ -6,22 +6,22 @@ const useSettings = (archivedArtist = null) => {
   const artistState =
     archivedArtist && archivedArtist.isArchived
       ? archivedArtist.settingsSnapshot[2]
-      : JSON.parse(localStorage.getItem('artistThresholds'));
+      : JSON.parse(sessionStorage.getItem('artistThresholds'));
   const albumState =
     archivedArtist && archivedArtist.isArchived
       ? archivedArtist.settingsSnapshot[1]
-      : JSON.parse(localStorage.getItem('albumThresholds'));
+      : JSON.parse(sessionStorage.getItem('albumThresholds'));
   const trackState =
     archivedArtist && archivedArtist.isArchived
       ? archivedArtist.settingsSnapshot[0]
-      : JSON.parse(localStorage.getItem('trackThresholds'));
+      : JSON.parse(sessionStorage.getItem('trackThresholds'));
 
   const [areLoaded, setAreLoaded] = useState(false);
   const [artistThresholds, setArtistThresholds] = useState(artistState);
   const [albumThresholds, setAlbumThresholds] = useState(albumState);
   const [trackThresholds, setTrackThresholds] = useState(trackState);
   const [doNotTrack, setDoNotTrack] = useState(
-    JSON.parse(localStorage.getItem('doNotTrack'))
+    JSON.parse(sessionStorage.getItem('doNotTrack'))
   );
 
   useEffect(() => {
@@ -37,22 +37,22 @@ const useSettings = (archivedArtist = null) => {
       });
       if (data) {
         setArtistThresholds(data.artistThresholds);
-        localStorage.setItem(
+        sessionStorage.setItem(
           'artistThresholds',
           JSON.stringify(data.artistThresholds)
         );
         setAlbumThresholds(data.albumThresholds);
-        localStorage.setItem(
+        sessionStorage.setItem(
           'albumThresholds',
           JSON.stringify(data.albumThresholds)
         );
         setTrackThresholds(data.trackThresholds);
-        localStorage.setItem(
+        sessionStorage.setItem(
           'trackThresholds',
           JSON.stringify(data.trackThresholds)
         );
         setDoNotTrack(data.doNotTrack);
-        localStorage.setItem('doNotTrack', data.doNotTrack);
+        sessionStorage.setItem('doNotTrack', data.doNotTrack);
         setAreLoaded(true);
       }
     } else {

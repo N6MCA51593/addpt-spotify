@@ -58,10 +58,10 @@ const SettingsComponent = props => {
         doNotTrack: trackingState
       }
     });
-    localStorage.setItem('trackThresholds', JSON.stringify(trackState));
-    localStorage.setItem('albumThresholds', JSON.stringify(albumState));
-    localStorage.setItem('artistThresholds', JSON.stringify(artistState));
-    localStorage.setItem('doNotTrack', trackingState);
+    sessionStorage.setItem('trackThresholds', JSON.stringify(trackState));
+    sessionStorage.setItem('albumThresholds', JSON.stringify(albumState));
+    sessionStorage.setItem('artistThresholds', JSON.stringify(artistState));
+    sessionStorage.setItem('doNotTrack', trackingState);
   };
 
   if (albumState && artistState && trackState) {
