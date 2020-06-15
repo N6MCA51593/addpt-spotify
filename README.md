@@ -94,10 +94,27 @@ npm run client
 ## Usage and limitations
 * Spotify adds a track to the history when it's played for at least 30 seconds, and listened to completion. Using the next/previous player buttons prevents it from showing up in the history. Listening on repeat will create a history record for every repeat
 * The Spotify history API endpoint [can sometimes return stale results](https://github.com/spotify/web-api/issues/1441), 
-which is indistinguishable from when the user hasn't listened to anything at all. As a result, it can cause some listens not to show up in the app listening history and count towards the stats
-* When adding an artist, the app automatically fetches up to 20 albums, singles, and compilations (up to 60 total). Whatever isn't fetched, as well as all artist's future releases, can be added manually
+which is indistinguishable from when the user hasn't listened to anything at all. As a result, it can cause some listens to not show up in the app listening history and count towards the stats
+* When adding an artist, the app automatically fetches up to 20 albums, singles, and compilations (up to 60 total). Whatever isn't fetched, as well as all the artist's future releases, can be added manually
 * Since the app relies on Spotify IDs, changing the market country will make tracking unreliable, since the same albums and tracks may have different IDs in different markets. To work in a different market, artists have to be deleted and added again 
+* Users stop being automatically tracked after 12 weeks since last login
 * Maximum number of tracks per album - 50 (sincere apologies to all the Frank Zappa fans out there)
 * No support for local files
 * No support for secondary artists in collaborations ("appears on" albums)
 * No support for IE and Edge Legacy
+
+## Built with
+
+* [Node.js](https://nodejs.org/)
+* [Express](https://expressjs.com/)
+* [JSON Web Tokens](https://jwt.io/)
+* [MongoDB](https://www.mongodb.com/)
+* [Mongoose](https://mongoosejs.com/)
+* [React](https://reactjs.org/)
+* [Axios](https://github.com/axios/axios)
+* [react-slider](https://github.com/zillow/react-slider)
+* [react-transition-group](https://github.com/reactjs/react-transition-group)
+
+
+## License
+MIT
