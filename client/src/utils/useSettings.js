@@ -1,76 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import useAPIRequest from './useAPIRequest';
+import SettingsContext from '../context/settings/settingsContext';
 
 const useSettings = (archivedArtist = null) => {
+  const { state, dispatch } = useContext(SettingsContext);
+  const {
+    trackThresholdsContext,
+    albumThresholdsContext,
+    artistThresholdsContext,
+    doNotTrack,
+    areLoaded
+  } = state;
+
   const [{ data }, setConfig] = useAPIRequest({});
   const artistState =
     archivedArtist && archivedArtist.isArchived
       ? archivedArtist.settingsSnapshot[2]
-      : JSON.parse(sessionStorage.getItem('artistThresholds'));
+      : artistThresholdsContext;
   const albumState =
     archivedArtist && archivedArtist.isArchived
       ? archivedArtist.settingsSnapshot[1]
-      : JSON.parse(sessionStorage.getItem('albumThresholds'));
+      : albumThresholdsContext;
   const trackState =
     archivedArtist && archivedArtist.isArchived
       ? archivedArtist.settingsSnapshot[0]
-      : JSON.parse(sessionStorage.getItem('trackThresholds'));
+      : trackThresholdsContext;
 
-  const [areLoaded, setAreLoaded] = useState(false);
-  const [artistThresholds, setArtistThresholds] = useState(artistState);
-  const [albumThresholds, setAlbumThresholds] = useState(albumState);
-  const [trackThresholds, setTrackThresholds] = useState(trackState);
-  const [doNotTrack, setDoNotTrack] = useState(
-    JSON.parse(sessionStorage.getItem('doNotTrack'))
-  );
+  const [artistThresholds] = useState(artistState);
+  const [albumThresholds] = useState(albumState);
+  const [trackThresholds] = useState(trackState);
 
   useEffect(() => {
-    if (
-      !albumThresholds ||
-      !artistThresholds ||
-      !trackThresholds ||
-      doNotTrack === null
-    ) {
+    if (!areLoaded) {
       setConfig({
         url: 'api/settings',
         method: 'get'
       });
       if (data) {
-        setArtistThresholds(data.artistThresholds);
-        sessionStorage.setItem(
-          'artistThresholds',
-          JSON.stringify(data.artistThresholds)
-        );
-        setAlbumThresholds(data.albumThresholds);
-        sessionStorage.setItem(
-          'albumThresholds',
-          JSON.stringify(data.albumThresholds)
-        );
-        setTrackThresholds(data.trackThresholds);
-        sessionStorage.setItem(
-          'trackThresholds',
-          JSON.stringify(data.trackThresholds)
-        );
-        setDoNotTrack(data.doNotTrack);
-        sessionStorage.setItem('doNotTrack', data.doNotTrack);
-        setAreLoaded(true);
+        dispatch({ type: 'LOAD_SETTINGS', payload: data });
       }
-    } else {
-      setAreLoaded(true);
     }
-  }, [
-    albumThresholds,
-    setAlbumThresholds,
-    setArtistThresholds,
-    setTrackThresholds,
-    artistThresholds,
-    trackThresholds,
-    doNotTrack,
-    setDoNotTrack,
-    data,
-    setAreLoaded,
-    setConfig
-  ]);
+  }, [setConfig, data, areLoaded, dispatch]);
 
   const assessTrack = track => {
     if (areLoaded) {
@@ -144,7 +114,6 @@ const useSettings = (archivedArtist = null) => {
     assessTrack,
     assessArr,
     assessPresentational,
-    setDoNotTrack,
     albumThresholds,
     trackThresholds,
     artistThresholds,

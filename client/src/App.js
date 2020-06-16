@@ -10,6 +10,7 @@ import AuthContext from './context/auth/authContext';
 import PrivateRoute from './components/routing/PrivateRoute';
 import AlertState from './context/alert/AlertState';
 import LibraryState from './context/library/LibraryState';
+import SettingsState from './context/settings/SettingsState';
 import Footer from './components/layout/Footer';
 import useFA from './utils/useFA';
 
@@ -25,20 +26,22 @@ const App = () => {
   return (
     <AlertState>
       <LibraryState>
-        <Router>
-          <Fragment>
-            <div className='main-grid'>
-              {isAuthenticated && <Navbar />}
-              <Alerts />
-              <Switch>
-                <Route exact path='/login' component={Login} />
-                <PrivateRoute exact path='/' component={Home} />
-                <PrivateRoute exact path='/settings' component={Settings} />
-              </Switch>
-            </div>
-            <Footer />
-          </Fragment>
-        </Router>
+        <SettingsState>
+          <Router>
+            <Fragment>
+              <div className='main-grid'>
+                {isAuthenticated && <Navbar />}
+                <Alerts />
+                <Switch>
+                  <Route exact path='/login' component={Login} />
+                  <PrivateRoute exact path='/' component={Home} />
+                  <PrivateRoute exact path='/settings' component={Settings} />
+                </Switch>
+              </div>
+              <Footer />
+            </Fragment>
+          </Router>
+        </SettingsState>
       </LibraryState>
     </AlertState>
   );
