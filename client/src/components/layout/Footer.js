@@ -20,7 +20,7 @@ const Footer = () => {
           </a>
         </div>
         <div>
-          Check out the project code on
+          Check out the app repo on
           <a
             href='https://github.com/N6MCA51593/spotify-addpt'
             target='_blank'

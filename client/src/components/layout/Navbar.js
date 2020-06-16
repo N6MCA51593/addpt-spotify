@@ -28,6 +28,7 @@ const Navbar = () => {
               className='nav-link'
               onClick={() => {
                 window.scrollTo(0, 0);
+                isShowing && setIsShowing(false);
                 loc.pathname === '/' && clearCurrent();
               }}
             >
@@ -35,19 +36,24 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to='/settings' className='nav-link'>
+            <Link
+              to='/settings'
+              className='nav-link'
+              onClick={() => isShowing && setIsShowing(false)}
+            >
               <FontAwesomeIcon icon='cog' size='lg' />
             </Link>
           </li>
           <li className={loc.pathname === '/settings' ? 'disabled' : ''}>
             <div
-              onClick={() =>
+              onClick={() => {
+                isShowing && setIsShowing(false);
                 loc.pathname !== '/settings' &&
-                setConfig({
-                  url: '/api/sync',
-                  method: 'post'
-                })
-              }
+                  setConfig({
+                    url: '/api/sync',
+                    method: 'post'
+                  });
+              }}
             >
               <FontAwesomeIcon icon='sync-alt' size='lg' />
             </div>
