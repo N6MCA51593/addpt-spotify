@@ -10,7 +10,8 @@ const SettingsComponent = props => {
     trackThresholds,
     artistThresholds,
     doNotTrack,
-    dispatch
+    dispatch,
+    areLoaded
   } = useSettings();
   const [{ data, isLoading, isError }, setConfig] = useAPIRequest({});
   const { setAlert } = useContext(AlertContext);
@@ -24,20 +25,26 @@ const SettingsComponent = props => {
     pearling: true,
     minDistance: 0
   };
-
   const [trackState, setTrackState] = useState(null);
   const [albumState, setAlbumState] = useState(null);
   const [artistState, setArtistState] = useState(null);
   const [trackingState, setTrackingState] = useState(null);
 
+  console.log(trackState);
   useEffect(() => {
-    if (trackThresholds && albumThresholds && trackThresholds) {
+    if (areLoaded) {
       setTrackState(trackThresholds);
       setAlbumState(albumThresholds);
       setArtistState(artistThresholds);
       setTrackingState(doNotTrack);
     }
-  }, [albumThresholds, trackThresholds, artistThresholds, doNotTrack]);
+  }, [
+    albumThresholds,
+    trackThresholds,
+    artistThresholds,
+    doNotTrack,
+    areLoaded
+  ]);
 
   useEffect(() => {
     if (data && data.msg === 'Updated' && !isError && !isLoading) {
@@ -71,7 +78,7 @@ const SettingsComponent = props => {
     });
   };
 
-  if (albumState && artistState && trackState) {
+  if (areLoaded) {
     return (
       <div className='settings'>
         <div className='settings-item'>

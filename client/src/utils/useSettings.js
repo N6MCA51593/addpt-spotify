@@ -26,9 +26,9 @@ const useSettings = (archivedArtist = null) => {
       ? archivedArtist.settingsSnapshot[0]
       : trackThresholdsContext;
 
-  const [artistThresholds] = useState(artistState);
-  const [albumThresholds] = useState(albumState);
-  const [trackThresholds] = useState(trackState);
+  const [artistThresholds, setArtistThresholds] = useState(artistState);
+  const [albumThresholds, setAlbumthresholds] = useState(albumState);
+  const [trackThresholds, setTrackThresholds] = useState(trackState);
 
   useEffect(() => {
     if (!areLoaded) {
@@ -38,6 +38,9 @@ const useSettings = (archivedArtist = null) => {
       });
       if (data) {
         dispatch({ type: 'LOAD_SETTINGS', payload: data });
+        setArtistThresholds(data.artistThresholds);
+        setAlbumthresholds(data.albumThresholds);
+        setTrackThresholds(data.trackThresholds);
       }
     }
   }, [setConfig, data, areLoaded, dispatch]);
@@ -118,7 +121,8 @@ const useSettings = (archivedArtist = null) => {
     trackThresholds,
     artistThresholds,
     doNotTrack,
-    dispatch
+    dispatch,
+    areLoaded
   };
 };
 
