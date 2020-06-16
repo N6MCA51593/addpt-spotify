@@ -9,7 +9,8 @@ const SettingsComponent = props => {
     albumThresholds,
     trackThresholds,
     artistThresholds,
-    doNotTrack = false
+    doNotTrack,
+    dispatch
   } = useSettings();
   const [{ data, isLoading, isError }, setConfig] = useAPIRequest({});
   const { setAlert } = useContext(AlertContext);
@@ -58,10 +59,16 @@ const SettingsComponent = props => {
         doNotTrack: trackingState
       }
     });
-    sessionStorage.setItem('trackThresholds', JSON.stringify(trackState));
-    sessionStorage.setItem('albumThresholds', JSON.stringify(albumState));
-    sessionStorage.setItem('artistThresholds', JSON.stringify(artistState));
-    sessionStorage.setItem('doNotTrack', trackingState);
+
+    dispatch({
+      type: 'UPDATE_SETTINGS',
+      payload: {
+        trackThresholds: trackState,
+        albumThresholds: albumState,
+        artistThresholds: artistState,
+        doNotTrack: trackingState
+      }
+    });
   };
 
   if (albumState && artistState && trackState) {

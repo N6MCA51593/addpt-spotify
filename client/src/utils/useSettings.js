@@ -117,7 +117,8 @@ const useSettings = (archivedArtist = null) => {
     albumThresholds,
     trackThresholds,
     artistThresholds,
-    doNotTrack
+    doNotTrack,
+    dispatch
   };
 };
 
