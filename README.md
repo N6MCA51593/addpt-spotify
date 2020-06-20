@@ -42,7 +42,7 @@ Discovering new music, expanding your musical taste is an exciting process. Yet 
  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_settings.gif" width="650" alt="gif">
 </p>
 
-  ####  Same features available from the smartpone!
+  ####  Same features available on mobile devices as well!
 
 <p align="center">
  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_mobile.gif" alt="gif">
