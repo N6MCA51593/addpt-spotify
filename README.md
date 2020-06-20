@@ -15,6 +15,8 @@ Artist discography discovery progress tracker for Spotify
 
 ## Intro
 
+Discovering new music, expanding your musical taste is an exciting process. Yet at the same, it can prove to be somewhat confusing and daunting, depending on your habits. If you prefer to dump new artists into a huge playlist and explore their discography one song at a time, it's easy to lose track of what you've listened to, and how many times. What's worse, you can have multiple new artists competing for your attention, which further exacerbates the problem. Artist discography discovery progress tracker for Spotify is designed to take care of that, and provide you with data and customization options that make exploring new music a more pleasant and comfortable journey.        
+
 ## Core features
 
 ## Getting started
@@ -115,6 +117,7 @@ which is indistinguishable from when the user hasn't listened to anything at all
 * [react-slider](https://github.com/zillow/react-slider)
 * [react-transition-group](https://github.com/reactjs/react-transition-group)
 * [Sass](https://sass-lang.com/)
+* [Font Awesome](https://fontawesome.com/)
 
 
 ## License
