@@ -30,7 +30,7 @@ Discovering new music, expanding your musical taste is an exciting process. Yet 
   <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_custom_2.gif" width="200" alt="gif">
   </p>
   
-  #### Start listening! The app updates your history automatically, but you can do it manually as well
+  #### Start listening! The app periodically updates your history, but you can trigger an update manually
 
 <p align="center">
  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_sync.gif" alt="gif">
