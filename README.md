@@ -19,6 +19,35 @@ Discovering new music, expanding your musical taste is an exciting process. Yet 
 
 ## Core features
 
+####  Add the artist that you want to track
+<p align="center">
+ <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_add.gif" width="450" alt="gif">
+  </p>
+  
+  ####  Pick and choose the albums and individual songs that interest you, tweak their listens counters 
+  <p align="middle">
+ <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_custom.gif" alt="gif">
+  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_custom_2.gif" width="200" alt="gif">
+  </p>
+  
+  ####  Start listening! The app updates your history automatically, but you can do it manually as well
+
+<p align="center">
+ <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_sync.gif" alt="gif">
+</p>
+
+  ####  Tweak your settings at any time from the settings menu
+  
+<p align="center">
+ <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_settings.gif" width="650" alt="gif">
+</p>
+
+  ####  Same features available from the smartpone!
+
+<p align="center">
+ <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_mobile.gif" alt="gif">
+</p>
+
 ## Getting started
 
 ### Prerequisites
