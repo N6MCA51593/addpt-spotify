@@ -66,8 +66,8 @@ const Login = props => {
             <h3>Highly customizable</h3>
             It's up to you to decide what albums and songs you want to track.
             Moreover, you can tweak progress thresholds for songs, albums, and
-            artists in the settings, or alter the listens counter for any song
-            if you choose to.
+            artists in the settings, or alter the listen counter for any song if
+            you choose to.
           </div>
           <div className='info-item'>
             <div className='icon-container icon-container-finish'>
