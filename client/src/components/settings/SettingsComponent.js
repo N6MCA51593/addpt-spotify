@@ -30,7 +30,6 @@ const SettingsComponent = props => {
   const [artistState, setArtistState] = useState(null);
   const [trackingState, setTrackingState] = useState(null);
 
-  console.log(trackState);
   useEffect(() => {
     if (areLoaded) {
       setTrackState(trackThresholds);
