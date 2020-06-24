@@ -28,7 +28,7 @@ Discovering new music, expanding your musical taste is an exciting process. Yet 
   #### Pick and choose the albums and individual songs that interest you, adjust their listen counters 
   <p align="middle">
  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_custom.gif" alt="gif">
-  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_custom_2.gif" width="200" alt="gif">
+  <img src="https://github.com/N6MCA51593/addpt-spotify/blob/3bbf4bba9df2d35b7cb55c27501e6ee3cbe35efc/gif_custom_2.gif" width="190" alt="gif">
   </p>
   
   #### Start listening! The app periodically updates your history, but you can trigger an update manually
