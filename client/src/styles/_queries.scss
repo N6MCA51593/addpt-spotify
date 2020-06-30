@@ -209,6 +209,10 @@
     &-item {
       flex-direction: column;
 
+      p {
+        width: initial;
+      }
+
       p:last-of-type {
         margin: 0 2rem 0.8rem;
       }
