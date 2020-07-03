@@ -40,7 +40,7 @@ export const Library = () => {
   const [childUnmounted, setChildUnmounted] = useState(null);
   const [areTracksShowing, setAreTracksShowing] = useState(false);
   const [artist, album, setParams] = useCurrentArtistUpdate();
-  const [{ isError, data }, setConfig] = useAPIRequest({
+  const [{ isError, data }, setConfig, resetData] = useAPIRequest({
     url: '/api/library',
     method: 'get'
   });
@@ -150,7 +150,7 @@ export const Library = () => {
       />
       <div className={`main-content${areTracksShowing ? ' hidden' : ''}`}>
         <BottomNav clearCurrent={currentArtist && clearCurrent} />
-        <SSEUpdate updArtists={updArtists} />
+        <SSEUpdate updArtists={updArtists} resetLibData={resetData} />
         {currentArtist ? (
           <AlbumList
             toggleTracking={toggleTracking}

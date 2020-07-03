@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import useAPIRequest from '../../utils/useAPIRequest';
 import LibraryContext from '../../context/library/libraryContext';
 
-const SSEUpdate = ({ updArtists }) => {
-  const [{ data, isError, isLoading }, setConfig] = useAPIRequest();
+const SSEUpdate = ({ updArtists, resetLibData }) => {
+  const [{ data, isError, isLoading }, setConfig, resetData] = useAPIRequest();
 
   const [artistArr, setArtistArr] = useState(null);
 
@@ -28,6 +28,7 @@ const SSEUpdate = ({ updArtists }) => {
       loadLibrary(isError, data);
     }
     return () => {
+      resetData();
       if (!currentArtist && data) {
         setArtistArr(null);
       }
@@ -42,7 +43,8 @@ const SSEUpdate = ({ updArtists }) => {
     isLoading,
     setArtistArr,
     loadLibrary,
-    setConfig
+    setConfig,
+    resetData
   ]);
 
   useEffect(() => {
@@ -55,6 +57,7 @@ const SSEUpdate = ({ updArtists }) => {
       setCurrentAlbum(null);
       setCurrentArtist(artists.find(artistsE => artistsE._id === id));
       setArtistArr(null);
+      resetLibData();
     }
     // eslint-disable-next-line
   }, [artists]);
@@ -63,7 +66,8 @@ const SSEUpdate = ({ updArtists }) => {
 };
 
 SSEUpdate.propTypes = {
-  updArtists: PropTypes.array
+  updArtists: PropTypes.array,
+  resetLibData: PropTypes.func
 };
 
 export default SSEUpdate;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const hookStateReducer = (state, action) => {
@@ -22,6 +22,11 @@ const hookStateReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: true
+      };
+    case 'DATA_RESET':
+      return {
+        ...state,
+        data: null
       };
     default:
       return state;
@@ -68,7 +73,9 @@ const useAPIRequest = (initialConfig, initialData) => {
     };
   }, [config]);
 
-  return [state, setConfig];
+  const resetData = useCallback(() => dispatch({ type: 'DATA_RESET' }), []);
+
+  return [state, setConfig, resetData];
 };
 
 useAPIRequest.propTypes = {
