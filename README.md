@@ -151,6 +151,7 @@ $ npm run client
 - [React](https://reactjs.org/)
 - [Axios](https://github.com/axios/axios)
 - [react-slider](https://github.com/zillow/react-slider)
+- [react-router](https://github.com/ReactTraining/react-router)
 - [react-transition-group](https://github.com/reactjs/react-transition-group)
 - [Sass](https://sass-lang.com/)
 - [Font Awesome](https://fontawesome.com/)
