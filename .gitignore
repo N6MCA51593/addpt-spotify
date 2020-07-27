@@ -2,6 +2,7 @@ node_modules/
 .env
 *.txt
 /client/build
+*.mp4
 
 **/.vscode/
 .vscode/* 
